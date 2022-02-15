@@ -25,20 +25,18 @@ function* watchGetSingleTeacher() {
   yield takeEvery(GET_SINGLE_TEACHER, workGetSingleTeacher);
 }
 
-function* workGetSingleTeacher(id) {
+function* workGetSingleTeacher() {
   // const id = payload;
-  const { response, error } = yield call(fetchGetSingleTeacher, id);
-console.log(response);
+  const { response, error } = yield call(fetchGetSingleTeacher);
+  console.log(response);
   if (response) {
     console.log(response);
-    yield put(getSingleTeacherSuccess(response.data));
+    yield put(getSingleTeacherSuccess(response.data.teachers));
   } else {
     yield put(getSingleTeacherError(error.response.data.message));
     notificationMessage("error", error.response.data.message);
   }
 }
-
-
 
 function* watchPostTeachers() {
   yield takeEvery(POST_TEACHERS, workPostTeachers);

@@ -9,7 +9,6 @@ function App() {
   const token = localStorage.getItem( "token" );
   const history = useHistory();
   const dispatch = useDispatch();
-  console.log( history );
 
   if ( token ) {
     dispatch(authMe(history));

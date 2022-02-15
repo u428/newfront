@@ -1,5 +1,5 @@
 import {
-    GET_TEACHERS,
+  GET_TEACHERS,
     GET_TEACHERS_ERROR,
     GET_TEACHERS_SUCCESS,
 
@@ -12,7 +12,7 @@ import {
     POST_TEACHERS_SUCCESS,
   } from "../actions";
   
-  export const getTeacher = () => ({
+  export const getTeachers = () => ({
     type: GET_TEACHERS,
   });
   

@@ -7,7 +7,7 @@ export const useBreadCrumb = (location) => {
     "/admin/home": "home",
     "/admin/setting": "setting",
     "/admin/products": "products",
-    "/admin/teacher": "teacher",
+    "/admin/teacher": "teachers",
   };
 
   const pathSnippets = location.pathname.split("/").filter((i) => i);

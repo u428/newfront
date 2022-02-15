@@ -3,8 +3,7 @@ import React, { useEffect, useState } from "react";
 import Fade from "react-reveal/Fade";
 import { Table, Tag, Card, PageHeader, Modal, Row, Col, Button } from 'antd';
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router";
-import { getTeacher } from "../../../redux/teacher/actions";
+import { getTeachers } from "../../../redux/teacher/actions";
 import AddTeacher from "./modal/AddTeacher";
 
 
@@ -13,8 +12,7 @@ const Teachers = () => {
   const dispatch = useDispatch();
   const [ isModalVisible, setIsModalVisible ] = useState( false );
 
-  const reducer = useSelector(state=>state.teacherReducer)
-  console.log(reducer);
+  
 
   const showModal = () => {
     setIsModalVisible( true );
@@ -29,8 +27,12 @@ const Teachers = () => {
   };
 
   useEffect( () => {
-    dispatch( getTeacher() );
-  }, [ dispatch ] );
+    console.log("use Effect ishladi");
+    dispatch( getTeachers() );
+  }, [dispatch] );
+
+  const reducer = useSelector(state=>state.teacherReducer)
+  console.log(reducer);
 
 
   // const showButtonInput = (id)=>{
@@ -169,7 +171,7 @@ const Teachers = () => {
       </Row>
 
       <Card>
-        <Table columns={ columns } dataSource={ reducer.teachers.returns } pagination={{pageSize: reducer.teachers.page_info.number_of_elements}} scroll={ { x: "auto" } } />
+        <Table columns={ columns } dataSource={ reducer.teachers && reducer.teachers.returns }  scroll={ { x: "auto" } } />
       </Card>
     </Fade>
   );
