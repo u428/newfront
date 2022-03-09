@@ -6,7 +6,8 @@ import { PieChartOutlined, UserOutlined, TeamOutlined, FileOutlined, ProjectOutl
 import { Link, useRouteMatch } from "react-router-dom";
 
 const { SubMenu } = Menu;
-function SideBar() {
+function SideBar(props) {
+  console.log(props);
   const { url } = useRouteMatch();
   // const { SubMenu } = Menu;
   return (

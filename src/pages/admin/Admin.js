@@ -17,6 +17,7 @@ import Home from "./home/Home";
 import Setting from "./setting/Setting";
 import Products from "./products/Products";
 import Teachers from "./teachers/Teachers";
+import { collapseend } from "react-reveal/globals";
 
 
 function Admin () {
@@ -27,24 +28,24 @@ function Admin () {
   let { path } = useRouteMatch();
 
   const [ state, setState ] = useState( {
-    collapsed: false,
+    collapseds: false,
   } );
 
-  const onCollapse = ( collapsed ) => {
-    setState( { collapsed } );
+  const onCollapse = ( collapseds ) => {
+    setState( { collapseds } );
   };
 
-  const { collapsed } = state;
+  const { collapseds } = state;
 
   return (
     <Fade>
       <Layout style={ { minHeight: "100vh" } }>
         <Sider
           collapsible
-          collapsed={ width < 768 ? true : collapsed }
+          collapsed={ width < 768 ? true : collapseds }
           onCollapse={ onCollapse }
         >
-          <SideBar />
+          <SideBar/>
         </Sider>
 
         <Layout className="site-layout">
@@ -83,7 +84,7 @@ function Admin () {
           </Content>
           <Footer style={ { textAlign: "center" } }>
             { " " }
-            2021 Created by Afrosiyob 🐝
+            2022 Created by Muhammad Amin 🐝
           </Footer>
         </Layout>
       </Layout>

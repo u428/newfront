@@ -1,44 +1,64 @@
 import React, { useEffect, useState } from "react";
 
 import Fade from "react-reveal/Fade";
-import { Table, Tag, Card, PageHeader, Modal, Row, Col, Button } from 'antd';
+import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import { Table, Tag, Card, PageHeader, Modal, Row, Col, Button, Space, Tooltip } from 'antd';
 import { useDispatch, useSelector } from "react-redux";
-import { getTeachers } from "../../../redux/teacher/actions";
+import { getTeachers, deleteTeacher, getSingleTeacher } from "../../../redux/teacher/actions";
 import AddTeacher from "./modal/AddTeacher";
+import EditTeacher from "./modal/EditTeacher";
 
 
 
 const Teachers = () => {
+
+  const {pagination, loading, isActive, teachers} = useSelector(state=>state.teacherReducer);
+
   const dispatch = useDispatch();
   const [ isModalVisible, setIsModalVisible ] = useState( false );
+  const [ isEditModalVisible, setIsEditModalVisible ] = useState( false );
 
   
+  function deleteTeachers (teacher) {
+    Modal.confirm({
+      title: "siz shu "+teacher.firstName.toUpperCase()+" "+teacher.lastName.toUpperCase()+" ni ochirmoqchimisiz",
+      okText: "Xa",
+      okType:"danger",
+      cancelText:"yoq",
+      onOk: () =>{
+        dispatch(deleteTeacher(teacher.id));
+        dispatch( getTeachers(pagination));
+      }
+    })
+  }
 
   const showModal = () => {
     setIsModalVisible( true );
   };
+  const showEditModal = (id) => {
+    dispatch(getSingleTeacher(id))
+    setIsEditModalVisible( true );
+  };
 
   const handleOk = () => {
     setIsModalVisible( false );
+    dispatch( getTeachers(pagination));
+  };
+  const handleOk2 = () => {
+    setIsEditModalVisible( false );
+    dispatch( getTeachers(pagination));
   };
 
   const handleCancel = () => {
     setIsModalVisible( false );
   };
+  const handleEDitModalCancel = () => {
+    setIsEditModalVisible( false );
+  };
 
   useEffect( () => {
-    console.log("use Effect ishladi");
-    dispatch( getTeachers() );
-  }, [dispatch] );
-
-  const reducer = useSelector(state=>state.teacherReducer)
-  console.log(reducer);
-
-
-  // const showButtonInput = (id)=>{
-  //   // dispatch(getSingleTeacher(history, id))
-  //   console.log(id);
-  // }
+    dispatch( getTeachers(pagination));
+  }, [] );
 
   const columns = [
     {
@@ -111,47 +131,39 @@ const Teachers = () => {
       dataIndex: 'groups',
       key: 'groups',
       render: text => <Button type="primary" shape="circle">{text}</Button>
+    },
+    {
+      title: 'Action',
+      key: 'action',
+      render: ( data ) => {
+        return (
+          <Space size="middle">
+              <Button onClick={() => showEditModal(data.teacher.id)}  shape="circle" warning icon={<EditOutlined />} />
+              <Button onClick={() => deleteTeachers(data.teacher)} shape="circle" danger  icon={<DeleteOutlined />} />
+          </Space>
+        )
+      },
     }
-    // {
-    //   title: 'languages',
-    //   key: 'languages',
-    //   dataIndex: 'teacher.languages',
-    //   render: tags => (
-    //     <>
-    //       { tags.map( tag => {
-    //         // let color = tag.length > 5 ? 'geekblue' : 'green';
-    //         // if ( tag === 'loser' ) {
-    //         //   color = 'volcano';
-    //         // }
-    //         let color = 'geekblue'
-    //         return (
-    //           <Tag color={ color } key={ tag.id }>
-    //             { tag.name }
-    //           </Tag>
-    //         );
-    //       } ) }
-    //     </>
-    //   ),
-    // },
-    // {
-    //   title: 'Action',
-    //   key: 'action',
-    //   render: ( text, record ) => {
-    //     // console.log( record.key );
-    //     return (
-    //       <Space size="middle">
-
-    //       </Space>
-    //     )
-    //   },
-    // },
   ];
+
+
+  const handleTableChange = (pagination) => {
+   
+    dispatch( getTeachers(pagination) );
+    // if(reducer.teachers){
+    //   console.log("handle ishladi");
+    //   setPagination(reducer.teachers.page_info)
+    // }
+  };
 
   
   return (
     <Fade>
-      <Modal title="Basic Modal" visible={ isModalVisible } onOk={ handleOk } onCancel={ handleCancel } footer={ false }>
+      <Modal title="Chreate Teacher" visible={ isModalVisible } onOk={ handleOk } onCancel={ handleCancel } footer={ false }>
         <AddTeacher handleOk={ handleOk } handleCancel={ handleCancel } />
+      </Modal>
+      <Modal title="Change Teacher" visible={ isEditModalVisible } onOk={ handleOk2 } onCancel={ handleEDitModalCancel } footer={ false }>
+        <EditTeacher handleOk2={ handleOk2 } handleCancel={ handleEDitModalCancel } />
       </Modal>
 
       <Row justify="space-between" align="middle">
@@ -171,7 +183,15 @@ const Teachers = () => {
       </Row>
 
       <Card>
-        <Table columns={ columns } dataSource={ reducer.teachers && reducer.teachers.returns }  scroll={ { x: "auto" } } />
+        <Table
+         columns={ columns } 
+         dataSource={ teachers &&teachers} 
+         pagination={pagination}
+         loading={loading}
+         scroll={ { x: "auto" } } 
+         onChange={handleTableChange}
+         />
+        
       </Card>
     </Fade>
   );

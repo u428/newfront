@@ -1,14 +1,69 @@
-import React from 'react'
-import { Form, Input, Button } from 'antd';
+import React, {useEffect, useState} from 'react'
+import { Form, Input, Button, Space, Upload, TreeSelect, DatePicker, Select } from 'antd';
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router";
+import { postTeacher } from "../../../../redux/teacher/actions";
+import {getLanguages} from "../../../../redux/lang/actions";
+import { getSubjects } from '../../../../redux/subject/actions';
+import moment from 'moment';
+import ImgCrop from 'antd-img-crop';
+import { EyeInvisibleOutlined, EyeTwoTone, UploadOutlined, InboxOutlined } from '@ant-design/icons';
+
+const options = [{id: 0, value: 'Boshqa' }, {id: 1, value: 'Erkak' }, {id: 2, value: 'Ayol' }];
 const AddTeacher = ( { handleOk, handleCancel } ) => {
     const [ form ] = Form.useForm();
+    const dispatch = useDispatch();
+    const { TreeNode } = TreeSelect;
+    let history = useHistory();
+
+    const dateFormat = 'DD.MM.YYYY';
+
+    const [dating, setDating] = useState(null);
+
+
+    const reduce = useSelector(state=>state.languageReducer);
+    const reducer = useSelector(state=>state.subjectReducer);
+
+    useEffect( () => {
+        dispatch( getLanguages());
+        dispatch( getSubjects());
+    }, [dispatch] );
+    
+ 
+
     const onFinish = ( values ) => {
-        console.log( values );
+        console.log(values);
+        console.log(values.birthDate.dateString);
+
+        let returns = {
+            "firstName": values.firstName,
+            "lastName": values.lastName,
+            "middleName":values.middleName,
+            "telNomer":values.telNomer,
+            "tgLink":values.tgLink,
+            "inLink":values.inLink,
+            "fLink":values.fLink,
+            "gmail":values.gmail,
+            "description":values.description,
+            "login":values.login,
+            "gender":values.gender,
+            "dateBirth": dating,
+            "password":values.password,
+            "fileId":values.images.file.response,
+            "subjectIds":values.subjectId,
+            "langIds":values.languageId
+        }
+
+        console.log(returns);
+
+        dispatch(postTeacher(history, returns));
         handleOk()
+        onReset()
     };
 
     const onFinishFailed = ( errorInfo ) => {
         console.log( 'Failed:', errorInfo );
+        onReset()
     };
 
 
@@ -16,16 +71,225 @@ const AddTeacher = ( { handleOk, handleCancel } ) => {
         form.resetFields();
     };
 
+    function onChange(date, dateString) {
+        setDating(dateString);
+      }
+
+      const onPreview = async file => {
+        let src = file.url;
+        if (!src) {
+          src = await new Promise(resolve => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file.originFileObj);
+            reader.onload = () => resolve(reader.result);
+          });
+        }
+        const image = new Image();
+        image.src = src;
+        const imgWindow = window.open(src);
+        imgWindow.document.write(image.outerHTML);
+      };
+
     return (
 
-        <Form form={ form } name="add-product" onFinish={ onFinish } onFinishFailed={ onFinishFailed }>
-            <Form.Item name="name" label="Neme" rules={ [ { required: true } ] }>
+        <Form 
+        autoComplete='off'
+        form={ form } 
+        layout="vertical"
+        name="add-teacher" 
+        onFinish={ onFinish } 
+        onFinishFailed={ onFinishFailed }>
+
+            <Form.Item 
+                name="firstName" 
+                label="Ismingiz" 
+                rules={ [ { required: true, message: "Iltimos ismingizni kiriting" }, {min: 3, max: 20 } ] }>
                 <Input />
             </Form.Item>
-            <Form.Item >
-                <Button type="primary" htmlType="submit">
-                    Submit
-                </Button>
+            <Form.Item 
+                name="lastName" 
+                label="Familiyangiz" 
+                rules={ [ { required: true, message: "Iltimos familiyangizni kiriting" }, {min: 3, max: 20 } ] }>
+                <Input />
+            </Form.Item>
+            <Form.Item 
+                name="middleName" 
+                label="Otangizni ismi" 
+                rules={ [ { required: true }, {min: 3, max: 20 } ] }>
+                <Input />
+            </Form.Item>
+            <Form.Item 
+                name="birthDate" 
+                label="Tugilgan sana" 
+                rules={ [ { required: true }] }>
+                <DatePicker 
+                    style={{width: "100%"}}
+                    defaultValue={moment()}
+                    format={dateFormat}
+                    onChange={(date, dateString) => onChange(date, dateString)}
+                      />
+            </Form.Item>
+            <Form.Item 
+                name="gender" 
+                label="Jinsingiz" 
+                rules={ [ { required: true }] }>
+                <Select defaultValue="0">
+                    <Select.Option value="1">Erkak</Select.Option>
+                    <Select.Option value="2">Ayol</Select.Option>
+                    <Select.Option value="0">Boshqa</Select.Option>
+                </Select>
+            </Form.Item>
+            <Form.Item 
+                name="gmail" 
+                label="G-mail" 
+                rules={ [ { required: false, type: 'email'  }, {min: 3, max: 40 } ] } hasFeedback>
+                <Input />
+            </Form.Item>
+            <Form.Item 
+                name="telNomer" 
+                label="Telefon nomer" 
+                rules={ [ { required: true }, {min: 9, max: 9 } ] }>
+                <Input />
+            </Form.Item>
+            <Form.Item 
+                name="tgLink" 
+                label="Telegram link" 
+                rules={ [ { required: false }, {min: 3, max: 50 } ] }>
+                <Input />
+            </Form.Item>
+            <Form.Item 
+                name="fLink" 
+                label="Facebook link" 
+                rules={ [ { required: false }, {min: 3, max: 50 } ] }>
+                <Input />
+            </Form.Item>
+            <Form.Item 
+                name="inLink" 
+                label="Instagram link" 
+                rules={ [ { required: false }, {min: 3, max: 50 } ] }>
+                <Input />
+            </Form.Item>
+            <Form.Item 
+                name="login" 
+                // EyeInvisibleOutlined 
+                label="Login" 
+                rules={ [ { required: true }, {min: 3, max: 20 } ] } hasFeedback>
+                <Input />
+            </Form.Item>
+            <Form.Item 
+                name="password" 
+                label="Parol" 
+                rules={ [ { required: true }, {min: 8, max: 15 } ] }
+                hasFeedback
+                >
+                <Input.Password placeholder="input password" />
+            </Form.Item>
+            <Form.Item 
+                name="repassword" 
+                dependencies={['password']} 
+                label="Parolni Takrorlang" 
+                rules={ [ {
+                     required: true 
+                    },
+                    ({ getFieldValue }) => ({
+                        validator(_, value) {
+                        if (!value || getFieldValue('password') === value) {
+                            return Promise.resolve();
+                        }
+                        return Promise.reject(new Error('The two passwords that you entered do not match!'));
+                    }
+                }), ] }
+                hasFeedback
+                >
+                <Input.Password placeholder="input password" />
+            </Form.Item>
+
+            <Form.Item 
+                name="languageId" 
+                label="Tilni tanlang" 
+                rules={ [ { required: true } ] }>
+            <TreeSelect
+                showSearch
+                style={{ width: '100%' }}
+                // value={languages}
+                dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
+                placeholder="Please select"
+                allowClear
+                multiple
+                treeDefaultExpandAll
+                // onChange={()=>{setLanguages()}}
+            >
+               <>
+               {
+                   reduce.isActive && reduce.language.map(lang =>{
+                       return(
+                            <TreeNode key={lang.id} value={lang.id} title ={lang.name}></TreeNode>
+                       )
+                   })
+               }
+               </>
+            </TreeSelect>
+            </Form.Item>
+
+            <Form.Item 
+                name="subjectId" 
+                label="Fanni tanlang" 
+                rules={ [ { required: true } ] }>
+            <TreeSelect
+                showSearch
+                style={{ width: '100%' }}
+                // value={subjects}
+                dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
+                placeholder="Please select"
+                allowClear
+                multiple
+                treeDefaultExpandAll
+                // onChange={() =>{setSubjects()}}
+            >
+               <>
+               {
+                   reducer.subjects.map(sub =>{
+                       return(
+                            <TreeNode key={sub.id} value={sub.id} title ={sub.nameUz}></TreeNode>
+                       )
+                   })
+               }
+               </>
+            </TreeSelect>
+            </Form.Item>
+            <Form.Item 
+                name="images" 
+                label="Imageni tanlang" 
+                rules={ [ { required: true }] }>
+                <ImgCrop rotate>
+                <Upload.Dragger 
+                maxCount={1}
+                name="file"
+                listType="picture"
+                accept='.png, .jpg, .img'
+                method='post'
+                action="/a23d_m23_i23n/add_image"
+                onPreview={onPreview}
+                >
+                    <Button>Imageni yuklash</Button>
+                </Upload.Dragger>
+                </ImgCrop>
+            </Form.Item>
+            
+            <Form.Item shouldUpdate>
+                {() => (
+                  <Button
+                    block
+                    type="primary"
+                    htmlType="submit"
+                    disabled={
+                      !form.isFieldsTouched(true) ||
+                      !!form.getFieldsError().filter(({ errors }) => errors.length).length
+                    }
+                  >
+                   Add Teacher
+                  </Button>
+                )}
             </Form.Item>
 
         </Form>

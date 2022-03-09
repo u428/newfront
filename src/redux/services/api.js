@@ -47,9 +47,9 @@ export const fetchGetProducts = async () =>
     .catch((error) => ({ error }));
 
 
-export const fetchGetTeachersList = async () =>
+export const fetchGetTeachersList = async (req) =>
   await axios
-    .get("/static/get_teachers_list", {
+    .get("/static/get_teachers_list?page="+Number(req.current)+"&limit="+Number(req.pageSize), {
       headers: {
         Authorization: token,
       },
@@ -57,9 +57,19 @@ export const fetchGetTeachersList = async () =>
     .then((response) => ({ response }))
     .catch((error) => ({ error }));
 
-  export const fetchGetSingleTeacher = async () =>
+export const fetchDeleteTeacher = async (id) =>
   await axios
-    .get("/static/get_single_teacher?id=1", {
+    .delete("/a23d_m23_i23n/delete_teacher?id="+Number(id), {
+      headers: {
+        Authorization: token,
+      },
+    })
+    .then((response) => ({ response }))
+    .catch((error) => ({ error }));
+
+  export const fetchGetSingleTeacher = async (id) =>
+  await axios
+    .get("/static/get_single_teacher?id="+id, {
       headers: {
         Authorization: token,
       },
@@ -68,15 +78,57 @@ export const fetchGetTeachersList = async () =>
     .catch((error) => ({ error }));
 
     
-export const fetchPostTeachersList = async (req) =>
+export const fetchPostTeacher = async (req) =>
 await axios
   .post(
-    "/static/get_teachers_list",
+    "/a23d_m23_i23n/put_teacher",
     req, 
     {
     headers: {
-      Authorization: token,
+      Authorization: token
     },
   })
   .then((response) => ({ response }))
   .catch((error) => ({ error }));
+
+  
+export const fetchPutTeacher = async (req) =>
+await axios
+  .put(
+    "/a23d_m23_i23n/put_teacher",
+    req, 
+    {
+    headers: {
+      Authorization: token
+    },
+  })
+  .then((response) => ({ response }))
+  .catch((error) => ({ error }));
+
+     
+export const fetchGetLanguagesList = async () =>
+await axios
+  .get(
+    "/static/get_language",
+    {
+    headers: {
+      Authorization: token,
+    },
+    })
+  .then((response) => ({ response }))
+  .catch((error) => ({ error }));
+
+     
+export const fetchGetSubjectsList = async () =>
+await axios
+  .get(
+    "/static/get_subjects",
+    {
+    headers: {
+      Authorization: token,
+    },
+    })
+  .then((response) => ({ response }))
+  .catch((error) => ({ error }));
+
+

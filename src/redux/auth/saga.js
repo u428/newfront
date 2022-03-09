@@ -20,8 +20,6 @@ function* watchAuthLogin() {
 
 function* workAuthLogin({ payload }) {
   const { history, req } = payload;
-  console.log(payload);
-  console.log("sdadsdadadawd");
   const { response, error } = yield call(fetchAuthLogin, req);
   if (response) {
     const { data } = response;
@@ -65,7 +63,9 @@ function* workAuthMe({ payload }) {
   const { response, error } = yield call(fetchAuthMe, token);
 
   if (response) {
-    yield put(authMeSuccess(response.data.data));
+    console.log(" there is authme saga");
+    console.log(response);
+    yield put(authMeSuccess(response.data));
     notificationMessage("success", "You have been LogIn");
     if (history) {
       history.push("/");

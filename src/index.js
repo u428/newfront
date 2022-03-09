@@ -4,7 +4,7 @@ import "./index.css";
 
 import reportWebVitals from "./reportWebVitals";
 
-import "antd/dist/antd.css"; // or 'antd/dist/antd.less'
+
 
 // import i18n (needs to be bundled ;))
 import "./i18n";
