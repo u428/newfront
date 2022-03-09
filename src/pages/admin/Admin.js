@@ -17,6 +17,7 @@ import Home from "./home/Home";
 import Setting from "./setting/Setting";
 import Products from "./products/Products";
 import Teachers from "./teachers/Teachers";
+import Subject from "./subject/Subject";
 import { collapseend } from "react-reveal/globals";
 
 
@@ -78,6 +79,10 @@ function Admin () {
                 <Route
                   path={ `${ path }/teacher` }
                   render={ ( props ) => <Teachers { ...props } /> }
+                />
+                <Route
+                  path={ `${ path }/subject` }
+                  render={ ( props ) => <Subject { ...props } /> }
                 />
               </Switch>
             </div>

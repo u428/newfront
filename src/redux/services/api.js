@@ -105,7 +105,7 @@ await axios
   .then((response) => ({ response }))
   .catch((error) => ({ error }));
 
-     
+    //  language
 export const fetchGetLanguagesList = async () =>
 await axios
   .get(
@@ -118,11 +118,38 @@ await axios
   .then((response) => ({ response }))
   .catch((error) => ({ error }));
 
+  // subject
      
 export const fetchGetSubjectsList = async () =>
 await axios
   .get(
     "/static/get_subjects",
+    {
+    headers: {
+      Authorization: token,
+    },
+    })
+  .then((response) => ({ response }))
+  .catch((error) => ({ error }));
+
+  export const fetchPostSubject = async (req) =>
+  await axios
+  .post(
+    "/a23d_m23_i23n/add_subject",
+    req,
+    {
+    headers: {
+      Authorization: token,
+    },
+    })
+  .then((response) => ({ response }))
+  .catch((error) => ({ error }));
+
+  export const fetchPutSubject = async (req) =>
+  await axios
+  .put(
+    "/a23d_m23_i23n/put_subject",
+    req,
     {
     headers: {
       Authorization: token,

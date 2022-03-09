@@ -40,14 +40,15 @@ function SideBar(props) {
         <Menu.Item key="10" icon={<UsergroupAddOutlined />}>
           <Link to={`${url}/teacher`}> Teachers </Link>
         </Menu.Item>
+        <Menu.Item key="5" icon={<ProjectOutlined />}>
+          <Link to={`${url}/subject`}> Add Subjects </Link>
+        </Menu.Item>
 
         <SubMenu key="sub1" icon={<ControlOutlined />} title="Constants">
         <Menu.Item key="4" icon={<ProjectOutlined />}>
           <Link to={`${url}/languages`}> Add Language </Link>
         </Menu.Item>
-        <Menu.Item key="5" icon={<ProjectOutlined />}>
-          <Link to={`${url}/subjects`}> Add Subjects </Link>
-        </Menu.Item>
+       
         <Menu.Item key="6" icon={<ProjectOutlined />}>
           <Link to={`${url}/stat`}> statistics </Link>
         </Menu.Item>

@@ -177,7 +177,7 @@ const Teachers = () => {
         </Col>
         <Col>
           <Button type="primary" onClick={ showModal }>
-            Open Modal
+            Add teacher
           </Button>
         </Col>
       </Row>

@@ -12,6 +12,9 @@ import {
     GET_SINGLE_SUBJECT_SUCCESS,
     GET_SINGLE_SUBJECT_ERROR,
     
+    PUT_SUBJECT,
+    PUT_SUBJECT_SUCCESS,
+    PUT_SUBJECT_ERROR,
 
     POST_SUBJECT,
     POST_SUBJECT_SUCCESS,
@@ -75,6 +78,21 @@ import {
   
   export const postSubjectError = (error) => ({
     type: POST_SUBJECT_ERROR,
+    payload: error,
+  });
+
+  export const putSubject = (history, req) => ({
+    type: PUT_SUBJECT,
+    payload: {history, req}
+  });
+  
+  export const putSubjectSuccess = (response) => ({
+    type: PUT_SUBJECT_SUCCESS,
+    payload: response,
+  });
+  
+  export const putSubjectError = (error) => ({
+    type: PUT_SUBJECT_ERROR,
     payload: error,
   });
   

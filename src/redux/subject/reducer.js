@@ -11,6 +11,10 @@ import {
   GET_SINGLE_SUBJECT_ERROR,
   GET_SINGLE_SUBJECT_SUCCESS,
 
+  PUT_SUBJECT,
+  PUT_SUBJECT_ERROR,
+  PUT_SUBJECT_SUCCESS,
+
   POST_SUBJECT,
   POST_SUBJECT_ERROR,
   POST_SUBJECT_SUCCESS,
@@ -20,7 +24,8 @@ import {
     loading: false,
     isActive: false,
     error: null,
-    subjects: null
+    subjects: null,
+    subject: {}
   };
   
   export const subjectReducer = (state = INIT_STATE, { type, payload }) => {
@@ -42,7 +47,7 @@ import {
       case GET_SINGLE_SUBJECT:
           return { ...state, loading: true};
       case GET_SINGLE_SUBJECT_SUCCESS:
-          return { ...state, loading: false, isActive: true, subjects: payload };
+          return { ...state, loading: false, isActive: true, subject: payload };
       case GET_SINGLE_SUBJECT_ERROR:
           return { ...state, loading: false,isActive: false, error: payload };
 
@@ -51,6 +56,13 @@ import {
       case POST_SUBJECT_SUCCESS:
         return { ...state, loading: false, subjects: payload };
       case POST_SUBJECT_ERROR:
+        return { ...state, loading: false, error: payload };
+
+        case PUT_SUBJECT:
+        return { ...state, loading: true };
+      case PUT_SUBJECT_SUCCESS:
+        return { ...state, loading: false, subjects: payload };
+      case PUT_SUBJECT_ERROR:
         return { ...state, loading: false, error: payload };
       default:
         return { ...state };
