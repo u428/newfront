@@ -53,7 +53,7 @@ import {
 
   export const getSingleSubject = (id) => ({
     type: GET_SINGLE_SUBJECT,
-    payload: id
+    id: id
   });
   
   export const getSingleSubjectSuccess = (response) => ({

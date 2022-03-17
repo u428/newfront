@@ -46,6 +46,7 @@ export const fetchGetProducts = async () =>
     .then((response) => ({ response }))
     .catch((error) => ({ error }));
 
+    // teachers
 
 export const fetchGetTeachersList = async (req) =>
   await axios
@@ -56,6 +57,16 @@ export const fetchGetTeachersList = async (req) =>
     })
     .then((response) => ({ response }))
     .catch((error) => ({ error }));
+
+
+export const fetchGetTeachersListSearch = async (req) =>
+  await axios
+    .get("/static/get_teachers_list_search?name="+req,{
+      headers: {
+        Authorization: token,
+      },
+    })
+
 
 export const fetchDeleteTeacher = async (id) =>
   await axios
@@ -81,7 +92,7 @@ export const fetchDeleteTeacher = async (id) =>
 export const fetchPostTeacher = async (req) =>
 await axios
   .post(
-    "/a23d_m23_i23n/put_teacher",
+    "/a23d_m23_i23n/add_teacher",
     req, 
     {
     headers: {
@@ -132,6 +143,18 @@ await axios
   .then((response) => ({ response }))
   .catch((error) => ({ error }));
 
+  export const fetchGetSingleSubjectsList = async (id) =>
+  await axios
+    .get(
+      "/static/get_subject_one?id="+id,
+      {
+      headers: {
+        Authorization: token,
+      },
+      })
+    .then((response) => ({ response }))
+    .catch((error) => ({ error }));
+
   export const fetchPostSubject = async (req) =>
   await axios
   .post(
@@ -158,4 +181,207 @@ await axios
   .then((response) => ({ response }))
   .catch((error) => ({ error }));
 
+  
+  export const fetchDeleteSubject = async (id) =>
+  await axios
+  .delete(
+    "/a23d_m23_i23n/delete_subject?id="+id,
+    {
+    headers: {
+      Authorization: token,
+    },
+    })
+  .then((response) => ({ response }))
+  .catch((error) => ({ error }));
 
+
+// groups
+
+export const fetchGetGroupsList = async (req) =>
+  await axios
+    .get("/static/get_group_list?current="+Number(req.current)+"&pageSize="+Number(req.pageSize), {
+      headers: {
+        Authorization: token,
+      },
+    })
+    .then((response) => ({ response }))
+    .catch((error) => ({ error }));
+
+    
+export const fetchGetGroupsListSearch = async (name) =>
+await axios
+  .get("/depend/get_group_list_search?name="+name, {
+    headers: {
+      Authorization: token,
+    },
+  })
+  .then((response) => ({ response }))
+  .catch((error) => ({ error }));
+
+    
+  export const fetchGetSingleGroups = async (id) =>
+  await axios
+    .get(
+      "/static/get_group_one?id="+id,
+      {
+      headers: {
+        Authorization: token,
+      },
+      })
+    .then((response) => ({ response }))
+    .catch((error) => ({ error }));
+
+  export const fetchPostGroup = async (req) =>
+  await axios
+  .post(
+    "/a23d_m23_i23n/add_group",
+    req,
+    {
+    headers: {
+      Authorization: token,
+    },
+    })
+  .then((response) => ({ response }))
+  .catch((error) => ({ error }));
+
+  export const fetchPutGroup = async (req) =>
+  await axios
+  .put(
+    "/a23d_m23_i23n/put_group",
+    req,
+    {
+    headers: {
+      Authorization: token,
+    },
+    })
+  .then((response) => ({ response }))
+  .catch((error) => ({ error }));
+
+  
+  export const fetchDeleteGroup = async (id) =>
+  await axios
+  .delete(
+    "/a23d_m23_i23n/delete_group?id="+id,
+    {
+    headers: {
+      Authorization: token,
+    },
+    })
+  .then((response) => ({ response }))
+  .catch((error) => ({ error }));
+
+
+  // Students
+
+  
+export const fetchGetStudentList = async (req) =>
+await axios
+  .get("/depend/get_students?current="+Number(req.current)+"&pageSize="+Number(req.pageSize), {
+    headers: {
+      Authorization: token,
+    },
+  })
+  .then((response) => ({ response }))
+  .catch((error) => ({ error }));
+
+  
+export const fetchGetNewStudentList = async (req) =>
+await axios
+  .get("/static/get_students_new?current="+Number(req.current)+"&pageSize="+Number(req.pageSize), {
+    headers: {
+      Authorization: token,
+    },
+  })
+  .then((response) => ({ response }))
+  .catch((error) => ({ error }));
+
+  
+export const fetchGetNewStudentOne = async (name) =>
+await axios
+  .get("/depend/get_Students_list_search?name="+name,{
+    headers: {
+      Authorization: token,
+    },
+  })
+  .then((response) => ({ response }))
+  .catch((error) => ({ error }));
+
+  
+export const fetchGetSingleStudent = async (id) =>
+await axios
+  .get(
+    "/static/get_group_one?id="+id,
+    {
+    headers: {
+      Authorization: token,
+    },
+    })
+  .then((response) => ({ response }))
+  .catch((error) => ({ error }));
+
+export const fetchPostStudent = async (req) =>
+await axios
+.post(
+  "/depend/add_student",
+  req,
+  {
+  headers: {
+    Authorization: token,
+  },
+  })
+.then((response) => ({ response }))
+.catch((error) => ({ error }));
+
+
+export const fetchPostStudentGroup = async (req) =>
+await axios
+.post(
+  "/depend/student_group",
+  req,
+  {
+  headers: {
+    Authorization: token,
+  },
+  })
+.then((response) => ({ response }))
+.catch((error) => ({ error }));
+
+
+export const fetchPostStudentLogin = async (req) =>
+await axios
+.post(
+  "/depend/add_student_login",
+  req,
+  {
+  headers: {
+    Authorization: token,
+  },
+  })
+.then((response) => ({ response }))
+.catch((error) => ({ error }));
+
+export const fetchPutStudent = async (req) =>
+await axios
+.put(
+  "/auth/add_student",
+  req,
+  {
+  headers: {
+    Authorization: token,
+  },
+  })
+.then((response) => ({ response }))
+.catch((error) => ({ error }));
+
+
+export const fetchDeleteStudent = async (id) =>
+await axios
+.delete(
+  "/depend/delete_new_student?id="+id,
+  {
+  headers: {
+    Authorization: token,
+  },
+  })
+.then((response) => ({ response }))
+.catch((error) => ({ error }));

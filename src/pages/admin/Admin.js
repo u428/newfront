@@ -18,6 +18,9 @@ import Setting from "./setting/Setting";
 import Products from "./products/Products";
 import Teachers from "./teachers/Teachers";
 import Subject from "./subject/Subject";
+import Groups from "./group/Groups";
+import Students from "./student/Students";
+import StudentsGroup from "./studentgroup/StudentsGroup";
 import { collapseend } from "react-reveal/globals";
 
 
@@ -83,6 +86,20 @@ function Admin () {
                 <Route
                   path={ `${ path }/subject` }
                   render={ ( props ) => <Subject { ...props } /> }
+                />
+                  <Route
+                  path={ `${ path }/group` }
+                  render={ ( props ) => <Groups { ...props } /> }
+                />
+
+                <Route
+                  path={ `${ path }/student` }
+                  render={ ( props ) => <Students { ...props } /> }
+                />
+
+                <Route
+                  path={ `${ path }/students/group` }
+                  render={ ( props ) => <StudentsGroup { ...props } /> }
                 />
               </Switch>
             </div>

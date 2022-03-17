@@ -25,6 +25,7 @@ const AddTeacher = ( { handleOk, handleCancel } ) => {
     const reducer = useSelector(state=>state.subjectReducer);
 
     useEffect( () => {
+        console.log("this is a dispatch effect");
         dispatch( getLanguages());
         dispatch( getSubjects());
     }, [dispatch] );
@@ -65,6 +66,12 @@ const AddTeacher = ( { handleOk, handleCancel } ) => {
         console.log( 'Failed:', errorInfo );
         onReset()
     };
+
+
+    const onBlur = (value)=>{
+        console.log("this is on blur");
+        console.log(value);
+    }
 
 
     const onReset = () => {
@@ -171,7 +178,7 @@ const AddTeacher = ( { handleOk, handleCancel } ) => {
             </Form.Item>
             <Form.Item 
                 name="login" 
-                // EyeInvisibleOutlined 
+                onBlur={onBlur}
                 label="Login" 
                 rules={ [ { required: true }, {min: 3, max: 20 } ] } hasFeedback>
                 <Input />
@@ -248,7 +255,7 @@ const AddTeacher = ( { handleOk, handleCancel } ) => {
             >
                <>
                {
-                   reducer.subjects.map(sub =>{
+                   reducer.isActive && reducer.subjects.map(sub =>{
                        return(
                             <TreeNode key={sub.id} value={sub.id} title ={sub.nameUz}></TreeNode>
                        )
@@ -261,7 +268,6 @@ const AddTeacher = ( { handleOk, handleCancel } ) => {
                 name="images" 
                 label="Imageni tanlang" 
                 rules={ [ { required: true }] }>
-                <ImgCrop rotate>
                 <Upload.Dragger 
                 maxCount={1}
                 name="file"
@@ -273,7 +279,6 @@ const AddTeacher = ( { handleOk, handleCancel } ) => {
                 >
                     <Button>Imageni yuklash</Button>
                 </Upload.Dragger>
-                </ImgCrop>
             </Form.Item>
             
             <Form.Item shouldUpdate>

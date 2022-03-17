@@ -4,49 +4,49 @@ import Fade from "react-reveal/Fade";
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import { Table, Tag, Card, PageHeader, Modal, Row, Col, Button, Space, Tooltip } from 'antd';
 import { useDispatch, useSelector } from "react-redux";
-import { getSubjects, deleteSubject, getSingleSubject } from "../../../redux/subject/actions";
-import ModalSubject from "./modal/ModalSubject";
+import {getGroups, deleteGroup, getSingleGroup } from "../../../redux/group/actions";
+import ModalGroup from "./modal/ModalGroup";
 
 
-const Subject = () => {
+
+const Groups = () => {
+
+  const {pagination, loading, isActive, groups} = useSelector(state=>state.groupReducer);
+  console.log(pagination);
 
   const dispatch = useDispatch();
   const [ isModalVisible, setIsModalVisible ] = useState( false );
-  const [ modalData, setModalData ] = useState( {} );
   const [count, setCount] =useState(0);
 
-const {isActive, loading, subjects} = useSelector(state => state.subjectReducer);
+
   
-  function deleteSubjects (subject) {
+  function deleteGroups (group) {
     Modal.confirm({
-      title: "siz shu "+subject.id+" ni ochirmoqchimisiz",
+      title: "siz shu "+group.name.toUpperCase()+" ni ochirmoqchimisiz",
       okText: "Xa",
       okType:"danger",
       cancelText:"yoq",
       onOk: () =>{
-        dispatch(deleteSubject(subject.id));
-        dispatch( getSubjects());
+        dispatch(deleteGroup(group.id));
+        dispatch( getGroups(pagination));
       }
     })
   }
 
   const showModal = (id, i) => {
     if(i > 0){
-      console.log("bu yerda 111111   " +i);
       setIsModalVisible( true );
-      dispatch(getSingleSubject(id));
+      dispatch(getSingleGroup(id));
       setCount(i)
     }else{
-      console.log("bu yerda 00000   "+ i);
       setIsModalVisible( true );
       setCount(i)
     }
   };
 
-
   const handleOk = () => {
     setIsModalVisible( false );
-    dispatch( getSubjects());
+    dispatch( getGroups(pagination));
   };
 
   const handleCancel = () => {
@@ -54,35 +54,29 @@ const {isActive, loading, subjects} = useSelector(state => state.subjectReducer)
   };
 
   useEffect( () => {
-    dispatch( getSubjects());
-  }, [dispatch] );
+    dispatch( getGroups(pagination));
+  }, [] );
 
   const columns = [
     {
       title: 'ID',
       dataIndex: 'id',
-      key: 'id',
+      key: 'id'
     },
     {
-      title: 'name Uz',
-      dataIndex: 'nameUz',
-      key: 'nameUz',
+      title: 'name',
+      dataIndex: 'name',
+      key: 'name'
     },
     {
-      title: 'name Ru',
-      dataIndex: 'nameRu',
-      key: 'nameRu',
-    },
-    {
-      title: 'name En',
-      dataIndex: 'nameEn',
-      key: 'nameEn',
+      title: 'price',
+      dataIndex: 'price',
+      key: 'price',
     },
     {
       title: 'description',
       dataIndex: 'description',
-      key: 'description',
-      // render: text => <p>{ text.telNomer }</p>,
+      key: 'description'
     },
     {
       title: 'Action',
@@ -91,18 +85,23 @@ const {isActive, loading, subjects} = useSelector(state => state.subjectReducer)
         return (
           <Space size="middle">
               <Button onClick={() => showModal(data.id, 1)}  shape="circle" warning icon={<EditOutlined />} />
-              <Button onClick={() => deleteSubjects(data)} shape="circle" danger  icon={<DeleteOutlined />} />
+              <Button onClick={() => deleteGroups(data)} shape="circle" danger  icon={<DeleteOutlined />} />
           </Space>
         )
       },
     }
   ];
 
+
+  const handleTableChange = (pagination) => {
+    dispatch( getGroups(pagination) );
+  };
+
   
   return (
     <Fade>
-      <Modal title="Chreate Teacher" visible={ isModalVisible } onOk={ handleOk } onCancel={ handleCancel } footer={ false }>
-        <ModalSubject handleOk={ handleOk } handleCancel={ handleCancel } count={count} modalData={modalData} />
+      <Modal title="Chreate Group" visible={ isModalVisible } onOk={ handleOk } onCancel={ handleCancel } footer={ false }>
+        <ModalGroup handleOk={ handleOk } handleCancel={ handleCancel } count={count}/>
       </Modal>
 
       <Row justify="space-between" align="middle">
@@ -116,7 +115,7 @@ const {isActive, loading, subjects} = useSelector(state => state.subjectReducer)
         </Col>
         <Col>
           <Button type="primary" onClick={()=> showModal({}, 0) }>
-            Add Subject
+            Add teacher
           </Button>
         </Col>
       </Row>
@@ -124,14 +123,15 @@ const {isActive, loading, subjects} = useSelector(state => state.subjectReducer)
       <Card>
         <Table
          columns={ columns } 
-         dataSource={subjects &&subjects } 
+         dataSource={ groups && groups} 
+         pagination={pagination}
          loading={loading}
-         scroll={ { x: "auto" } }
+         scroll={ { x: "auto" } } 
+         onChange={handleTableChange}
          />
-        
       </Card>
     </Fade>
   );
 };
 
-export default Subject;
+export default Groups;

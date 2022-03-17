@@ -2,37 +2,33 @@ import React, {useEffect, useState} from 'react'
 import { Form, Input, Button, Space, Upload, TreeSelect, DatePicker, Select } from 'antd';
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
-import { getSubjects, postSubject, putSubject } from '../../../../redux/subject/actions';
+import { postNewStudent, putNewStudent } from '../../../../redux/student/actions';
 import moment from 'moment';
-import ImgCrop from 'antd-img-crop';
-import Subject from '../Subject';
 
-const ModalSubject = ( { handleOk, handleCancel, count } ) => {
+const ModalStudents = ( { handleOk, handleCancel, count } ) => {
 
     const [ form ] = Form.useForm();
     const dispatch = useDispatch();
-    const { TreeNode } = TreeSelect;
     let history = useHistory();
+    const dateFormat = 'DD.MM.YYYY';
 
-    const {isActive, subject} = useSelector(state => state.subjectReducer);
+    const [dating, setDating] = useState(null);
+
+    const {isActive, student} = useSelector(state => state.studentReducer);
 
     useEffect( () => {
-        
-        console.log(subject);
-        console.log(count);
         if(count > 0){
-            console.log(count);
             form.setFieldsValue({
-                "nameUz":subject.nameUz,
-                "nameRu":subject.nameRu,
-                "nameEn":subject.nameEn,
-                "description":subject.description
+                "firstName":student.firstName,
+                "lastName":student.lastName,
+                "telNumber":student.telNumber,
+                "qtelNomer":student.qtelNomer,
+                "description":student.description
             });
         }
-    }, [subject] );
+    }, [student] );
 
     useEffect( () => {
-        console.log(count);
         onReset()
     }, [count] );
 
@@ -41,21 +37,25 @@ const ModalSubject = ( { handleOk, handleCancel, count } ) => {
         
         if(count > 0){
             let returns = {
-                "id":subject.id,
-                "nameUz":values.nameUz,
-                "nameRu":values.nameRu,
-                "nameEn":values.nameEn,
+                "id":student.id,
+                "firstName":values.firstName,
+                "lastName":values.lastName,
+                "telNumber":values.telNumber,
+                "qTelNumber":values.qtelNomer,
+                "birthDate":dating,
                 "description":values.description
             }
-            dispatch(putSubject(history, returns));
+            dispatch(putNewStudent(history, returns));
         }else{
             let returns = {
-            "nameUz":values.nameUz,
-            "nameRu":values.nameRu,
-            "nameEn":values.nameEn,
+            "firstName":values.firstName,
+            "lastName":values.lastName,
+            "telNumber":values.telNumber,
+            "qTelNumber":values.qtelNomer,
+            "birthDate":dating,
             "description":values.description
             }
-            dispatch(postSubject(history, returns));
+            dispatch(postNewStudent(history, returns));
         }
         handleOk()
         onReset()
@@ -66,6 +66,9 @@ const ModalSubject = ( { handleOk, handleCancel, count } ) => {
         onReset()
     };
 
+    function onChange(date, dateString) {
+        setDating(dateString);
+    }
 
     const onReset = () => {
         form.resetFields();
@@ -82,21 +85,38 @@ const ModalSubject = ( { handleOk, handleCancel, count } ) => {
         onFinishFailed={ onFinishFailed }>
 
             <Form.Item 
-                name="nameUz" 
-                label="O'zbekcha nomi" 
+                name="firstName" 
+                label="Ismingizni kiriting" 
                 rules={ [ { required: true, message: "Iltimos joyni toldiring" }, {min: 3, max: 20 } ] }>
                 <Input />
             </Form.Item>
             <Form.Item 
-                name="nameRu" 
-                label="Ruscha nomi" 
+                name="lastName" 
+                label="Familyangizni kiriting" 
                 rules={ [ { required: true, message: "Iltimos joyni toldiring" }, {min: 3, max: 20 } ] }>
                 <Input />
             </Form.Item>
             <Form.Item 
-                name="nameEn" 
-                label="Inglizcha nomi" 
+                name="birthDate" 
+                label="Tugilgan sana" 
+                rules={ [ { required: true }] }>
+                <DatePicker 
+                    style={{width: "100%"}}
+                    defaultValue={moment()}
+                    format={dateFormat}
+                    onChange={(date, dateString) => onChange(date, dateString)}
+                      />
+            </Form.Item>
+            <Form.Item 
+                name="telNumber" 
+                label="telefon ramaingiz" 
                 rules={ [ { required: true, message: "Iltimos joyni toldiring" }, {min: 3, max: 20 } ] }>
+                <Input />
+            </Form.Item>
+            <Form.Item 
+                name="qtelNomer" 
+                label="qoshimcha telefon ramaingiz" 
+                rules={ [ {min: 3, max: 20 } ] }>
                 <Input />
             </Form.Item>
             <Form.Item 
@@ -127,4 +147,4 @@ const ModalSubject = ( { handleOk, handleCancel, count } ) => {
     )
 }
 
-export default ModalSubject
+export default ModalStudents

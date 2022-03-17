@@ -24,7 +24,8 @@ import {
     loading: false,
     isActive: false,
     error: null,
-    subjects: null,
+    subjects: [],
+    success: null,
     subject: {}
   };
   
@@ -54,14 +55,14 @@ import {
       case POST_SUBJECT:
         return { ...state, loading: true };
       case POST_SUBJECT_SUCCESS:
-        return { ...state, loading: false, subjects: payload };
+        return { ...state, loading: false};
       case POST_SUBJECT_ERROR:
         return { ...state, loading: false, error: payload };
 
         case PUT_SUBJECT:
         return { ...state, loading: true };
       case PUT_SUBJECT_SUCCESS:
-        return { ...state, loading: false, subjects: payload };
+        return { ...state, loading: false };
       case PUT_SUBJECT_ERROR:
         return { ...state, loading: false, error: payload };
       default:
