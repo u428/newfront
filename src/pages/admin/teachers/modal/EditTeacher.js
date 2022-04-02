@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useRef, useState} from 'react'
 import { Form, Input, Button, Space, Upload, TreeSelect, DatePicker, Select, Option  } from 'antd';
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
@@ -7,6 +7,7 @@ import {getLanguages} from "../../../../redux/lang/actions";
 import { getSubjects } from '../../../../redux/subject/actions';
 import moment from 'moment';
 import { EyeInvisibleOutlined, EyeTwoTone, UploadOutlined, InboxOutlined } from '@ant-design/icons';
+import { MaskedInput } from 'antd-mask-input';
 
 const options = [{ id: 3, value: 'Boshqa' }, {id: 1, value: 'Erkak' }, {id: 2, value: 'Ayol' }];
 const EditTeacher = ( { handleOk2, handleEDitModalCancel } ) => {
@@ -14,27 +15,27 @@ const EditTeacher = ( { handleOk2, handleEDitModalCancel } ) => {
     const dispatch = useDispatch();
     const { TreeNode } = TreeSelect;
     let history = useHistory();
+    let emailRef = useRef()
 
     const [initValue, setInitValue] = useState({});
-    const [gendering, setGendering] = useState(1);
 
     const reduce = useSelector(state=>state.languageReducer);
     const reducer = useSelector(state=>state.subjectReducer);
     const {teacher, isActive} = useSelector(state=>state.teacherReducer);
-    const dateFormat = 'DD.MM.YYYY';
-    const [dating, setDating] = useState(null);
+    const dateFormat = 'YYYY-MM-DD';
+    const [dating, setDating] = useState("");
 
     console.log(teacher);
     console.log(isActive);
     console.log(initValue);
 
     useEffect( () => {
-        setGendering(2)
         dispatch( getLanguages());
         dispatch( getSubjects());
     }, [] );
 
     useEffect(() =>{
+        
         if(isActive){
             form.setFieldsValue({
             "firstName": teacher.firstName,
@@ -46,15 +47,14 @@ const EditTeacher = ( { handleOk2, handleEDitModalCancel } ) => {
             "fLink":teacher.flink,
             "gmail":teacher.gmail,
             "description":teacher.description,
-            "dateBirth":teacher.dateBirth,
+            "birthDate":moment(teacher.dateBirth, dateFormat),
             "password":teacher.password,
             "subjectId":teacher.subjects.map((item)=> item.id),
             "languageId":teacher.languages.map((item) => item.id),
             "images": teacher.imagesId,
             "gender":   teacher.gender
             });
-            setGendering(2);
-            setDating(teacher.dateBirth)
+            // setDating(teacher.dateBirth)
         }
        
     }, [isActive])
@@ -109,6 +109,11 @@ const EditTeacher = ( { handleOk2, handleEDitModalCancel } ) => {
     function onChange(date, dateString) {
         setDating(dateString);
     }
+    const handleInputChange = e => {
+        if (!e.target.value) {
+            emailRef.current.setInputValue("+998(__) ___ __ __");
+        }
+    };
 
     return (
 
@@ -133,7 +138,6 @@ const EditTeacher = ( { handleOk2, handleEDitModalCancel } ) => {
                 label="Tugilgan sana">
                 <DatePicker 
                     style={{width: "100%"}}
-                    defaultValue={moment()}
                     format={dateFormat}
                     onChange={(date, dateString) => onChange(date, dateString)}
                       />
@@ -160,7 +164,13 @@ const EditTeacher = ( { handleOk2, handleEDitModalCancel } ) => {
                 <Input />
             </Form.Item>
             <Form.Item name="telNomer" label="Telefon nomer" rules={ [ { required: true } ] }>
-                <Input />
+                <MaskedInput
+        ref={emailRef}
+        mask="+998(##) ### ## ##"
+        // onChange={handleInputChange}
+        // onFocus={handleFocus}
+        // onBlur={handleBlur}
+      />
             </Form.Item>
             <Form.Item name="tgLink" label="Telegram link" rules={ [ { required: false } ] }>
                 <Input />

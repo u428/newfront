@@ -63,8 +63,6 @@ function* workAuthMe({ payload }) {
   const { response, error } = yield call(fetchAuthMe, token);
 
   if (response) {
-    console.log(" there is authme saga");
-    console.log(response);
     yield put(authMeSuccess(response.data));
     notificationMessage("success", "You have been LogIn");
     if (history) {

@@ -77,9 +77,9 @@ import {
     payload: error,
   });
 
-  export const getSingleStudent = (id) => ({
+  export const getSingleStudent = (history, req) => ({
     type: GET_SINGLE_STUDENT,
-    id: id
+    payload: {history, req}
   });
   
   export const getSingleStudentSuccess = (response) => ({

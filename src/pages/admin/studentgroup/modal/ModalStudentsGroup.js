@@ -5,7 +5,7 @@ import { useHistory } from "react-router";
 import { fetchGetGroupsListSearch } from '../../../../redux/services/api';
 import { postStudentGroup, postStudentLogin } from '../../../../redux/student/actions';
 
-const ModalStudentsGroup = ( { handleOk, handleCancel, count } ) => {
+const ModalStudentsGroup = ( { handleOk, handleCancel, studentId } ) => {
 
     const [ form ] = Form.useForm();
     const dispatch = useDispatch();
@@ -15,31 +15,17 @@ const ModalStudentsGroup = ( { handleOk, handleCancel, count } ) => {
     const [listGroups, setListGroups]= useState([]);
     const [optionGroups, setOptionGroups] = useState([]);
 
-    // const {isActive, student} = useSelector(state => state.studentReducer);
-
-    // useEffect( () => {
-    //     if(count > 0){
-    //         form.setFieldsValue({
-    //             "firstName":student.firstName,
-    //             "lastName":student.lastName,
-    //             "telNumber":student.telNumber,
-    //             "qtelNomer":student.qtelNomer,
-    //             "description":student.description
-    //         });
-    //     }
-    // }, [student] );
-
     useEffect( () => {
         onReset()
-    }, [count] );
+    }, [] );
 
     const onFinish = ( values ) => {
         console.log(values);
             let returns = {
-            "studentId":values.Student,
-            "groupId": values.group
+            "studentId": studentId,
+            "groupId": values.groupId
             }
-            dispatch( postStudentLogin(history, returns));
+            dispatch( postStudentGroup(history, returns));
         handleOk()
         onReset()
     };

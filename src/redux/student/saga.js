@@ -16,7 +16,7 @@ function* workGetStudents(req) {
   const { response, error } = yield call(fetchGetStudentList, payload);
 
   if (response) {
-    console.log(response);
+    // console.log(JSON.parse(response));
     yield put(getStudentsSuccess(response.data));
   } else {
     yield put(getStudentsError(error.response.data));
@@ -49,15 +49,18 @@ function* watchGetSingleStudent() {
   yield takeEvery(GET_SINGLE_STUDENT, workGetSingleStudent);
 }
 
-function* workGetSingleStudent({id}) {
-
-  const { response, error } = yield call(fetchGetSingleStudent, id);
+function* workGetSingleStudent({payload}) {
+console.log(payload);
+  const {history, req} = payload;
+console.log(req);
+  const { response, error } = yield call(fetchGetSingleStudent,req);
   console.log(response);
   if (response) {
-    yield put(getSingleStudentSuccess(response.data.teacher));
+    yield put(getSingleStudentSuccess(response.data));
+    history.push("/admin/view/student")
   } else {
     yield put(getSingleStudentError(error.response.data.message));
-    notificationMessage("error", error.response.data.message);
+    notificationMessage("error", error.response.data);
   }
 }
 

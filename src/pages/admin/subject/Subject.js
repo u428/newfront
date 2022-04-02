@@ -128,7 +128,6 @@ const {isActive, loading, subjects} = useSelector(state => state.subjectReducer)
          loading={loading}
          scroll={ { x: "auto" } }
          />
-        
       </Card>
     </Fade>
   );

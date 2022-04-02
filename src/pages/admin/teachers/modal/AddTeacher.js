@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from 'react'
-import { Form, Input, Button, Space, Upload, TreeSelect, DatePicker, Select } from 'antd';
+import React, {useEffect, useRef, useState} from 'react'
+import { Form, Input, Button, Space, Upload, TreeSelect, DatePicker, Select, InputNumber } from 'antd';
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import { postTeacher } from "../../../../redux/teacher/actions";
@@ -8,6 +8,8 @@ import { getSubjects } from '../../../../redux/subject/actions';
 import moment from 'moment';
 import ImgCrop from 'antd-img-crop';
 import { EyeInvisibleOutlined, EyeTwoTone, UploadOutlined, InboxOutlined } from '@ant-design/icons';
+import { fetchGetCheckLogin } from '../../../../redux/services/api';
+import { MaskedInput } from 'antd-mask-input';
 
 const options = [{id: 0, value: 'Boshqa' }, {id: 1, value: 'Erkak' }, {id: 2, value: 'Ayol' }];
 const AddTeacher = ( { handleOk, handleCancel } ) => {
@@ -16,10 +18,12 @@ const AddTeacher = ( { handleOk, handleCancel } ) => {
     const { TreeNode } = TreeSelect;
     let history = useHistory();
 
+    let emailRef = useRef()
+
     const dateFormat = 'DD.MM.YYYY';
 
     const [dating, setDating] = useState(null);
-
+    const [valid, setValid] = useState();
 
     const reduce = useSelector(state=>state.languageReducer);
     const reducer = useSelector(state=>state.subjectReducer);
@@ -31,6 +35,8 @@ const AddTeacher = ( { handleOk, handleCancel } ) => {
     }, [dispatch] );
     
  
+
+    
 
     const onFinish = ( values ) => {
         console.log(values);
@@ -68,9 +74,20 @@ const AddTeacher = ( { handleOk, handleCancel } ) => {
     };
 
 
-    const onBlur = (value)=>{
-        console.log("this is on blur");
-        console.log(value);
+    const onBlurHandle = ()=>{
+        
+
+        console.log(emailRef.current);
+
+        fetchGetCheckLogin(emailRef.current.input.value)
+        .then(response => {
+            console.log(response.response);
+            if(!response.response.data){
+                setValid("success");
+            }else{
+                setValid("error");
+            }
+        });
     }
 
 
@@ -96,6 +113,27 @@ const AddTeacher = ( { handleOk, handleCancel } ) => {
         const imgWindow = window.open(src);
         imgWindow.document.write(image.outerHTML);
       };
+
+//   const handleInputChange = e => {
+//     if (!e.target.value) {
+//         emailRef.current.setInputValue("+998(__) ___ __ __");
+//     }
+//   };
+
+//   const handleFocus = e => {
+//     if (!e.target.value) {
+//         emailRef.current.setInputValue("+998(__) ___ __ __");
+//       const q = e.target;
+//       setTimeout(() => q.setSelectionRange(5, 5), 0);
+//     }
+//   };
+
+//   const handleBlur = e => {
+//       console.log(e.target.value.length);
+//     if (!e.target.value.length < 11) {
+//         emailRef.current.setInputValue("");
+//     }
+//   };
 
     return (
 
@@ -155,8 +193,18 @@ const AddTeacher = ( { handleOk, handleCancel } ) => {
             <Form.Item 
                 name="telNomer" 
                 label="Telefon nomer" 
-                rules={ [ { required: true }, {min: 9, max: 9 } ] }>
-                <Input />
+                rules={ [ { 
+                    required: true}
+                    ] }>
+                <MaskedInput
+        // isRevealingMask
+        // emptyValue="+38(0__)"
+        // ref={emailRef}
+        mask="+998(00) 000 00 00"
+        // onChange={handleInputChange}
+        // onFocus={handleFocus}
+        // onBlur={handleBlur}
+      />
             </Form.Item>
             <Form.Item 
                 name="tgLink" 
@@ -178,14 +226,14 @@ const AddTeacher = ( { handleOk, handleCancel } ) => {
             </Form.Item>
             <Form.Item 
                 name="login" 
-                onBlur={onBlur}
+                validateStatus = {valid}
                 label="Login" 
                 rules={ [ { required: true }, {min: 3, max: 20 } ] } hasFeedback>
-                <Input />
+                <Input onBlur={onBlurHandle} ref={emailRef} />
             </Form.Item>
             <Form.Item 
                 name="password" 
-                label="Parol" 
+                label="Parol"  
                 rules={ [ { required: true }, {min: 8, max: 15 } ] }
                 hasFeedback
                 >

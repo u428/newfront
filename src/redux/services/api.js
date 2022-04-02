@@ -10,8 +10,8 @@ export const delay = async (ms) =>
     }, ms);
   });
 
-export const fetchAuthLogin = async (req) =>
-  await axios
+export const fetchAuthLogin = (req) =>
+   axios
     .post("/auth/login", req)
     .then((response) => ({ response }))
     .catch((error) => ({ error }));
@@ -39,6 +39,16 @@ export const fetchAuthSetting = async (req) =>
 export const fetchGetProducts = async () =>
   await axios
     .get("/api/product/", {
+      headers: {
+        Authorization: token,
+      },
+    })
+    .then((response) => ({ response }))
+    .catch((error) => ({ error }));
+
+    export const fetchGetCheckLogin = async (login) =>
+  await axios
+    .get("/auth/check_login?login="+login, {
       headers: {
         Authorization: token,
       },
@@ -310,7 +320,7 @@ await axios
 export const fetchGetSingleStudent = async (id) =>
 await axios
   .get(
-    "/static/get_group_one?id="+id,
+    "/static/get_student?id="+id,
     {
     headers: {
       Authorization: token,

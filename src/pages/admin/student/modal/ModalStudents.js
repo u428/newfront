@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import { postNewStudent, putNewStudent } from '../../../../redux/student/actions';
 import moment from 'moment';
+import { MaskedInput } from 'antd-mask-input';
 
 const ModalStudents = ( { handleOk, handleCancel, count } ) => {
 
@@ -111,13 +112,23 @@ const ModalStudents = ( { handleOk, handleCancel, count } ) => {
                 name="telNumber" 
                 label="telefon ramaingiz" 
                 rules={ [ { required: true, message: "Iltimos joyni toldiring" }, {min: 3, max: 20 } ] }>
-                <Input />
+                <MaskedInput
+        mask="+998(00) 000 00 00"
+        // onChange={handleInputChange}
+        // onFocus={handleFocus}
+        // onBlur={handleBlur}
+      />
             </Form.Item>
             <Form.Item 
                 name="qtelNomer" 
                 label="qoshimcha telefon ramaingiz" 
                 rules={ [ {min: 3, max: 20 } ] }>
-                <Input />
+                <MaskedInput
+        mask="+998(00) 000 00 00"
+        // onChange={handleInputChange}
+        // onFocus={handleFocus}
+        // onBlur={handleBlur}
+      />
             </Form.Item>
             <Form.Item 
                 name="description" 

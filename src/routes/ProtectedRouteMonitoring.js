@@ -2,14 +2,12 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { Route, Redirect } from "react-router-dom";
 
-export const ProtectedRouteAdmin = ({ component: Component, ...rest }) => {
+export const ProtectedRouteMonitoring = ({ component: Component, ...rest }) => {
   const token = localStorage.getItem("token");
   
   const {loading, userData} = useSelector(state=>state.authReducer);
 
   console.log(userData);
-
-  console.log(!userData);
 
   return (
 
@@ -17,8 +15,8 @@ export const ProtectedRouteAdmin = ({ component: Component, ...rest }) => {
       {...rest}
       render={(props) =>
         {
-          if(token && userData){
-            if(userData.role.name == "ADMIN"){
+          if(token  && userData){
+            if(userData.role.name == "MONITORING"){
               return(
                 <Component {...props} />
               )

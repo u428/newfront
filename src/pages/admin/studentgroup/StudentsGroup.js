@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 
 import Fade from "react-reveal/Fade";
-import { EditOutlined, DeleteOutlined, UsergroupAddOutlined } from '@ant-design/icons';
+import { useHistory } from "react-router";
+import { EditOutlined, DeleteOutlined, UsergroupAddOutlined,InfoCircleOutlined} from '@ant-design/icons';
 import { Table, Tag, Card, PageHeader, Modal, Row, Col, Button, Space, Tooltip } from 'antd';
 import { useDispatch, useSelector } from "react-redux";
-import {getStudents} from "../../../redux/student/actions";
+import {getStudents, getSingleStudent} from "../../../redux/student/actions";
 import ModalStudentsLogin from "./modal/ModalStudentsLogin";
 import ModalStudentsGroup from "./modal/ModalStudentsGroup";
 
@@ -14,40 +15,32 @@ const StudentsGroup = () => {
 
   const {pagination, loading, isActive, students} = useSelector(state=>state.studentReducer);
   console.log(students);
+  let history = useHistory();
 
 
   const dispatch = useDispatch();
   const [ isModalLoginVisible, setIsModalLoginVisible ] = useState( false );
   const [ isModalGroupVisible, setIsModalGroupVisible ] = useState( false );
 
+  const [studentId, setStudentId] = useState(0);
   
   useEffect( () => {
     dispatch( getStudents(pagination));
   }, [dispatch] );
-  
-  // function deleteStudents (students) {
-  //   Modal.confirm({
-  //     title: "siz shu "+students.id+" ni ochirmoqchimisiz",
-  //     okText: "Xa",
-  //     okType:"danger",
-  //     cancelText:"yoq",
-  //     onOk: () =>{
-  //       dispatch(deleteNewStudent(students.id));
-  //       dispatch( getNewStudents(pagination));
-  //     }
-  //   })
-  // }
 
   function addGroupToStudent (students) {
       console.log(students);
+      setStudentId(students.id);
       setIsModalGroupVisible( true );
+  }
+
+  function viewSingleStudent (students) {
+    console.log(students.id);
+    dispatch(getSingleStudent(history, students.id));
   }
 
   const showModalLogin = () => {
     setIsModalLoginVisible( true );
-  };
-  const showModalGroup = () => {
-    setIsModalGroupVisible( true );
   };
 
   const handleOkLogin = () => {
@@ -99,8 +92,8 @@ const StudentsGroup = () => {
       render: ( data ) => {
         return (
           <Space size="middle">
-              {/* <Button onClick={() => showEditModal(data.id)}  shape="circle" warning icon={<EditOutlined />} /> */}
-              <Button onClick={() => addGroupToStudent(data)} shape="circle" style={{color: "#63B4B5"}}  icon={<UsergroupAddOutlined />} />
+              <Button onClick={() => viewSingleStudent(data)} shape="circle" icon={<InfoCircleOutlined />} style={{color:"#5cdbd3"}} />
+              <Button onClick={() => addGroupToStudent(data)} shape="circle" style={{color: "#399EFF"}}  icon={<UsergroupAddOutlined />} />
           </Space>
         )
       },
@@ -119,7 +112,7 @@ const StudentsGroup = () => {
         <ModalStudentsLogin handleOk={ handleOkLogin } handleCancel={ handleCancel } />
       </Modal>
       <Modal title="Chreate Teacher" visible={ isModalGroupVisible } onOk={ handleOkGroup } onCancel={ handleCancelGroup } footer={ false }>
-        <ModalStudentsGroup handleOk={ handleOkGroup } handleCancel={ handleCancelGroup } />
+        <ModalStudentsGroup handleOk={ handleOkGroup } handleCancel={ handleCancelGroup } studentId={studentId} />
       </Modal>
 
       <Row justify="space-between" align="middle">

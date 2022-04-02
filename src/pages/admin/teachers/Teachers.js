@@ -42,11 +42,11 @@ const Teachers = () => {
 
   const handleOk = () => {
     setIsModalVisible( false );
-    dispatch( getTeachers(pagination));
+    // dispatch( getTeachers(pagination));
   };
   const handleOk2 = () => {
     setIsEditModalVisible( false );
-    dispatch( getTeachers(pagination));
+    // dispatch( getTeachers(pagination));
   };
 
   const handleCancel = () => {
@@ -58,7 +58,7 @@ const Teachers = () => {
 
   useEffect( () => {
     dispatch( getTeachers(pagination));
-  }, [] );
+  }, [isModalVisible,isEditModalVisible ] );
 
   const columns = [
     {

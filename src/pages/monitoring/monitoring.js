@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Layout, Breadcrumb, Affix } from "antd";
 import Fade from "react-reveal/Fade";
-import SideBarAdmin from "../../layouts/sideBar/SideBarAdmin";
+import SideBarMonitoring from "../../layouts/sideBar/SideBarMonitoring";
 import TopBar from "../../layouts/topBar/TopBar";
-import "./Admin.scss";
+// import "./Admin.scss";
 import { useWindowSize } from "../../hooks/useWindowSize";
 import {
   Redirect,
@@ -14,18 +14,9 @@ import {
 } from "react-router-dom";
 import { useBreadCrumb } from "../../hooks/useBreadCrumb";
 import Home from "./home/Home";
-import Setting from "./setting/Setting";
-import Products from "./products/Products";
-import Teachers from "./teachers/Teachers";
-import Subject from "./subject/Subject";
-import Groups from "./group/Groups";
-import Students from "./student/Students";
-import StudentsGroup from "./studentgroup/StudentsGroup";
-import StudentView from "./studentgroup/studentView/StudentView";
-import { collapseend } from "react-reveal/globals";
 
 
-function Admin () {
+function Monitoring () {
   const { Header, Content, Footer, Sider } = Layout;
   const [ width ] = useWindowSize();
   let location = useLocation();
@@ -50,7 +41,7 @@ function Admin () {
           collapsed={ width < 768 ? true : collapseds }
           onCollapse={ onCollapse }
         >
-          <SideBarAdmin/>
+          <SideBarMonitoring/>
         </Sider>
 
         <Layout className="site-layout">
@@ -72,41 +63,11 @@ function Admin () {
                   path={ `${ path }/home` }
                   render={ ( props ) => <Home { ...props } /> }
                 />
-                <Route
-                  path={ `${ path }/setting` }
-                  render={ ( props ) => <Setting { ...props } /> }
-                />
-                <Route
-                  path={ `${ path }/products` }
-                  render={ ( props ) => <Products { ...props } /> }
-                />
-                <Route
-                  path={ `${ path }/teacher` }
-                  render={ ( props ) => <Teachers { ...props } /> }
-                />
-                <Route
-                  path={ `${ path }/subject` }
-                  render={ ( props ) => <Subject { ...props } /> }
-                />
-                  <Route
-                  path={ `${ path }/group` }
-                  render={ ( props ) => <Groups { ...props } /> }
-                />
-
-                <Route
-                  path={ `${ path }/student` }
-                  render={ ( props ) => <Students { ...props } /> }
-                />
-
-                <Route
-                  path={ `${ path }/view/student` }
-                  render={ ( props ) => <StudentView { ...props } /> }
-                />
-
-                <Route
-                  path={ `${ path }/students/group` }
+                
+                {/* <Route
+                  path={ `${ path }/monitoring` }
                   render={ ( props ) => <StudentsGroup { ...props } /> }
-                />
+                /> */}
               </Switch>
             </div>
           </Content>
@@ -120,4 +81,4 @@ function Admin () {
   );
 }
 
-export default Admin;
+export default Monitoring;
