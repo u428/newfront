@@ -329,6 +329,19 @@ await axios
   .then((response) => ({ response }))
   .catch((error) => ({ error }));
 
+  
+export const fetchGetSingleStudentGroups = async (id) =>
+await axios
+  .get(
+    "/depend/get_group_list_student?id="+id,
+    {
+    headers: {
+      Authorization: token,
+    },
+    })
+  .then((response) => ({ response }))
+  .catch((error) => ({ error }));
+
 export const fetchPostStudent = async (req) =>
 await axios
 .post(

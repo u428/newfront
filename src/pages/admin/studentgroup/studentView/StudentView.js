@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-
+import { HistoryOutlined, GroupOutlined} from '@ant-design/icons';
 import Fade from "react-reveal/Fade";
 import { Table, Tag, Card, PageHeader, Modal, Row, Col, Button, Space, Tooltip } from 'antd';
 import { useDispatch, useSelector } from "react-redux";
@@ -8,8 +8,8 @@ import { useDispatch, useSelector } from "react-redux";
 
 const StudentView = () => {
 
-  const {pagination, loading, isActive, student} = useSelector(state=>state.studentReducer);
-  console.log(student);
+  const {pagination, loading, isActive, studentGroup, student} = useSelector(state=>state.studentReducer);
+  console.log(studentGroup);
   // let history = useHistory();
 
 
@@ -42,12 +42,14 @@ const StudentView = () => {
     {
       title: 'status',
       dataIndex: 'status',
-      key: 'status'
-    },
-    {
-      title: 'payed',
-      dataIndex: 'payed',
-      key: 'payed'
+      key: 'status',
+      render: tags => (
+        <span>
+              <Tag color={tags? "green":"volcano"}>
+                {tags?"ACTIVE":"DISACTIVE"}
+              </Tag>
+        </span>
+      )
     },
     {
       title: 'attendance',
@@ -60,8 +62,8 @@ const StudentView = () => {
       render: ( data ) => {
         return (
           <Space size="middle">
-              {/* <Button onClick={() => viewSingleStudent(data)} shape="circle" icon={<InfoCircleOutlined />} style={{color:"#5cdbd3"}} />
-              <Button onClick={() => addGroupToStudent(data)} shape="circle" style={{color: "#399EFF"}}  icon={<UsergroupAddOutlined />} /> */}
+              <Button  shape="circle" style={{color: "#399EFF"}} icon={<HistoryOutlined />} />
+              <Button shape="circle" style={{color: "#399EFF"}}  icon={<GroupOutlined />} />
           </Space>
         )
       }
@@ -97,11 +99,10 @@ const StudentView = () => {
       <Card>
       <Table
          columns={ columns } 
-        //  dataSource={ teachers && teachers} 
-        //  pagination={pagination}
-        //  loading={loading}
-         scroll={ { x: "auto" } } 
-        //  onChange={handleTableChange}
+         dataSource={ studentGroup && studentGroup} 
+         pagination={{position: ["none", "none"]}}
+         loading={loading}
+         scroll={ { x: "auto" } }
          />
       </Card>
     </Fade>

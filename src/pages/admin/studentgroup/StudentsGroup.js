@@ -5,7 +5,7 @@ import { useHistory } from "react-router";
 import { EditOutlined, DeleteOutlined, UsergroupAddOutlined,InfoCircleOutlined} from '@ant-design/icons';
 import { Table, Tag, Card, PageHeader, Modal, Row, Col, Button, Space, Tooltip } from 'antd';
 import { useDispatch, useSelector } from "react-redux";
-import {getStudents, getSingleStudent} from "../../../redux/student/actions";
+import {getStudents, getSingleStudent, getSingleGroupStudent} from "../../../redux/student/actions";
 import ModalStudentsLogin from "./modal/ModalStudentsLogin";
 import ModalStudentsGroup from "./modal/ModalStudentsGroup";
 
@@ -14,7 +14,6 @@ import ModalStudentsGroup from "./modal/ModalStudentsGroup";
 const StudentsGroup = () => {
 
   const {pagination, loading, isActive, students} = useSelector(state=>state.studentReducer);
-  console.log(students);
   let history = useHistory();
 
 
@@ -36,6 +35,7 @@ const StudentsGroup = () => {
 
   function viewSingleStudent (students) {
     console.log(students.id);
+    dispatch(getSingleGroupStudent(history, students.id));
     dispatch(getSingleStudent(history, students.id));
   }
 
@@ -92,8 +92,8 @@ const StudentsGroup = () => {
       render: ( data ) => {
         return (
           <Space size="middle">
-              <Button onClick={() => viewSingleStudent(data)} shape="circle" icon={<InfoCircleOutlined />} style={{color:"#5cdbd3"}} />
               <Button onClick={() => addGroupToStudent(data)} shape="circle" style={{color: "#399EFF"}}  icon={<UsergroupAddOutlined />} />
+              {data.activation.length?<Button onClick={() => viewSingleStudent(data)} shape="circle" icon={<InfoCircleOutlined />} style={{color:"#5cdbd3"}} />: ""}
           </Space>
         )
       },

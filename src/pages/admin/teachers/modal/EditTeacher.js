@@ -166,7 +166,7 @@ const EditTeacher = ( { handleOk2, handleEDitModalCancel } ) => {
             <Form.Item name="telNomer" label="Telefon nomer" rules={ [ { required: true } ] }>
                 <MaskedInput
         ref={emailRef}
-        mask="+998(##) ### ## ##"
+        mask="+998(00) 000 00 00"
         // onChange={handleInputChange}
         // onFocus={handleFocus}
         // onBlur={handleBlur}

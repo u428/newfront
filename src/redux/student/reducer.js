@@ -14,6 +14,10 @@ import {
   GET_SINGLE_STUDENT,
   GET_SINGLE_STUDENT_SUCCESS,
   GET_SINGLE_STUDENT_ERROR,
+  
+  GET_SINGLE_GROUP_STUDENT,
+  GET_SINGLE_GROUP_STUDENT_SUCCESS,
+  GET_SINGLE_GROUP_STUDENT_ERROR,
 
   POST_STUDENT,
   POST_STUDENT_SUCCESS,
@@ -39,6 +43,7 @@ import {
     error: null,
     students: null,
     student: {},
+    studentGroup:{},
     success: null,
     pagination:{
       current: 1,
@@ -68,12 +73,19 @@ import {
         return { ...state, loading: false, isActive: true, success: payload};
       case DELETE_STUDENT_ERROR:
         return { ...state, loading: false, isActive: false, error: payload };
-
+        
       case GET_SINGLE_STUDENT:
           return { ...state, loading: true, isActive: false};
       case GET_SINGLE_STUDENT_SUCCESS:
           return { ...state, loading: false, isActive: true, student: payload };
       case GET_SINGLE_STUDENT_ERROR:
+          return { ...state, loading: false,isActive: false, error: payload };
+
+      case GET_SINGLE_GROUP_STUDENT:
+          return { ...state, loading: true, isActive: false};
+      case GET_SINGLE_GROUP_STUDENT_SUCCESS:
+          return { ...state, loading: false, isActive: true, studentGroup: payload };
+      case GET_SINGLE_GROUP_STUDENT_ERROR:
           return { ...state, loading: false,isActive: false, error: payload };
 
       case POST_STUDENT:

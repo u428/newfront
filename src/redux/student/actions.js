@@ -15,6 +15,10 @@ import {
     GET_SINGLE_STUDENT_ERROR,
     GET_SINGLE_STUDENT_SUCCESS,
 
+    GET_SINGLE_GROUP_STUDENT,
+    GET_SINGLE_GROUP_STUDENT_SUCCESS,
+    GET_SINGLE_GROUP_STUDENT_ERROR,
+
     POST_STUDENT,
     POST_STUDENT_ERROR,
     POST_STUDENT_SUCCESS,
@@ -74,6 +78,21 @@ import {
   
   export const deleteNewStudentError = (error) => ({
     type: DELETE_STUDENT_ERROR,
+    payload: error,
+  });
+
+  export const getSingleGroupStudent = (history, req) => ({
+    type: GET_SINGLE_GROUP_STUDENT,
+    payload: {history, req}
+  });
+
+  export const getSingleGroupStudentSuccess = (response) => ({
+    type: GET_SINGLE_GROUP_STUDENT_SUCCESS,
+    payload: response,
+  });
+  
+  export const getSingleGroupStudentError = (error) => ({
+    type: GET_SINGLE_GROUP_STUDENT_ERROR,
     payload: error,
   });
 
