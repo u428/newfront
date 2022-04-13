@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 const StudentView = () => {
 
-  const {pagination, loading, isActive, studentGroup, student} = useSelector(state=>state.studentReducer);
+  const {loading, isActive, studentGroup, student} = useSelector(state=>state.studentReducer);
   console.log(studentGroup);
   // let history = useHistory();
 
@@ -19,7 +19,6 @@ const StudentView = () => {
   
   useEffect( () => {
     
-    console.log("this is a open useEffet");
   }, [] );
 
 

@@ -25,7 +25,7 @@ const StudentsGroup = () => {
   
   useEffect( () => {
     dispatch( getStudents(pagination));
-  }, [dispatch] );
+  }, [isModalLoginVisible,isModalGroupVisible] );
 
   function addGroupToStudent (students) {
       console.log(students);
@@ -34,7 +34,6 @@ const StudentsGroup = () => {
   }
 
   function viewSingleStudent (students) {
-    console.log(students.id);
     dispatch(getSingleGroupStudent(history, students.id));
     dispatch(getSingleStudent(history, students.id));
   }
@@ -45,11 +44,9 @@ const StudentsGroup = () => {
 
   const handleOkLogin = () => {
     setIsModalLoginVisible( false );
-    dispatch( getStudents(pagination));
   };
   const handleOkGroup = () => {
     setIsModalGroupVisible( false );
-    dispatch( getStudents(pagination));
   };
 
   const handleCancel = () => {
@@ -119,7 +116,6 @@ const StudentsGroup = () => {
         <Col>
           <PageHeader
             className="site-page-header"
-            // onBack={ () => null }
             title="Title"
             subTitle="This is a subtitle"
           />

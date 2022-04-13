@@ -14,6 +14,7 @@ import {
 } from "react-router-dom";
 import { useBreadCrumb } from "../../hooks/useBreadCrumb";
 import Home from "./home/Home";
+import GroupsTeacher from "./group/GroupsTeacher";
 
 
 function Teacher () {
@@ -64,10 +65,10 @@ function Teacher () {
                   render={ ( props ) => <Home { ...props } /> }
                 />
                 
-                {/* <Route
-                  path={ `${ path }/monitoring` }
-                  render={ ( props ) => <StudentsGroup { ...props } /> }
-                /> */}
+                <Route
+                  path={ `${ path }/groups` }
+                  render={ ( props ) => <GroupsTeacher { ...props } /> }
+                />
               </Switch>
             </div>
           </Content>

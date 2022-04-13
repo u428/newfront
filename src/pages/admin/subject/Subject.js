@@ -25,7 +25,7 @@ const {isActive, loading, subjects} = useSelector(state => state.subjectReducer)
       cancelText:"yoq",
       onOk: () =>{
         dispatch(deleteSubject(subject.id));
-        dispatch( getSubjects());
+        dispatch(getSubjects());
       }
     })
   }
@@ -46,7 +46,6 @@ const {isActive, loading, subjects} = useSelector(state => state.subjectReducer)
 
   const handleOk = () => {
     setIsModalVisible( false );
-    dispatch( getSubjects());
   };
 
   const handleCancel = () => {
@@ -55,7 +54,7 @@ const {isActive, loading, subjects} = useSelector(state => state.subjectReducer)
 
   useEffect( () => {
     dispatch( getSubjects());
-  }, [dispatch] );
+  }, [isModalVisible] );
 
   const columns = [
     {

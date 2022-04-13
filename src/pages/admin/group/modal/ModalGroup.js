@@ -28,20 +28,17 @@ const ModalGroup = ( { handleOk, handleCancel, count } ) => {
 
     useEffect( () => {
         if(count > 0 && Object.keys(group).length !== 0){
-            console.log(group);
-            // setDefaultData([moment(group.begin, 'HH:mm:ss'), moment(group.finish, 'HH:mm:ss')]);
             fetchGetSingleTeacher(group.teacherId).then(response =>{
                 const {teacher} = response.response.data;
-                console.log(teacher);
                 setListTeacher(teacher);
-                setOptionList(<Option key={teacher.id}>{teacher.firstName} {teacher.lastName} {teacher.telNomer.substring(teacher.telNomer.length-4)}</Option>);
+                setOptionList(<Option key={teacher.id}>{teacher.firstName} {teacher.lastName} -{teacher.telNomer.substring(teacher.telNomer.length-5)}</Option>);
                 
                 form.setFieldsValue({
                     "name": group.name,
                     "price": group.price,
                     "description":group.description,
                     "date":[moment(group.begin, 'HH:mm:ss'), moment(group.finish, 'HH:mm:ss')],
-                    'teacher': teacher.firstName+" " +teacher.lastName+" "+teacher.telNomer.substring(teacher.telNomer.length-4),
+                    'teacher': teacher.firstName+" " +teacher.lastName+" "+teacher.telNomer.substring(teacher.telNomer.length-5),
                     "languageId": group.languageId,
                     "subjectId": group.subjectId
                 });
@@ -112,7 +109,7 @@ const ModalGroup = ( { handleOk, handleCancel, count } ) => {
         returns.then(response =>{
             console.log(response.data);
             setListTeacher(response.data);
-            setOptionList(response.data.map(d => <Option key={d.id}>{d.firstName} {d.lastName} {d.telNomer.substring(d.telNomer.length-4)}</Option>));
+            setOptionList(response.data.map(d => <Option key={d.id}>{d.firstName} {d.lastName} -{d.telNomer.substring(d.telNomer.length-5)}</Option>));
         })
     }
     }

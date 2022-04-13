@@ -20,7 +20,7 @@ function* workGetTeachers(req) {
     yield put(getTeachersSuccess(response.data));
   } else {
     yield put(getTeachersError(error.response.data.message));
-    notificationMessage("error", error.response.data.message);
+    notificationMessage("error", "Could not Refresh");
   }
 }
 

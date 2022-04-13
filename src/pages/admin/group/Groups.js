@@ -12,7 +12,6 @@ import ModalGroup from "./modal/ModalGroup";
 const Groups = () => {
 
   const {pagination, loading, isActive, groups} = useSelector(state=>state.groupReducer);
-  console.log(pagination);
 
   const dispatch = useDispatch();
   const [ isModalVisible, setIsModalVisible ] = useState( false );
@@ -46,7 +45,6 @@ const Groups = () => {
 
   const handleOk = () => {
     setIsModalVisible( false );
-    dispatch( getGroups(pagination));
   };
 
   const handleCancel = () => {
@@ -54,8 +52,8 @@ const Groups = () => {
   };
 
   useEffect( () => {
-    dispatch( getGroups(pagination));
-  }, [] );
+    dispatch(getGroups(pagination));
+  }, [isModalVisible] );
 
   const columns = [
     {

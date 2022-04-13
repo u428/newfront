@@ -2,6 +2,10 @@ import {
     GET_GROUPS,
     GET_GROUPS_SUCCESS,
     GET_GROUPS_ERROR,
+
+    GET_GROUPS_TEACHER,
+    GET_GROUPS_TEACHER_SUCCESS,
+    GET_GROUPS_TEACHER_ERROR,
     
     DELETE_GROUP,
     DELETE_GROUP_SUCCESS,
@@ -33,6 +37,21 @@ import {
   
   export const getGroupsError = (error) => ({
     type: GET_GROUPS_ERROR,
+    payload: error,
+  });
+
+  export const getGroupsTeacher = (req) => ({
+    type: GET_GROUPS_TEACHER,
+    payload: req,
+  });
+  
+  export const getGroupsTeacherSuccess = (response) => ({
+    type: GET_GROUPS_TEACHER_SUCCESS,
+    payload: response,
+  });
+  
+  export const getGroupsTeacherError = (error) => ({
+    type: GET_GROUPS_TEACHER_ERROR,
     payload: error,
   });
 

@@ -217,6 +217,16 @@ export const fetchGetGroupsList = async (req) =>
     .then((response) => ({ response }))
     .catch((error) => ({ error }));
 
+    export const fetchGetGroupsTeacherList = async (req) =>
+  await axios
+    .get("/teacher/groups",{
+      headers: {
+        Authorization: token,
+      },
+    })
+    .then((response) => ({ response }))
+    .catch((error) => ({ error }));
+
     
 export const fetchGetGroupsListSearch = async (name) =>
 await axios
@@ -287,6 +297,17 @@ await axios
 export const fetchGetStudentList = async (req) =>
 await axios
   .get("/depend/get_students?current="+Number(req.current)+"&pageSize="+Number(req.pageSize), {
+    headers: {
+      Authorization: token,
+    },
+  })
+  .then((response) => ({ response }))
+  .catch((error) => ({ error }));
+
+  
+export const fetchGetStudentGroupList = async (id) =>
+await axios
+  .get("/depend/get_student_list_by_group?id="+id, {
     headers: {
       Authorization: token,
     },

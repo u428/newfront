@@ -17,12 +17,11 @@ const Students = () => {
 
   const dispatch = useDispatch();
   const [ isModalVisible, setIsModalVisible ] = useState( false );
-  const [ isEditModalVisible, setIsEditModalVisible ] = useState( false );
 
   
   useEffect( () => {
     dispatch( getNewStudents(pagination));
-  }, [dispatch] );
+  }, [isModalVisible] );
   
   function deleteStudents (students) {
     Modal.confirm({
@@ -40,19 +39,15 @@ const Students = () => {
   const showModal = () => {
     setIsModalVisible( true );
   };
-  const showEditModal = (id, i) => {
-    if(i>0){
 
-      setIsEditModalVisible( true );
-    }else{
+  const showEditModal = (id, i) => {
+   if(i<=0){
       dispatch(getSingleStudent(id))
-      setIsEditModalVisible( true );
     }
   };
 
   const handleOk = () => {
     setIsModalVisible( false );
-    dispatch( getNewStudents(pagination));
   };
 
   const handleCancel = () => {

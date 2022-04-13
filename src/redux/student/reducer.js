@@ -2,6 +2,10 @@ import {
   GET_STUDENTS,
   GET_STUDENTS_SUCCESS,
   GET_STUDENTS_ERROR,
+
+  GET_STUDENTS_GROUP,
+  GET_STUDENTS_GROUP_ERROR,
+  GET_STUDENTS_GROUP_SUCCESS,
  
   GET_NEW_STUDENTS,
   GET_NEW_STUDENTS_ERROR,
@@ -58,6 +62,13 @@ import {
       case GET_STUDENTS_SUCCESS:
         return { ...state, loading: false, isActive: true, students: payload.students, pagination:{...payload.pagination}};
       case GET_STUDENTS_ERROR:
+        return { ...state, loading: false, isActive: false, error: payload, students: {} };
+
+        case GET_STUDENTS_GROUP:
+        return { ...state, isActive: false, loading: true };
+      case GET_STUDENTS_GROUP_SUCCESS:
+        return { ...state, loading: false, isActive: true, students: payload};
+      case GET_STUDENTS_GROUP_ERROR:
         return { ...state, loading: false, isActive: false, error: payload, students: {} };
 
         case GET_NEW_STUDENTS:

@@ -33,7 +33,7 @@ function SideBarTeacher(props) {
         </Menu.Item>
 
         <Menu.Item key="3" icon={<UsergroupAddOutlined />}>
-          <Link to={`${url}/group`}> Groups </Link>
+          <Link to={`${url}/groups`}> Groups </Link>
         </Menu.Item>
 
         {/* <SubMenu key="sub1" icon={<ControlOutlined />} title="Student">

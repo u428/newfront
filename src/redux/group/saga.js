@@ -1,8 +1,8 @@
 import { all, takeEvery, call, put, fork } from "@redux-saga/core/effects";
-import {GET_GROUPS, GET_SINGLE_GROUP, DELETE_GROUP, POST_GROUP, PUT_GROUP} from "../actions";
-import {fetchGetGroupsList, fetchGetSingleGroups, fetchPostGroup, fetchPutGroup, fetchDeleteGroup } from "../services/api";
+import {GET_GROUPS, GET_SINGLE_GROUP, DELETE_GROUP, POST_GROUP, PUT_GROUP, GET_GROUPS_TEACHER} from "../actions";
+import {fetchGetGroupsList, fetchGetSingleGroups, fetchPostGroup, fetchPutGroup, fetchDeleteGroup, fetchGetGroupsTeacherList } from "../services/api";
 import { notificationMessage } from "../services/notificationMessage";
-import {getGroupsError, getGroupsSuccess, getSingleGroupError, getSingleGroupSuccess, postGroupError, postGroupSuccess, putGroupError, putGroupSuccess, deleteGroupError, deleteGroupSuccess} from "./actions";
+import {getGroupsError, getGroupsSuccess, getSingleGroupError, getSingleGroupSuccess, postGroupError, postGroupSuccess, putGroupError, putGroupSuccess, deleteGroupError, deleteGroupSuccess, getGroupsTeacherSuccess, getGroupsTeacherError} from "./actions";
 
 function* watchGetGroups() {
   yield takeEvery(GET_GROUPS, workGetGroups);
@@ -17,6 +17,24 @@ function* workGetGroups({payload}) {
     yield put(getGroupsSuccess(response.data));
   } else {
     yield put(getGroupsError(error.response.data));
+    notificationMessage("error", error.response.data);
+  }
+}
+
+
+
+function* watchGetGroupsTeacher() {
+  yield takeEvery(GET_GROUPS_TEACHER, workGetGroupsTeacher);
+}
+
+function* workGetGroupsTeacher() {
+
+  const { response, error } = yield call(fetchGetGroupsTeacherList);
+
+  if (response) {
+    yield put(getGroupsTeacherSuccess(response.data));
+  } else {
+    yield put(getGroupsTeacherError(error.response.data));
     notificationMessage("error", error.response.data);
   }
 }
@@ -96,6 +114,7 @@ function* workDeleteGroups({id}) {
 export default function* groupSaga() {
   yield all([
     fork(watchDeleteGroups),
+    fork(watchGetGroupsTeacher),
     fork(watchPutGroup),
     fork(watchPostGroup),
     fork(watchGetSingleGroups),

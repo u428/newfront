@@ -3,6 +3,10 @@ import {
     GET_STUDENTS_ERROR,
     GET_STUDENTS_SUCCESS,
 
+    GET_STUDENTS_GROUP,
+    GET_STUDENTS_GROUP_ERROR,
+    GET_STUDENTS_GROUP_SUCCESS,
+
     GET_NEW_STUDENTS,
     GET_NEW_STUDENTS_ERROR,
     GET_NEW_STUDENTS_SUCCESS,
@@ -51,6 +55,7 @@ import {
     payload: error,
   });
 
+
   export const getStudents = (req) => ({
     type: GET_STUDENTS,
     payload: req,
@@ -63,6 +68,22 @@ import {
   
   export const getStudentsError = (error) => ({
     type: GET_STUDENTS_ERROR,
+    payload: error,
+  });
+
+  
+  export const getStudentsGroup = (req) => ({
+    type: GET_STUDENTS_GROUP,
+    payload: req,
+  });
+  
+  export const getStudentsGroupSuccess = (response) => ({
+    type: GET_STUDENTS_GROUP_SUCCESS,
+    payload: response,
+  });
+  
+  export const getStudentsGroupError = (error) => ({
+    type: GET_STUDENTS_GROUP_ERROR,
     payload: error,
   });
 
@@ -81,9 +102,9 @@ import {
     payload: error,
   });
 
-  export const getSingleGroupStudent = (history, req) => ({
+  export const getSingleGroupStudent = (id) => ({
     type: GET_SINGLE_GROUP_STUDENT,
-    payload: {history, req}
+    payload: id
   });
 
   export const getSingleGroupStudentSuccess = (response) => ({
