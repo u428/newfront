@@ -10,7 +10,7 @@ COPY package-lock.json .
 
 RUN npm install --silent
 
-RUN npm install react-script@5.0.0 -g --silent
+RUN npm install react-scripts@5.0.0 -g --silent
 
 COPY . . 
 
