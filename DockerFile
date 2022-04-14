@@ -1,3 +1,17 @@
-FROM ubuntu:latest
+FROM node:latest
 
-CMD echo "Hello to Muhammad Amin from docker"
+WORKDIR './app'
+
+COPY package.json .
+
+RUN npm install
+
+COPY . . 
+
+# CMD echo "Hello to Muhammad Amin from docker"
+
+CMD ["npm", "start"]
+
+
+
+
