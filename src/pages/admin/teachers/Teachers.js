@@ -27,7 +27,6 @@ const Teachers = () => {
       cancelText:"yoq",
       onOk: () =>{
         dispatch(deleteTeacher(teacher.id));
-        dispatch( getTeachers(pagination));
       }
     })
   }
@@ -36,7 +35,7 @@ const Teachers = () => {
     setIsModalVisible( true );
   };
   const showEditModal = (id) => {
-    dispatch(getSingleTeacher(id))
+    dispatch(getSingleTeacher(id));
     setIsEditModalVisible( true );
   };
 
@@ -58,7 +57,7 @@ const Teachers = () => {
 
   useEffect( () => {
     dispatch( getTeachers(pagination));
-  }, [isModalVisible,isEditModalVisible ] );
+  }, [] );
 
   const columns = [
     {

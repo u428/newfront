@@ -66,8 +66,9 @@ const {history, req} = payload;
   const { response, error } = yield call(fetchPostGroup, req);
 
   if (response) {
-    console.log(response);
+    notificationMessage("success", "Qo'shildi");
     yield put(postGroupSuccess(response.data));
+    yield fork(workGetGroups, {payload:{current: 1, pageSize: 10}});
   } else {
     yield put(postGroupError(error.response.data.message));
     notificationMessage("error", error.response.data.message);
@@ -84,7 +85,9 @@ const {history, req} =payload;
   const { response, error } = yield call(fetchPutGroup, req);
 
   if (response) {
+    notificationMessage("success", "O'zgartirildi");
     yield put(putGroupSuccess(response.data));
+    yield fork(workGetGroups, {payload:{current: 1, pageSize: 10}});
   } else {
     yield put(putGroupError(error.response.data.message));
     notificationMessage("error", error.response.data.message);
@@ -104,7 +107,8 @@ function* workDeleteGroups({id}) {
 
   if (response) {
     yield put(deleteGroupSuccess(response.data));
-    notificationMessage("success", "SUCCESS");
+    notificationMessage("success", "O'chirildi");
+    yield fork(workGetGroups, {payload:{current: 1, pageSize: 10}});
   } else {
     yield put(deleteGroupError(error.response.data));
     notificationMessage("error", error.response.data);

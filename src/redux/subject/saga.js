@@ -1,8 +1,8 @@
-import { all, takeEvery, call, put, fork } from "@redux-saga/core/effects";
+import { all, takeEvery, call, put, fork, takeLatest } from "@redux-saga/core/effects";
 import { GET_SUBJECTS, GET_SINGLE_SUBJECT, POST_SUBJECT, PUT_SUBJECT, DELETE_SUBJECT} from "../actions";
 import {fetchGetSubjectsList, fetchGetSingleSubjectsList, fetchPostSubject, fetchPutSubject, fetchDeleteSubject} from "../services/api";
 import { notificationMessage } from "../services/notificationMessage";
-import {getSingleSubjectError, getSingleSubjectSuccess, getSubjectsError, getSubjectsSuccess, postSubjectError, postSubjectSuccess, putSubjectError, putSubjectSuccess, deleteSubjectSuccess, deleteSubjectError} from "./actions";
+import {getSingleSubjectError, getSingleSubjectSuccess, getSubjectsError, getSubjectsSuccess, postSubjectError, postSubjectSuccess, putSubjectError, putSubjectSuccess, deleteSubjectSuccess, deleteSubjectError, getSubjects} from "./actions";
 
 function* watchGetSubjects() {
   yield takeEvery(GET_SUBJECTS, workGetSubjects);
@@ -49,7 +49,9 @@ console.log(req);
 
   if (response) {
     console.log(response);
+    notificationMessage("success", " Qo'shildi");
     yield put(postSubjectSuccess(response.data));
+    yield fork(workGetSubjects);
   } else {
     yield put(postSubjectError(error.response.data.message));
     notificationMessage("error", error.response.data.message);
@@ -67,7 +69,9 @@ const {history, req} =payload;
 
   if (response) {
     console.log(response);
+    notificationMessage("success", "O'zgartirildi");
     yield put(putSubjectSuccess(response.data));
+    yield fork(workGetSubjects);
   } else {
     yield put(putSubjectError(error.response.data.message));
     notificationMessage("error", error.response.data.message);
@@ -86,6 +90,7 @@ function* workDeleteSubjects({id}) {
   if (response) {
     yield put(deleteSubjectSuccess(response.data));
     notificationMessage("success", "SUCCESS");
+    yield fork(workGetSubjects);
   } else {
     yield put(deleteSubjectError(error.response.data));
     notificationMessage("error", error.response.data);

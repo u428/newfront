@@ -2,7 +2,7 @@ import { all, takeEvery, call, put, fork } from "@redux-saga/core/effects";
 import { GET_TEACHERS, POST_TEACHERS, GET_SINGLE_TEACHER, DELETE_TEACHER, PUT_TEACHERS } from "../actions";
 import { fetchGetTeachersList, fetchPostTeacher, fetchPutTeacher, fetchGetSingleTeacher, fetchDeleteTeacher } from "../services/api";
 import { notificationMessage } from "../services/notificationMessage";
-import { getTeachersError, getTeachersSuccess, postTeachersError, putTeachersSuccess, putTeachersError, getSingleTeacherSuccess, getSingleTeacherError, deleteTeacherSuccess, deleteTeacherError } from "./actions";
+import { getTeachersError, getTeachersSuccess, postTeachersError, putTeachersSuccess, putTeachersError, getSingleTeacherSuccess, getSingleTeacherError, deleteTeacherSuccess, deleteTeacherError, postTeachersSuccess } from "./actions";
 
 function* watchGetTeachers() {
   yield takeEvery(GET_TEACHERS, workGetTeachers);
@@ -52,8 +52,9 @@ function* workDeleteTeacher({id}) {
   const { response, error } = yield call(fetchDeleteTeacher, id);
   console.log(response);
   if (response) {
-    console.log(response);
+    notificationMessage("success", "O'irildi");
     yield put(deleteTeacherSuccess(response.data.teachers));
+    yield fork(workGetTeachers, {payload:{current: 1, pageSize: 10}});
   } else {
     console.log(error);
     yield put(deleteTeacherError(error.response.data.message));
@@ -67,14 +68,13 @@ function* watchPostTeachers() {
 
 function* workPostTeachers({payload}) {
  const {history, req} = payload;
- console.log(payload);
- console.log(req);
 
   const { response, error } = yield call(fetchPostTeacher, req);
 
   if (response) {
-    // yield put(postTeachersSuccess(response));
+    yield put(postTeachersSuccess(response));
     notificationMessage("success", "Teacher qoshildi");
+    yield fork(workGetTeachers, {payload:{current: 1, pageSize: 10}});
   } else {
     yield put(postTeachersError(error.response.data.message));
     notificationMessage("error", error.response.data.message);
@@ -88,14 +88,13 @@ function* watchPutTeachers() {
 
 function* workPutTeachers({payload}) {
  const {history, req} = payload;
- console.log(payload);
- console.log(req);
 
   const { response, error } = yield call(fetchPutTeacher, req);
 
   if (response) {
     yield put(putTeachersSuccess(response));
     notificationMessage("success", "Teacher omadli ozgartirildi");
+    yield fork(workGetTeachers, {payload:{current: 1, pageSize: 10}});
   } else {
     yield put(putTeachersError(error.response.data.message));
     notificationMessage("error", error.response.data.message);

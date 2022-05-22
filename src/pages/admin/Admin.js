@@ -15,14 +15,12 @@ import {
 import { useBreadCrumb } from "../../hooks/useBreadCrumb";
 import Home from "./home/Home";
 import Setting from "./setting/Setting";
-import Products from "./products/Products";
 import Teachers from "./teachers/Teachers";
 import Subject from "./subject/Subject";
 import Groups from "./group/Groups";
 import Students from "./student/Students";
 import StudentsGroup from "./studentgroup/StudentsGroup";
 import StudentView from "./studentgroup/studentView/StudentView";
-import { collapseend } from "react-reveal/globals";
 
 
 function Admin () {
@@ -76,10 +74,7 @@ function Admin () {
                   path={ `${ path }/setting` }
                   render={ ( props ) => <Setting { ...props } /> }
                 />
-                <Route
-                  path={ `${ path }/products` }
-                  render={ ( props ) => <Products { ...props } /> }
-                />
+            
                 <Route
                   path={ `${ path }/teacher` }
                   render={ ( props ) => <Teachers { ...props } /> }
