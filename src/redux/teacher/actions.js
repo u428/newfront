@@ -1,7 +1,11 @@
 import {
-  GET_TEACHERS,
+    GET_TEACHERS,
     GET_TEACHERS_ERROR,
     GET_TEACHERS_SUCCESS,
+
+    VIEW_TEACHER,
+    VIEW_TEACHER_SUCCESS,
+    VIEW_TEACHER_ERROR,
 
     DELETE_TEACHER,
     DELETE_TEACHER_SUCCESS,
@@ -32,6 +36,21 @@ import {
   
   export const getTeachersError = (error) => ({
     type: GET_TEACHERS_ERROR,
+    payload: error,
+  });
+
+  export const viewTeacher = (history, id) => ({
+    type: VIEW_TEACHER,
+    payload: {history, id},
+  });
+  
+  export const viewTeacherSuccess = (response) => ({
+    type: VIEW_TEACHER_SUCCESS,
+    payload: response,
+  });
+  
+  export const viewTeacherError = (error) => ({
+    type: VIEW_TEACHER_ERROR,
     payload: error,
   });
 

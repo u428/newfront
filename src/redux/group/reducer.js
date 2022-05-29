@@ -42,7 +42,7 @@ import {
       case GET_GROUPS:
         return { ...state, isActive: false, loading: true };
       case GET_GROUPS_SUCCESS:
-        return { ...state, loading: false, isActive: true, groups: payload.groups, pagination:{...payload.pagination}};
+        return { ...state, loading: false, isActive: true, groups: payload.data, pagination:{...payload.pagination}};
       case GET_GROUPS_ERROR:
         return { ...state, loading: false, isActive: false, error: payload };
 

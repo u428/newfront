@@ -1,8 +1,8 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useRef, useState} from 'react'
 import { Form, Input, Button, Space, Upload, TreeSelect, DatePicker, Select } from 'antd';
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
-import { fetchGetNewStudentOne } from '../../../../redux/services/api';
+import { fetchGetCheckLogin, fetchGetNewStudentOne } from '../../../../redux/services/api';
 import { postStudentGroup, postStudentLogin } from '../../../../redux/student/actions';
 
 const ModalStudentsLogin = ( { handleOk, handleCancel, count } ) => {
@@ -11,7 +11,8 @@ const ModalStudentsLogin = ( { handleOk, handleCancel, count } ) => {
     const dispatch = useDispatch();
     let history = useHistory();
     const { Option } = Select;
-
+    let emailRef = useRef()
+    const [valid, setValid] = useState();
     const [listStudents, setListStudents]= useState([]);
     const [optionStudents, setOptionStudents] = useState([]);
 
@@ -50,6 +51,23 @@ const ModalStudentsLogin = ( { handleOk, handleCancel, count } ) => {
         onReset()
     };
 
+    const onBlurHandle = ()=>{
+        
+
+        console.log(emailRef.current);
+
+        fetchGetCheckLogin(emailRef.current.input.value)
+        .then(response => {
+            console.log(response.response);
+            console.log(!response.response.data);
+            if(!response.response.data){
+                setValid("success");
+            }else{
+                setValid("error");
+            }
+        });
+    }
+
     const handleSearch = (value)=>{
         console.log(value);
         if(value.length > 2){
@@ -59,7 +77,7 @@ const ModalStudentsLogin = ( { handleOk, handleCancel, count } ) => {
         returns.then(response =>{
             console.log(response.response);
             setListStudents(response.response.data);
-            setOptionStudents(response.response.data.map(d => <Option key={d.id}>{d.firstName} {d.lastName} {d.telNomer.substring(d.telNomer.length-4)}</Option>));
+            setOptionStudents(response.response.data.map(d => <Option key={d.id}>{d.firstName} {d.lastName} - {d.telNomer.substring(d.telNomer.length-6)}</Option>));
         })
         }
     }
@@ -107,8 +125,9 @@ const ModalStudentsLogin = ( { handleOk, handleCancel, count } ) => {
             <Form.Item 
                 name="login"
                 label="Login" 
+                validateStatus = {valid}
                 rules={ [ { required: true }, {min: 3, max: 20 } ] } hasFeedback>
-                <Input />
+                <Input onBlur={onBlurHandle} ref={emailRef} />
             </Form.Item>
             <Form.Item 
                 name="password" 

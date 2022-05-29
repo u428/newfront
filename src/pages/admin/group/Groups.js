@@ -6,6 +6,8 @@ import { Table, Tag, Card, PageHeader, Modal, Row, Col, Button, Space, Tooltip }
 import { useDispatch, useSelector } from "react-redux";
 import {getGroups, deleteGroup, getSingleGroup } from "../../../redux/group/actions";
 import ModalGroup from "./modal/ModalGroup";
+import { getStudentsGroup } from "../../../redux/student/actions";
+import StudentListGroupModal from "./modal/StudentListGroupModal";
 
 
 
@@ -13,8 +15,11 @@ const Groups = () => {
 
   const {pagination, loading, isActive, groups} = useSelector(state=>state.groupReducer);
 
+  console.log(groups);
+
   const dispatch = useDispatch();
   const [ isModalVisible, setIsModalVisible ] = useState( false );
+  const [ isStudentVisible, setIsStudentVisible ] = useState( false );
   const [count, setCount] =useState(0);
 
 
@@ -43,12 +48,34 @@ const Groups = () => {
     }
   };
 
+  function getGroupStudents (group) {
+    dispatch(getStudentsGroup(group.id))
+    // modal open
+    setIsStudentVisible(true);
+  }
+
+  function groupTeacher (id) {
+    // bu yerda teacherni otkazivarish garak
+
+    console.log(id);
+    console.log("teacher id");
+
+  }
+
   const handleOk = () => {
     setIsModalVisible( false );
   };
 
+  const handleStudentOk = () => {
+    setIsStudentVisible( false );
+  };
+
   const handleCancel = () => {
     setIsModalVisible( false );
+  };
+
+  const handleStudentCancel = () => {
+    setIsStudentVisible( false );
   };
 
   useEffect( () => {
@@ -58,23 +85,44 @@ const Groups = () => {
   const columns = [
     {
       title: 'ID',
-      dataIndex: 'id',
-      key: 'id'
+      dataIndex: 'group',
+      key: 'id',
+      render: text => <p>{ text.id }</p>
     },
     {
       title: 'name',
-      dataIndex: 'name',
-      key: 'name'
+      dataIndex: 'group',
+      key: 'name',
+      render: text => <p>{text.name}</p>
     },
     {
       title: 'price',
-      dataIndex: 'price',
+      dataIndex: 'group',
       key: 'price',
+      render: text => <p>{text.price}</p>
     },
     {
-      title: 'description',
-      dataIndex: 'description',
-      key: 'description'
+      title: 'Language',
+      dataIndex: 'language',
+      key: 'language',
+      render: text => <p>{text.name}</p>
+    },
+    {
+      title: 'Subject',
+      dataIndex: 'subject',
+      key: 'subject',
+      render: text => <p>{text.nameUz}</p>
+    },
+    {
+      title: 'Teacher',
+      dataIndex: 'teacher',
+      key: 'fullName',
+      render: text => <a onClick={() =>{ groupTeacher(text.id)}}>{text.firstName} {text.lastName} <br /> {text.telNumber}</a>
+    },
+    {
+      title: 'Students',
+      key: 'soni',
+      render: text => <Button onClick={() =>{getGroupStudents(text.group)}} type="primary" shape="circle">{text.soni}</Button>
     },
     {
       title: 'Action',
@@ -82,8 +130,8 @@ const Groups = () => {
       render: ( data ) => {
         return (
           <Space size="middle">
-              <Button onClick={() => showModal(data.id, 1)}  shape="circle" warning icon={<EditOutlined />} />
-              <Button onClick={() => deleteGroups(data)} shape="circle" danger  icon={<DeleteOutlined />} />
+              <Button onClick={() => showModal(data.group.id, 1)}  shape="circle" warning icon={<EditOutlined />} />
+              <Button onClick={() => deleteGroups(data.group)} shape="circle" danger  icon={<DeleteOutlined />} />
           </Space>
         )
       },
@@ -101,6 +149,15 @@ const Groups = () => {
       <Modal title="Chreate Group" visible={ isModalVisible } onOk={ handleOk } onCancel={ handleCancel } footer={ false }>
         <ModalGroup handleOk={ handleOk } handleCancel={ handleCancel } count={count}/>
       </Modal>
+{/* 
+      <Modal title="Chreate Group" visible={ isModalVisible } onOk={ handleOk } onCancel={ handleCancel } footer={ false }>
+        <ModalGroup handleOk={ handleOk } handleCancel={ handleCancel } count={count}/>
+      </Modal> */}
+
+      <Modal title="Chreate Group" visible={ isStudentVisible } onOk={ handleStudentOk } onCancel={ handleStudentCancel } footer={ false }>
+        <StudentListGroupModal handleOk={ handleStudentOk }/>
+      </Modal>
+
 
       <Row justify="space-between" align="middle">
         <Col>

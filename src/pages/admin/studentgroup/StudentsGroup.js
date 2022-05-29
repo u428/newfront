@@ -25,10 +25,9 @@ const StudentsGroup = () => {
   
   useEffect( () => {
     dispatch( getStudents(pagination));
-  }, [isModalLoginVisible,isModalGroupVisible] );
+  }, [] );
 
   function addGroupToStudent (students) {
-      console.log(students);
       setStudentId(students.id);
       setIsModalGroupVisible( true );
   }

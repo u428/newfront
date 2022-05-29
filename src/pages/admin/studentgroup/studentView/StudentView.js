@@ -1,26 +1,36 @@
-import React, { useEffect, useState } from "react";
-import { HistoryOutlined, GroupOutlined} from '@ant-design/icons';
+import React, { useState } from "react";
+import { HistoryOutlined, UsergroupAddOutlined} from '@ant-design/icons';
 import Fade from "react-reveal/Fade";
-import { Table, Tag, Card, PageHeader, Modal, Row, Col, Button, Space, Tooltip } from 'antd';
+import { Table, Tag, Card, PageHeader, Modal, Row, Col, Button, Space } from 'antd';
 import { useDispatch, useSelector } from "react-redux";
+import StudentViewGroupModal from "./model/StudentViewGroupModal";
+import { getStudentsGroup } from "../../../../redux/student/actions";
 
 
 
 const StudentView = () => {
 
-  const {loading, isActive, studentGroup, student} = useSelector(state=>state.studentReducer);
-  console.log(studentGroup);
+  const {loading, studentGroup, student} = useSelector(state=>state.studentReducer);
   // let history = useHistory();
 
 
   // const dispatch = useDispatch();
+  const dispatch = useDispatch();
+  const [ isModalLoginVisible, setIsModalLoginVisible ] = useState( false );
 
-  const [groups, setGroups] = useState([]);
-  
-  useEffect( () => {
-    
-  }, [] );
 
+  const handleOkLogin = () => {
+    setIsModalLoginVisible( false );
+  };
+
+  const handleCancel = () => {
+    setIsModalLoginVisible( false );
+  };
+
+  function getGroupStudents (group) {
+    dispatch(getStudentsGroup(group.id))
+    setIsModalLoginVisible( true );
+  }
 
   const columns = [
     {
@@ -62,7 +72,7 @@ const StudentView = () => {
         return (
           <Space size="middle">
               <Button  shape="circle" style={{color: "#399EFF"}} icon={<HistoryOutlined />} />
-              <Button shape="circle" style={{color: "#399EFF"}}  icon={<GroupOutlined />} />
+              <Button shape="circle"  onClick={() => getGroupStudents(data)} style={{color: "#399EFF"}}  icon={<UsergroupAddOutlined />} />
           </Space>
         )
       }
@@ -77,7 +87,9 @@ const StudentView = () => {
   
   return (
     <Fade>
-
+      <Modal title="Chreate Teacher" visible={ isModalLoginVisible } onOk={ handleOkLogin } onCancel={ handleCancel } footer={ false }>
+        <StudentViewGroupModal  handleOk={ handleOkLogin } handleCancel={ handleCancel } />
+      </Modal>
       <Row justify="space-between" align="middle">
         <Col>
           <PageHeader

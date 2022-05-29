@@ -72,8 +72,10 @@ function* watchGetSingleStudentGroups() {
 }
 
 function* workGetSingleStudentGroups({payload}) {
-  const {history, req} = payload;
-  const { response, error } = yield call(fetchGetSingleStudentGroups,req);
+  console.log(payload);
+  const {history, id} = payload;
+  console.log(id);
+  const { response, error } = yield call(fetchGetSingleStudentGroups,id);
   if (response) {
     yield put(getSingleGroupStudentSuccess(response.data));
     history.push("/admin/view/student")
@@ -91,6 +93,7 @@ function* workDeleteStudent({id}) {
   const { response, error } = yield call(fetchDeleteStudent, id);
   if (response) {
     yield put(deleteNewStudentSuccess(response.data.teachers));
+    yield fork(workGetNewStudents, {payload:{current: 1, pageSize: 10}});
   } else {
     yield put(deleteNewStudentError(error.response.data.message));
     notificationMessage("error", "SORRY: there is some ERRORS");
@@ -107,6 +110,7 @@ function* workPostStudent({payload}) {
   if (response) {
     yield put(postNewStudentSuccess(response));
     notificationMessage("success", "Student qoshildi");
+    yield fork(workGetNewStudents, {payload:{current: 1, pageSize: 10}});
   } else {
     yield put(postNewStudentError(error.response.data.message));
     notificationMessage("error", "SORRY: there is some ERRORS");
@@ -124,6 +128,7 @@ function* workPostStudentGroup({payload}) {
   if (response) {
     yield put(postStudentGroupSuccess(response));
     notificationMessage("success", "Student qoshildi");
+    yield fork(workGetStudents, {payload:{current: 1, pageSize: 10}});
   } else {
     yield put(postStudentGroupError(error.response.data.message));
     notificationMessage("error", "SORRY: there is some ERRORS");
@@ -141,6 +146,7 @@ function* workPostStudentLogin({payload}) {
   if (response) {
     yield put(postStudentLoginSuccess(response));
     notificationMessage("success", "Studentga Login parol qoshildi");
+    yield fork(workGetStudents, {payload:{current: 1, pageSize: 10}});
   } else {
     yield put(postStudentLoginError(error.response.data));
     notificationMessage("error", "SORRY: there is some ERRORS");
@@ -158,6 +164,7 @@ function* workPutStudent({payload}) {
   if (response) {
     yield put(putNewStudentSuccess(response));
     notificationMessage("success", "Student omadli ozgartirildi");
+    yield fork(workGetNewStudents, {payload:{current: 1, pageSize: 10}});
   } else {
     yield put(putNewStudentError(error.response.data));
     notificationMessage("error", "SORRY: there is some ERRORS");

@@ -3,6 +3,10 @@ import {
     GET_TEACHERS_ERROR,
     GET_TEACHERS_SUCCESS,
 
+    VIEW_TEACHER,
+    VIEW_TEACHER_SUCCESS,
+    VIEW_TEACHER_ERROR,
+
     DELETE_TEACHER,
     DELETE_TEACHER_SUCCESS,
     DELETE_TEACHER_ERROR,
@@ -27,6 +31,7 @@ import {
     teachers: null,
     teacher: {},
     success: null,
+    teacherGroup:null,
     pagination:{
       current: 1,
       pageSize: 10
@@ -54,6 +59,13 @@ import {
       case GET_SINGLE_TEACHER_SUCCESS:
           return { ...state, loading: false, isActive: true, teacher: payload };
       case GET_SINGLE_TEACHER_ERROR:
+          return { ...state, loading: false,isActive: false, error: payload };
+
+      case VIEW_TEACHER:
+          return { ...state, loading: true, isActive: false};
+      case VIEW_TEACHER_SUCCESS:
+          return { ...state, loading: false, isActive: true, teacher: payload.teacher, teacherGroup:payload.groups };
+      case VIEW_TEACHER_ERROR:
           return { ...state, loading: false,isActive: false, error: payload };
 
       case POST_TEACHERS:

@@ -46,6 +46,7 @@ import {
     isActive: false,
     error: null,
     students: null,
+    studentsGroup: [],
     student: {},
     studentGroup:{},
     success: null,
@@ -67,7 +68,7 @@ import {
         case GET_STUDENTS_GROUP:
         return { ...state, isActive: false, loading: true };
       case GET_STUDENTS_GROUP_SUCCESS:
-        return { ...state, loading: false, isActive: true, students: payload};
+        return { ...state, loading: false, isActive: true, studentsGroup: payload};
       case GET_STUDENTS_GROUP_ERROR:
         return { ...state, loading: false, isActive: false, error: payload, students: {} };
 

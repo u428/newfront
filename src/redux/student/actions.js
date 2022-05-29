@@ -102,9 +102,9 @@ import {
     payload: error,
   });
 
-  export const getSingleGroupStudent = (id) => ({
+  export const getSingleGroupStudent = (history, id) => ({
     type: GET_SINGLE_GROUP_STUDENT,
-    payload: id
+    payload: {history, id}
   });
 
   export const getSingleGroupStudentSuccess = (response) => ({

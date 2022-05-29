@@ -83,6 +83,18 @@ export const fetchDeleteTeacher = async (id) =>
     .then((response) => ({ response }))
     .catch((error) => ({ error }));
 
+
+    
+export const fetchViewTeacher = async (id) =>
+await axios
+  .get(`${URL}/static/view_teacher?id=${Number(id)}`, {
+    headers: {
+      Authorization: token,
+    },
+  })
+  .then((response) => ({ response }))
+  .catch((error) => ({ error }));
+
   export const fetchGetSingleTeacher = async (id) =>
   await axios
     .get(`${URL}/static/get_single_teacher?id=${Number(id)}`, {

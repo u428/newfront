@@ -1,16 +1,19 @@
 import React, { useEffect, useState } from "react";
 
 import Fade from "react-reveal/Fade";
-import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import { EditOutlined, DeleteOutlined, EyeOutlined } from '@ant-design/icons';
 import { Table, Tag, Card, PageHeader, Modal, Row, Col, Button, Space, Tooltip } from 'antd';
 import { useDispatch, useSelector } from "react-redux";
-import { getTeachers, deleteTeacher, getSingleTeacher } from "../../../redux/teacher/actions";
+import { useHistory } from "react-router";
+import { getTeachers, deleteTeacher, getSingleTeacher, viewTeacher } from "../../../redux/teacher/actions";
 import AddTeacher from "./modal/AddTeacher";
 import EditTeacher from "./modal/EditTeacher";
 
 
 
 const Teachers = () => {
+
+  let history = useHistory();
 
   const {pagination, loading, isActive, teachers} = useSelector(state=>state.teacherReducer);
 
@@ -39,13 +42,16 @@ const Teachers = () => {
     setIsEditModalVisible( true );
   };
 
+  const viewTeachers = (id) => {
+    console.log(id);
+    dispatch(viewTeacher(history, id))
+  };
+
   const handleOk = () => {
     setIsModalVisible( false );
-    // dispatch( getTeachers(pagination));
   };
   const handleOk2 = () => {
     setIsEditModalVisible( false );
-    // dispatch( getTeachers(pagination));
   };
 
   const handleCancel = () => {
@@ -139,6 +145,7 @@ const Teachers = () => {
           <Space size="middle">
               <Button onClick={() => showEditModal(data.teacher.id)}  shape="circle" warning icon={<EditOutlined />} />
               <Button onClick={() => deleteTeachers(data.teacher)} shape="circle" danger  icon={<DeleteOutlined />} />
+              <Button onClick={() => viewTeachers(data.teacher.id)} shape="circle" info  icon={ <EyeOutlined />} />
           </Space>
         )
       },
@@ -149,10 +156,6 @@ const Teachers = () => {
   const handleTableChange = (pagination) => {
    
     dispatch( getTeachers(pagination) );
-    // if(reducer.teachers){
-    //   console.log("handle ishladi");
-    //   setPagination(reducer.teachers.page_info)
-    // }
   };
 
   

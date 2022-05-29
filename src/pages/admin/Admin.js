@@ -21,6 +21,7 @@ import Groups from "./group/Groups";
 import Students from "./student/Students";
 import StudentsGroup from "./studentgroup/StudentsGroup";
 import StudentView from "./studentgroup/studentView/StudentView";
+import ViewTeacher from "./teachers/view/ViewTeacher";
 
 
 function Admin () {
@@ -101,6 +102,10 @@ function Admin () {
                 <Route
                   path={ `${ path }/students/group` }
                   render={ ( props ) => <StudentsGroup { ...props } /> }
+                />
+                 <Route
+                  path={ `${ path }/view/teacher` }
+                  render={ ( props ) => <ViewTeacher { ...props } /> }
                 />
               </Switch>
             </div>

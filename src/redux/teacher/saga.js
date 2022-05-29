@@ -1,8 +1,8 @@
 import { all, takeEvery, call, put, fork } from "@redux-saga/core/effects";
-import { GET_TEACHERS, POST_TEACHERS, GET_SINGLE_TEACHER, DELETE_TEACHER, PUT_TEACHERS } from "../actions";
-import { fetchGetTeachersList, fetchPostTeacher, fetchPutTeacher, fetchGetSingleTeacher, fetchDeleteTeacher } from "../services/api";
+import { GET_TEACHERS, POST_TEACHERS, GET_SINGLE_TEACHER, DELETE_TEACHER, PUT_TEACHERS, VIEW_TEACHER } from "../actions";
+import { fetchGetTeachersList, fetchPostTeacher, fetchPutTeacher, fetchGetSingleTeacher, fetchDeleteTeacher, fetchViewTeacher } from "../services/api";
 import { notificationMessage } from "../services/notificationMessage";
-import { getTeachersError, getTeachersSuccess, postTeachersError, putTeachersSuccess, putTeachersError, getSingleTeacherSuccess, getSingleTeacherError, deleteTeacherSuccess, deleteTeacherError, postTeachersSuccess } from "./actions";
+import { getTeachersError, getTeachersSuccess, postTeachersError, putTeachersSuccess, putTeachersError, getSingleTeacherSuccess, getSingleTeacherError, deleteTeacherSuccess, deleteTeacherError, postTeachersSuccess, viewTeacherSuccess, viewTeacherError } from "./actions";
 
 function* watchGetTeachers() {
   yield takeEvery(GET_TEACHERS, workGetTeachers);
@@ -21,6 +21,30 @@ function* workGetTeachers(req) {
   } else {
     yield put(getTeachersError(error.response.data.message));
     notificationMessage("error", "Could not Refresh");
+  }
+}
+
+
+
+function* watchViewTeachers() {
+  yield takeEvery(VIEW_TEACHER, workViewTeachers);
+}
+
+function* workViewTeachers({payload}) {
+
+  console.log(payload);
+  const {history, id} = payload;
+  console.log(id);
+
+  const { response, error } = yield call(fetchViewTeacher, id);
+
+  if (response) {
+    console.log(response);
+    yield put(viewTeacherSuccess(response.data));
+    history.push("/admin/view/teacher")
+  } else {
+    yield put(viewTeacherError(error.response.data));
+    notificationMessage("error", "There is some error");
   }
 }
 
@@ -107,6 +131,7 @@ export default function* teacherSaga() {
     fork(watchPutTeachers),
     fork(watchDeleteTeacher),
     fork(watchGetSingleTeacher),
+    fork(watchViewTeachers),
     fork(watchPostTeachers)
   ]);
 }
