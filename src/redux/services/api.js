@@ -120,6 +120,20 @@ await axios
   .catch((error) => ({ error }));
 
   
+export const fetchCheckStudentTeacher = async (req) =>
+await axios
+  .post(
+    `${URL}/teacher/student_check`,
+    req, 
+    {
+    headers: {
+      Authorization: token
+    },
+  })
+  .then((response) => ({ response }))
+  .catch((error) => ({ error }));
+
+  
 export const fetchPutTeacher = async (req) =>
 await axios
   .put(

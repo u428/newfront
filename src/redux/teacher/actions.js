@@ -19,6 +19,10 @@ import {
     POST_TEACHERS_ERROR,
     POST_TEACHERS_SUCCESS,
 
+    CHECK_STUDENT_TEACHER,
+    CHECK_STUDENT_TEACHER_ERROR,
+    CHECK_STUDENT_TEACHER_SUCCESS,
+
     PUT_TEACHERS,
     PUT_TEACHERS_ERROR,
     PUT_TEACHERS_SUCCESS,
@@ -98,6 +102,23 @@ import {
     type: POST_TEACHERS_ERROR,
     payload: error,
   });
+
+
+  export const checkStudentTeacher = (req) => ({
+    type: CHECK_STUDENT_TEACHER,
+    payload: req
+  });
+  
+  export const checkStudentTeacherSuccess = (response) => ({
+    type: CHECK_STUDENT_TEACHER_SUCCESS,
+    payload: response,
+  });
+  
+  export const checkStudentTeacherError = (error) => ({
+    type: CHECK_STUDENT_TEACHER_ERROR,
+    payload: error,
+  });
+
 
   export const putTeacher = (history, req) => ({
     type: PUT_TEACHERS,

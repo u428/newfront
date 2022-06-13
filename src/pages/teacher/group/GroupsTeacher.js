@@ -13,14 +13,17 @@ import StudentCheckTeacher from "./page/StudentCheckTeacher";
 const GroupsTeacher = () => {
 
   const [isModalVisible, setIsModalVisible] =useState(false);
+  const [studentIds, setStudentIds] = useState(0);
 
   const {loading, isActive, groups} = useSelector(state=>state.groupReducer);
-
+  const {userData} = useSelector(state=>state.authReducer);
   const dispatch = useDispatch();
+
 
 
   
   function studentCheck (id) {
+    setStudentIds(id);
     dispatch(getStudentsGroup(id));
     setIsModalVisible(true);
   }
@@ -41,12 +44,13 @@ const GroupsTeacher = () => {
   };
 
   const handleCancel = () => {
+    console.log("cancel Modal");
     setIsModalVisible( false );
   };
 
   useEffect( () => {
     dispatch( getGroupsTeacher());
-  }, [isModalVisible] );
+  }, [dispatch] );
 
   const columns = [
     {
@@ -91,16 +95,16 @@ const GroupsTeacher = () => {
   
   return (
     <Fade>
-      <Modal title="Attendance Students" visible={ isModalVisible } onOk={ handleOk } onCancel={ handleCancel } footer={ false }>
-        <StudentCheckTeacher handleOk={ handleOk } handleCancel={ handleCancel } />
+      <Modal destroyOnClose={true} forceRender={true} title="Attendance Students" visible={ isModalVisible } onOk={ handleOk } onCancel={ handleCancel } footer={ false }>
+        <StudentCheckTeacher handleOk={ handleOk } handleCancel={ handleCancel } groupId={studentIds} />
       </Modal>
       <Row justify="space-between" align="middle">
-        <Col>
+      <Col>
           <PageHeader
             className="site-page-header"
             // onBack={ () => null }
-            title="Title"
-            subTitle="This is a subtitle"
+            title={userData.user.firstName+" "+ userData.user.lastName}
+            subTitle={userData.user.telNomer}
           />
         </Col>
       </Row>

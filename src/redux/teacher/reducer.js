@@ -18,6 +18,10 @@ import {
     POST_TEACHERS,
     POST_TEACHERS_ERROR,
     POST_TEACHERS_SUCCESS,
+    
+    CHECK_STUDENT_TEACHER,
+    CHECK_STUDENT_TEACHER_ERROR,
+    CHECK_STUDENT_TEACHER_SUCCESS,
 
     PUT_TEACHERS,
     PUT_TEACHERS_ERROR,
@@ -74,6 +78,13 @@ import {
         return { ...state, loading: false, isActive: true, success: payload };
       case POST_TEACHERS_ERROR:
         return { ...state, loading: false, error: payload };
+
+      case CHECK_STUDENT_TEACHER:
+          return { ...state, loading: true , isActive: false};
+      case CHECK_STUDENT_TEACHER_SUCCESS:
+          return { ...state, loading: false, isActive: true, success: payload };
+      case CHECK_STUDENT_TEACHER_ERROR:
+          return { ...state, loading: false, error: payload };
 
         case PUT_TEACHERS:
         return { ...state, loading: true , isActive: false};

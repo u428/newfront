@@ -1,8 +1,8 @@
 import { all, takeEvery, call, put, fork } from "@redux-saga/core/effects";
-import { GET_TEACHERS, POST_TEACHERS, GET_SINGLE_TEACHER, DELETE_TEACHER, PUT_TEACHERS, VIEW_TEACHER } from "../actions";
-import { fetchGetTeachersList, fetchPostTeacher, fetchPutTeacher, fetchGetSingleTeacher, fetchDeleteTeacher, fetchViewTeacher } from "../services/api";
+import { GET_TEACHERS, POST_TEACHERS, GET_SINGLE_TEACHER, DELETE_TEACHER, PUT_TEACHERS, VIEW_TEACHER, CHECK_STUDENT_TEACHER } from "../actions";
+import { fetchGetTeachersList, fetchPostTeacher, fetchPutTeacher, fetchGetSingleTeacher, fetchDeleteTeacher, fetchViewTeacher, fetchCheckStudentTeacher } from "../services/api";
 import { notificationMessage } from "../services/notificationMessage";
-import { getTeachersError, getTeachersSuccess, postTeachersError, putTeachersSuccess, putTeachersError, getSingleTeacherSuccess, getSingleTeacherError, deleteTeacherSuccess, deleteTeacherError, postTeachersSuccess, viewTeacherSuccess, viewTeacherError } from "./actions";
+import { getTeachersError, getTeachersSuccess, postTeachersError, putTeachersSuccess, putTeachersError, getSingleTeacherSuccess, getSingleTeacherError, deleteTeacherSuccess, deleteTeacherError, postTeachersSuccess, viewTeacherSuccess, viewTeacherError, checkStudentTeacherSuccess, checkStudentTeacherError } from "./actions";
 
 function* watchGetTeachers() {
   yield takeEvery(GET_TEACHERS, workGetTeachers);
@@ -106,6 +106,27 @@ function* workPostTeachers({payload}) {
 }
 
 
+
+function* watchCheckStudentTeacher() {
+  yield takeEvery(CHECK_STUDENT_TEACHER, workCheckStudentTeacher);
+}
+
+function* workCheckStudentTeacher({payload}) {
+
+  console.log(payload);
+  const { response, error } = yield call(fetchCheckStudentTeacher, payload);
+
+  if (response) {
+    yield put(checkStudentTeacherSuccess(response));
+    notificationMessage("success", "Tasdiqlandi");
+  } else {
+    yield put(checkStudentTeacherError(error.response.data.message));
+    notificationMessage("error", error.response.data.message);
+  }
+
+}
+
+
 function* watchPutTeachers() {
   yield takeEvery(PUT_TEACHERS, workPutTeachers);
 }
@@ -131,6 +152,7 @@ export default function* teacherSaga() {
     fork(watchPutTeachers),
     fork(watchDeleteTeacher),
     fork(watchGetSingleTeacher),
+    fork(watchCheckStudentTeacher),
     fork(watchViewTeachers),
     fork(watchPostTeachers)
   ]);
