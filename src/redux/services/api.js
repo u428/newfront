@@ -3,7 +3,7 @@ import axios from "axios";
 export const token = localStorage.getItem("token");
 export const role = localStorage.getItem("role");
 
-const URL = "http://localhost:8080/api/v1"
+const URL = "http://159.65.197.98:8080/api/v1"
 
 export const delay = async (ms) =>
   await new Promise((resolve) => {
