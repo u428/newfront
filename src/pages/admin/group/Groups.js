@@ -170,7 +170,7 @@ const Groups = () => {
         </Col>
         <Col>
           <Button type="primary" onClick={()=> showModal({}, 0) }>
-            Add teacher
+            Add Group
           </Button>
         </Col>
       </Row>

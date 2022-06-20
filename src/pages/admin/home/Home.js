@@ -1,8 +1,9 @@
 import { Card, Col, Row, Statistic } from "antd";
 import React from "react";
 import Fade from "react-reveal/Fade";
-import { UserOutlined } from '@ant-design/icons';
 import HelmetTitle from "../../../components/helmetTitle/HelmetTitle";
+import { UserOutlined } from '@ant-design/icons';
+import { TeamOutlined } from '@ant-design/icons';
 
 const Home = () => {
   return (
@@ -27,7 +28,7 @@ const Home = () => {
           <Statistic
             title="Non ACtive Students"
             value={11.28}
-            valueStyle={{ color: '#894D6B'}}
+            valueStyle={{ color: 'red'}}
             prefix={<UserOutlined />}
             suffix="%"
           />
@@ -50,7 +51,7 @@ const Home = () => {
             title="Groups"
             value={11.28}
             valueStyle={{ color: '#A8A82F' }}
-            prefix={<UserOutlined />}
+            prefix={<TeamOutlined/>}
             suffix="%"
           />
         </Card>

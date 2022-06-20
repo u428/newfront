@@ -44,7 +44,7 @@ function Login() {
         >
           <Row className="right-box-inner-row" justify="center" align="middle">
             <Col span="18">
-              <h1>Welcome to React Admin! 👋</h1>
+              <h1>Welcome to  Our system! 👋</h1>
               <p>Please sign-in to your account and start the adventure</p>
 
               <Form

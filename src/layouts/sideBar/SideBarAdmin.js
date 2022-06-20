@@ -4,11 +4,12 @@ import logo from '../../assets/images/bg/logo.png';
 
 import { PieChartOutlined, UserOutlined, TeamOutlined, FileOutlined, ProjectOutlined, UsergroupAddOutlined, ControlOutlined } from "@ant-design/icons";
 import { Link, useRouteMatch } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const { SubMenu } = Menu;
 function SideBarAdmin(props) {
   const { url } = useRouteMatch();
-
+const { i18n, t } = useTranslation();
   // const { SubMenu } = Menu;
   return (
     <Affix offsetTop={0}>
@@ -29,11 +30,11 @@ function SideBarAdmin(props) {
       <div>
       <Menu theme="light" defaultSelectedKeys={["1"]} mode="inline">
         <Menu.Item key="1" icon={<PieChartOutlined />}>
-          <Link to={`${url}/home`}> Home </Link>
+          <Link to={`${url}/home`}> {t("home")} </Link>
         </Menu.Item>
         
         <Menu.Item key="2" icon={<ProjectOutlined />}>
-          <Link to={`${url}/products`}> Products </Link>
+          <Link to={`${url}/products`}> {t("products")} </Link>
         </Menu.Item>
 
         <Menu.Item key="3" icon={<UsergroupAddOutlined />}>
