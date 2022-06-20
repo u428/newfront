@@ -112,7 +112,7 @@ function Admin () {
           </Content>
           <Footer style={ { textAlign: "center" } }>
             { " " }
-            2022 Created by Muhammad Amin 🐝
+            2022 Created by Azizbek
           </Footer>
         </Layout>
       </Layout>

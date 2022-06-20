@@ -1,3 +1,5 @@
 {
-    "msg": "this is message"
+    "msg": "this is message",
+    "home":"Home",
+    "products":"Products"
 }
