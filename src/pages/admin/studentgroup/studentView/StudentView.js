@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { HistoryOutlined, UsergroupAddOutlined} from '@ant-design/icons';
+import { HistoryOutlined, UsergroupAddOutlined, DollarCircleOutlined} from '@ant-design/icons';
 import Fade from "react-reveal/Fade";
 import { Table, Tag, Card, PageHeader, Modal, Row, Col, Button, Space } from 'antd';
 import { useDispatch, useSelector } from "react-redux";
 import StudentViewGroupModal from "./model/StudentViewGroupModal";
 import { getStudentsGroup } from "../../../../redux/student/actions";
+import StudentPaymentGroupModal from "./model/StudentPaymentGroupModal";
 
 
 
@@ -17,6 +18,8 @@ const StudentView = () => {
   // const dispatch = useDispatch();
   const dispatch = useDispatch();
   const [ isModalLoginVisible, setIsModalLoginVisible ] = useState( false );
+  const [ isModalPaymentVisible, setIsModalPaymentVisible ] = useState( false );
+  const [ groupPaymentId, setGroupPaymentId ] = useState([]);
 
 
   const handleOkLogin = () => {
@@ -26,6 +29,19 @@ const StudentView = () => {
   const handleCancel = () => {
     setIsModalLoginVisible( false );
   };
+
+  const handleOkPayment = () => {
+    setIsModalPaymentVisible( false );
+  };
+
+  const handlepaymentCancel = () => {
+    setIsModalPaymentVisible( false );
+  };
+
+  function getPayment (group) {
+    setGroupPaymentId(group);
+    setIsModalPaymentVisible( true );
+  }
 
   function getGroupStudents (group) {
     dispatch(getStudentsGroup(group.id))
@@ -73,6 +89,7 @@ const StudentView = () => {
           <Space size="middle">
               <Button  shape="circle" style={{color: "#399EFF"}} icon={<HistoryOutlined />} />
               <Button shape="circle"  onClick={() => getGroupStudents(data)} style={{color: "#399EFF"}}  icon={<UsergroupAddOutlined />} />
+              <Button shape="circle" onClick={() => getPayment(data)} style={{color: "#399EFF"}} icon={<DollarCircleOutlined />} />
           </Space>
         )
       }
@@ -89,6 +106,9 @@ const StudentView = () => {
     <Fade>
       <Modal title="Chreate Teacher" visible={ isModalLoginVisible } onOk={ handleOkLogin } onCancel={ handleCancel } footer={ false }>
         <StudentViewGroupModal  handleOk={ handleOkLogin } handleCancel={ handleCancel } />
+      </Modal>
+      <Modal title="Payment" visible={ isModalPaymentVisible } onOk={ handleOkPayment } onCancel={ handlepaymentCancel } footer={ false }>
+        <StudentPaymentGroupModal  handleOk={ handleOkPayment } handleCancel={ handlepaymentCancel } group = {groupPaymentId} />
       </Modal>
       <Row justify="space-between" align="middle">
         <Col>
