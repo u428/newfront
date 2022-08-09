@@ -38,6 +38,10 @@ import {
     PUT_STUDENT,
     PUT_STUDENT_ERROR,
     PUT_STUDENT_SUCCESS,
+
+    STUDENT_PAYMENT,
+    STUDENT_PAYMENT_ERROR,
+    STUDENT_PAYMENT_SUCCESS,
   } from "../actions";
   
   export const getNewStudents = (req) => ({
@@ -189,6 +193,21 @@ import {
   
   export const putNewStudentError = (error) => ({
     type: PUT_STUDENT_ERROR,
+    payload: error,
+  });
+
+  export const studentPayment = (history, req) => ({
+    type: STUDENT_PAYMENT,
+    payload: {history, req}
+  });
+  
+  export const studentPaymentSuccess = (response) => ({
+    type: STUDENT_PAYMENT_SUCCESS,
+    payload: response,
+  });
+  
+  export const studentPaymentError = (error) => ({
+    type: STUDENT_PAYMENT_ERROR,
     payload: error,
   });
   

@@ -5,7 +5,8 @@ import languagesSaga from "./lang/saga";
 import subjectSaga from "./subject/saga";
 import groupSaga from "./group/saga";
 import studentSaga from "./student/saga";
+import statisticsSaga from "./statistic/saga";
 
 export default function* rootSaga() {
-  yield all([authSaga(), teacherSaga(), languagesSaga(), subjectSaga(), groupSaga(), studentSaga()]);
+  yield all([authSaga(), teacherSaga(), languagesSaga(), subjectSaga(), groupSaga(), studentSaga(), statisticsSaga()]);
 }

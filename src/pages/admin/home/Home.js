@@ -1,9 +1,8 @@
-import { Card, Col, Row, Statistic } from "antd";
-import React from "react";
+import { Button, Card, Col, Row, Space, Statistic } from "antd";
+import React, { useEffect } from "react";
 import Fade from "react-reveal/Fade";
 import HelmetTitle from "../../../components/helmetTitle/HelmetTitle";
-import { UserOutlined } from '@ant-design/icons';
-import { TeamOutlined } from '@ant-design/icons';
+import { TeamOutlined, SettingOutlined, EditOutlined, EllipsisOutlined } from '@ant-design/icons';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -15,6 +14,10 @@ import {
   Legend,
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
+import { useDispatch, useSelector } from "react-redux";
+import { getStatistics } from "../../../redux/statistic/actions";
+
+
 
 ChartJS.register(
   CategoryScale,
@@ -64,22 +67,29 @@ export const data = {
       label: 'Student number',
       data: [33, 53, 85, 41, 44, 65, 72],
       fill: true,
-      borderColor: 'rgb(255, 99, 132)',
-      backgroundColor: 'rgba(255, 99, 132, 0.5)',
+      borderColor: 'rgb(255, 162, 132)',
+      backgroundColor: 'rgba(255, 162, 132, 0.5)',
       yAxisID: 'y',
     },
     {
       label: 'Payment amount on 1M',
       data: [33, 25, 35, 51, 54, 76, 69],
       fill: true,
-      borderColor: 'rgb(53, 162, 235)',
-      backgroundColor: 'rgba(53, 162, 235, 0.5)',
+      borderColor: 'rgb(180, 162, 235)',
+      backgroundColor: 'rgba(180, 162, 235, 0.5)',
       yAxisID: 'y',
     },
   ],
 };
 
 const Home = () => {
+  const dispatch = useDispatch();
+  const {statistic} = useSelector(state=>state.statisticReducer);
+  console.log(statistic);
+  useEffect( () => {
+    dispatch(getStatistics())
+  }, [] );
+  
   return (
     <Fade>
       <HelmetTitle title="Home" />
@@ -87,46 +97,56 @@ const Home = () => {
 
       <Row gutter={12}>
       <Col span={6}>
-      <Card>
+      <Card
+      hoverable
+      onClick={e=>{console.log("click card");}}
+      >
           <Statistic
-            title="Active Students"
-            value={11.28}
+            title="All Students"
+            value={statistic&&statistic.all}
             valueStyle={{ color: '#3f8600' }}
-            prefix={<UserOutlined />}
-            suffix="%"
+            prefix={<TeamOutlined />}
           />
         </Card>
       </Col>
       <Col span={6}>
-      <Card>
+      <Card  
+      hoverable
+      onClick={e=>{console.log("click card");}}
+      >
+       
           <Statistic
-            title="Non ACtive Students"
-            value={11.28}
-            valueStyle={{ color: 'red'}}
-            prefix={<UserOutlined />}
-            suffix="%"
+            title="New Students"
+            value={statistic&&statistic.new}
+            valueStyle={{ color: ''}}
+            prefix={<TeamOutlined />}
           />
+          
         </Card>
       </Col>
       <Col span={6}>
-      <Card>
+      <Card
+      hoverable
+      onClick={e=>{console.log("click card");}}
+      >
           <Statistic
-            title="Teachers"
-            value={11.28}
+            title="Payed"
+            value={statistic&&statistic.payed}
             valueStyle={{ color: '#478890' }}
-            prefix={<UserOutlined />}
-            suffix="%"
+            prefix={<TeamOutlined />}
           />
         </Card>
       </Col>
       <Col span={6}>
-      <Card>
+      <Card
+      onClick={e=>{console.log("click card");}}
+      hoverable >
+
           <Statistic
-            title="Groups"
-            value={11.28}
+            title="Not Payed"
+            value={statistic&&statistic.not_payed}
             valueStyle={{ color: '#A8A82F' }}
             prefix={<TeamOutlined/>}
-            suffix="%"
           />
         </Card>
       </Col>

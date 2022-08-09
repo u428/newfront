@@ -1,28 +1,36 @@
 import React, {useEffect, useState} from 'react'
 import { Button, Form, Input } from 'antd';
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { studentPayment } from '../../../../../redux/student/actions';
+import { useHistory } from 'react-router-dom';
 
 const StudentPaymentGroupModal = ( { handleOk, handleCancel, group} ) => {
 
-    const { studentGroup, student} = useSelector(state=>state.studentReducer);
-    console.log(student);
-    console.log(studentGroup);
+    const { studentGroup, student, isActive} = useSelector(state=>state.studentReducer);
     const [ form ] = Form.useForm();
-    console.log(group);
+    const dispatch = useDispatch();
+    let history = useHistory();
     const [numbers, setNumbers] = useState(0);
 
-    // useEffect( () => {
-    //     onReset()
-    // }, [] );
+    useEffect( () => {
+        onReset()
+        form.resetFields();
+    }, [] );
 
     const onFinish = ( values ) => {
-        
+
+        const payments = {
+            summa: values['price'],
+            studentId: student.id,
+            groupId: group.id
+        }
+        console.log(payments);
+        dispatch(studentPayment(history, payments))
         handleOk()
         onReset()
     };
 
     const onFinishFailed = ( errorInfo ) => {
-        console.log( 'Failed:', errorInfo );
         onReset()
     };
 
@@ -32,10 +40,9 @@ const StudentPaymentGroupModal = ( { handleOk, handleCancel, group} ) => {
     };
 
     const handleChange = (e) => {
-        console.log(e.target.value);
         let num = e.target.value;
-        setNumbers(num/group.price);
-      };
+        setNumbers((num*12)/group.price);
+    };
     
 
     return (
@@ -50,8 +57,8 @@ const StudentPaymentGroupModal = ( { handleOk, handleCancel, group} ) => {
 
             
             <Form.Item 
-                name="Price"
-                label="price" 
+                name="price"
+                label="Price" 
                 rules={ [ { required: true }, {min: 1, max: 40 } ] } hasFeedback>
                 <Input type="number" controls={false} onChange = {handleChange} />
             </Form.Item>

@@ -38,6 +38,10 @@ import {
   PUT_STUDENT,
   PUT_STUDENT_SUCCESS,
   PUT_STUDENT_ERROR,
+
+  STUDENT_PAYMENT,
+  STUDENT_PAYMENT_SUCCESS,
+  STUDENT_PAYMENT_ERROR,
  
   } from "../actions";
   
@@ -78,6 +82,14 @@ import {
           return { ...state, loading: false, isActive: true, students: payload.students, pagination:{...payload.pagination}};
         case GET_NEW_STUDENTS_ERROR:
           return { ...state, loading: false, isActive: false, error: payload, students: {} };
+
+          case STUDENT_PAYMENT:
+            return { ...state, isActive: false, loading: true };
+          case STUDENT_PAYMENT_SUCCESS:
+            return { ...state, loading: false, isActive: true};
+          case STUDENT_PAYMENT_ERROR:
+            return { ...state, loading: false, isActive: false};
+  
 
       case DELETE_STUDENT:
         return { ...state, isActive: false, loading: true };

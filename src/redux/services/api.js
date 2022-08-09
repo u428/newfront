@@ -3,7 +3,7 @@ import axios from "axios";
 export const token = localStorage.getItem("token");
 export const role = localStorage.getItem("role");
 
-const URL = "http://localhost:8080/api/v1"
+const URL = "http://143.198.104.17:8080/api/v1"
 
 export const delay = async (ms) =>
   await new Promise((resolve) => {
@@ -450,3 +450,30 @@ await axios
   })
 .then((response) => ({ response }))
 .catch((error) => ({ error }));
+
+export const fetchPaymentStudent = async (req) =>
+await axios
+.post(
+  `${URL}/a23d_m23_i23n/payment`,
+  req,
+  {
+  headers: {
+    Authorization: token,
+  },
+  })
+.then((response) => ({ response }))
+.catch((error) => ({ error }));
+
+// dashboard statistic
+export const fetchDashboardStatistic = async (req) =>
+await axios
+.get(
+  `${URL}/static/get_dashboard`,
+  {
+  headers: {
+    Authorization: token,
+  },
+  })
+.then((response) => ({ response }))
+.catch((error) => ({ error }));
+

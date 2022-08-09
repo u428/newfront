@@ -1,21 +1,21 @@
 import {
-  GET_STUDENT_STATISTICS,
-  GET_STUDENT_STATISTICS_SUCCESS,
-  GET_STUDENT_STATISTICS_ERROR,
+  GET_STATISTICS,
+  GET_STATISTICS_SUCCESS,
+  GET_STATISTICS_ERROR,
     
   } from "../actions";
   
-  export const getStudentStatistics = () => ({
-    type: GET_STUDENT_STATISTICS
+  export const getStatistics = () => ({
+    type: GET_STATISTICS
   });
   
-  export const getStudentStatisticSuccess = (response) => ({
-    type: GET_STUDENT_STATISTICS_SUCCESS,
+  export const getStatisticSuccess = (response) => ({
+    type: GET_STATISTICS_SUCCESS,
     payload: response,
   });
   
-  export const getStudentStatisticError = (error) => ({
-    type: GET_STUDENT_STATISTICS_ERROR,
+  export const getStatisticError = (error) => ({
+    type: GET_STATISTICS_ERROR,
     payload: error,
   });
   
