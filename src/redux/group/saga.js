@@ -1,8 +1,8 @@
 import { all, takeEvery, call, put, fork } from "@redux-saga/core/effects";
-import {GET_GROUPS, GET_SINGLE_GROUP, DELETE_GROUP, POST_GROUP, PUT_GROUP, GET_GROUPS_TEACHER} from "../actions";
-import {fetchGetGroupsList, fetchGetSingleGroups, fetchPostGroup, fetchPutGroup, fetchDeleteGroup, fetchGetGroupsTeacherList } from "../services/api";
+import {GET_GROUPS, GET_SINGLE_GROUP, DELETE_GROUP, POST_GROUP, PUT_GROUP, GET_GROUPS_TEACHER, GET_TEACHER_GROUPS} from "../actions";
+import {fetchGetGroupsList, fetchGetSingleGroups, fetchPostGroup, fetchPutGroup, fetchDeleteGroup, fetchGetGroupsTeacherList, fetchGetTeacherGroups } from "../services/api";
 import { notificationMessage } from "../services/notificationMessage";
-import {getGroupsError, getGroupsSuccess, getSingleGroupError, getSingleGroupSuccess, postGroupError, postGroupSuccess, putGroupError, putGroupSuccess, deleteGroupError, deleteGroupSuccess, getGroupsTeacherSuccess, getGroupsTeacherError} from "./actions";
+import {getGroupsError, getGroupsSuccess, getSingleGroupError, getSingleGroupSuccess, postGroupError, postGroupSuccess, putGroupError, putGroupSuccess, deleteGroupError, deleteGroupSuccess, getGroupsTeacherSuccess, getGroupsTeacherError, getTeacherGroupsSuccess, getTeacherGroupsError} from "./actions";
 
 function* watchGetGroups() {
   yield takeEvery(GET_GROUPS, workGetGroups);
@@ -115,6 +115,27 @@ function* workDeleteGroups({id}) {
   }
 }
 
+
+function* watchGetTeacherGroups() {
+  yield takeEvery(GET_TEACHER_GROUPS, workGetTeacherGroups);
+}
+
+function* workGetTeacherGroups({payload}) {
+
+  const {history, id}=payload;
+
+  const { response, error } = yield call(fetchGetTeacherGroups, id);
+
+  if (response) {
+    
+    yield put(getTeacherGroupsSuccess(response.data));
+    history.push("/admin/teacher/groups");
+  } else {
+    yield put(getTeacherGroupsError(error.response.data));
+    notificationMessage("error", "Xatolik yuz berdi");
+  }
+}
+
 export default function* groupSaga() {
   yield all([
     fork(watchDeleteGroups),
@@ -122,6 +143,7 @@ export default function* groupSaga() {
     fork(watchPutGroup),
     fork(watchPostGroup),
     fork(watchGetSingleGroups),
-    fork(watchGetGroups)
+    fork(watchGetGroups),
+    fork(watchGetTeacherGroups)
   ]);
 }

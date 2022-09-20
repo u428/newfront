@@ -322,7 +322,7 @@ const AddTeacher = ( { handleOk, handleCancel } ) => {
                 listType="picture"
                 accept='.png, .jpg, .img'
                 method='post'
-                action="http://143.198.104.17:8080/api/v1/a23d_m23_i23n/add_image"
+                action="https://qorakol-ilm-ziyo.uz/api/v1/a23d_m23_i23n/add_image"
                 onPreview={onPreview}
                 >
                     <Button>Imageni yuklash</Button>

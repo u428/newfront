@@ -76,7 +76,7 @@ function Admin () {
                   render={ ( props ) => <Setting { ...props } /> }
                 />
             
-                <Route
+                <Route exact
                   path={ `${ path }/teacher` }
                   render={ ( props ) => <Teachers { ...props } /> }
                 />
@@ -112,7 +112,7 @@ function Admin () {
           </Content>
           <Footer style={ { textAlign: "center" } }>
             { " " }
-            2022 Created by Azizbek
+            2022 Created by Muhammad Amin
           </Footer>
         </Layout>
       </Layout>

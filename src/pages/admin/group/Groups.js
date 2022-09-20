@@ -4,10 +4,12 @@ import Fade from "react-reveal/Fade";
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import { Table, Tag, Card, PageHeader, Modal, Row, Col, Button, Space, Tooltip } from 'antd';
 import { useDispatch, useSelector } from "react-redux";
-import {getGroups, deleteGroup, getSingleGroup } from "../../../redux/group/actions";
+import {getGroups, deleteGroup, getSingleGroup, getTeacherGroups } from "../../../redux/group/actions";
 import ModalGroup from "./modal/ModalGroup";
 import { getStudentsGroup } from "../../../redux/student/actions";
 import StudentListGroupModal from "./modal/StudentListGroupModal";
+import { useHistory } from "react-router-dom";
+import { viewTeacher } from "../../../redux/teacher/actions";
 
 
 
@@ -16,7 +18,7 @@ const Groups = () => {
   const {pagination, loading, isActive, groups} = useSelector(state=>state.groupReducer);
 
   console.log(groups);
-
+  let history = useHistory();
   const dispatch = useDispatch();
   const [ isModalVisible, setIsModalVisible ] = useState( false );
   const [ isStudentVisible, setIsStudentVisible ] = useState( false );
@@ -55,11 +57,7 @@ const Groups = () => {
   }
 
   function groupTeacher (id) {
-    // bu yerda teacherni otkazivarish garak
-
-    console.log(id);
-    console.log("teacher id");
-
+    dispatch(viewTeacher(history, id));
   }
 
   const handleOk = () => {
@@ -80,7 +78,7 @@ const Groups = () => {
 
   useEffect( () => {
     dispatch(getGroups(pagination));
-  }, [isModalVisible] );
+  }, [] );
 
   const columns = [
     {

@@ -3,7 +3,7 @@ import axios from "axios";
 export const token = localStorage.getItem("token");
 export const role = localStorage.getItem("role");
 
-const URL = "http://143.198.104.17:8080/api/v1"
+const URL = "http://localhost:8080/api/v1"
 
 export const delay = async (ms) =>
   await new Promise((resolve) => {
@@ -312,6 +312,19 @@ await axios
   .catch((error) => ({ error }));
 
 
+  export const fetchGetTeacherGroups = async (id) =>
+  await axios
+  .get(
+    `${URL}/static/get-teacher-groups?id=${id}`,
+    {
+    headers: {
+      Authorization: token,
+    },
+    })
+  .then((response) => ({ response }))
+  .catch((error) => ({ error }));
+
+
   // Students
 
   
@@ -465,10 +478,22 @@ await axios
 .catch((error) => ({ error }));
 
 // dashboard statistic
-export const fetchDashboardStatistic = async (req) =>
+export const fetchDashboardStatistic = async () =>
 await axios
 .get(
   `${URL}/static/get_dashboard`,
+  {
+  headers: {
+    Authorization: token,
+  },
+  })
+.then((response) => ({ response }))
+.catch((error) => ({ error }));
+
+export const fetchDashboardStatisticChart = async () =>
+await axios
+.get(
+  `${URL}/static/line_graph`,
   {
   headers: {
     Authorization: token,

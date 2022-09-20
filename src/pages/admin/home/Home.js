@@ -15,7 +15,7 @@ import {
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 import { useDispatch, useSelector } from "react-redux";
-import { getStatistics } from "../../../redux/statistic/actions";
+import { getStatistics, getStatisticsChart } from "../../../redux/statistic/actions";
 
 
 
@@ -73,7 +73,7 @@ export const data = {
     },
     {
       label: 'Payment amount on 1M',
-      data: [33, 25, 35, 51, 54, 76, 69],
+      data: [0, 0, 35, 51, 54, 76, 69],
       fill: true,
       borderColor: 'rgb(180, 162, 235)',
       backgroundColor: 'rgba(180, 162, 235, 0.5)',
@@ -84,10 +84,12 @@ export const data = {
 
 const Home = () => {
   const dispatch = useDispatch();
-  const {statistic} = useSelector(state=>state.statisticReducer);
+  const {statistic, charts} = useSelector(state=>state.statisticReducer);
   console.log(statistic);
+  console.log(charts);
   useEffect( () => {
     dispatch(getStatistics())
+    dispatch(getStatisticsChart());
   }, [] );
   
   return (

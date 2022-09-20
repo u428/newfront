@@ -32,10 +32,6 @@ const { i18n, t } = useTranslation();
         <Menu.Item key="1" icon={<PieChartOutlined />}>
           <Link to={`${url}/home`}> {t("home")} </Link>
         </Menu.Item>
-        
-        <Menu.Item key="2" icon={<ProjectOutlined />}>
-          <Link to={`${url}/products`}> {t("products")} </Link>
-        </Menu.Item>
 
         <Menu.Item key="3" icon={<UsergroupAddOutlined />}>
           <Link to={`${url}/group`}> Groups </Link>

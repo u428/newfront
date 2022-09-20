@@ -74,7 +74,7 @@ function Teacher () {
           </Content>
           <Footer style={ { textAlign: "center" } }>
             { " " }
-            2022 Created by Muhammad Amin 🐝
+            2022 Created by Muhammad Amin
           </Footer>
         </Layout>
       </Layout>

@@ -6,6 +6,10 @@ import {
     GET_GROUPS_TEACHER,
     GET_GROUPS_TEACHER_SUCCESS,
     GET_GROUPS_TEACHER_ERROR,
+
+    GET_TEACHER_GROUPS,
+    GET_TEACHER_GROUPS_SUCCESS,
+    GET_TEACHER_GROUPS_ERROR,
     
     DELETE_GROUP,
     DELETE_GROUP_SUCCESS,
@@ -29,6 +33,7 @@ import {
     isActive: false,
     error: null,
     groups: null,
+    teacherGroups: null,
     success: null,
     pagination:{
       current: 1,
@@ -51,6 +56,13 @@ import {
       case GET_GROUPS_TEACHER_SUCCESS:
         return { ...state, loading: false, isActive: true, groups: payload};
       case GET_GROUPS_TEACHER_ERROR:
+        return { ...state, loading: false, isActive: false, error: payload };
+
+      case GET_TEACHER_GROUPS:
+        return { ...state, isActive: false, loading: true };
+      case GET_TEACHER_GROUPS_SUCCESS:
+        return { ...state, loading: false, isActive: true, teacherGroups: payload};
+      case GET_TEACHER_GROUPS_ERROR:
         return { ...state, loading: false, isActive: false, error: payload };
 
       case DELETE_GROUP:

@@ -6,6 +6,10 @@ import {
     GET_GROUPS_TEACHER,
     GET_GROUPS_TEACHER_SUCCESS,
     GET_GROUPS_TEACHER_ERROR,
+
+    GET_TEACHER_GROUPS,
+    GET_TEACHER_GROUPS_SUCCESS,
+    GET_TEACHER_GROUPS_ERROR,
     
     DELETE_GROUP,
     DELETE_GROUP_SUCCESS,
@@ -37,6 +41,21 @@ import {
   
   export const getGroupsError = (error) => ({
     type: GET_GROUPS_ERROR,
+    payload: error,
+  });
+
+  export const getTeacherGroups = (history, id) => ({
+    type: GET_TEACHER_GROUPS,
+    payload: {history, id},
+  });
+
+  export const getTeacherGroupsSuccess = (response) => ({
+    type: GET_TEACHER_GROUPS_SUCCESS,
+    payload: response,
+  });
+  
+  export const getTeacherGroupsError = (error) => ({
+    type: GET_TEACHER_GROUPS_ERROR,
     payload: error,
   });
 

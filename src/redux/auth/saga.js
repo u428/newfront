@@ -69,8 +69,8 @@ function* workAuthMe({ payload }) {
       history.push("/");
     }
   } else {
-    yield put(authMeError(error.response.data.message));
-    notificationMessage("error", error.response.data.message);
+    yield put(authMeError(error.response));
+    notificationMessage("error", "ERROR Authorization");
 
     localStorage.clear();
     window.location.reload();
