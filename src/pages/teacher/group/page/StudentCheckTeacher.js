@@ -14,6 +14,7 @@ const StudentCheckTeacher = ({handleOk, handleCancel, groupId}) => {
     const {loading, isActive, studentsGroup} = useSelector(state=>state.studentReducer);
     const [indeterminate, setIndeterminate] = useState(false);
     const [checkAll, setCheckAll] = useState(false);
+    const [checkFree, setCheckFree] = useState(false);
 
     const [studentCheckIds, setStudentCheckedIds] = useState([]);
 
@@ -39,7 +40,8 @@ const StudentCheckTeacher = ({handleOk, handleCancel, groupId}) => {
         
         let req ={
             ids: studentCheckIds,
-            groupId: Number(groupId)
+            groupId: Number(groupId),
+            freeLesson: checkFree
         }
     
         dispatch(checkStudentTeacher(req));
@@ -53,6 +55,11 @@ const StudentCheckTeacher = ({handleOk, handleCancel, groupId}) => {
     const onReset = () => {
         setStudentCheckedIds([])
         form.resetFields();
+    };
+
+    const onChange = (e) => {
+        console.log(checkFree);
+        setCheckFree(!checkFree);
     };
 
       const checkedForBox = (checking, id) => {
@@ -93,8 +100,12 @@ const StudentCheckTeacher = ({handleOk, handleCancel, groupId}) => {
                     loader={<Skeleton avatar paragraph={{ rows: 1 }} active />}
                     scrollableTarget="scrollableDiv"
                 >
-                    <Checkbox indeterminate={indeterminate} checked={checkAll}>
+                    <Checkbox checked={checkAll}>
                         Check all
+                    </Checkbox>
+
+                    <Checkbox checked={checkFree} onChange={onChange}>
+                        Check for free Lesson
                     </Checkbox>
                     <Divider />
                     <List

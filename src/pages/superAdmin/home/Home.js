@@ -8,7 +8,7 @@ const Home = () => {
       <HelmetTitle title="Home" />
 
       <br></br>
-      This is a Teacher      
+      This is a Super Admin      
     </Fade>
   );
 };

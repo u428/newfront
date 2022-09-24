@@ -33,7 +33,7 @@ export const ProtectedRouteAuth = ( { component: Component, ...rest } ) => {
                 return(
                   <Redirect
                       to={ {
-                        pathname: "/super_admin",
+                        pathname: "/super-admin",
                         state: { from: props.location },
                       } }
                   />

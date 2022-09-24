@@ -11,6 +11,8 @@ import { ProtectedRouteAuth } from './ProtectedRouteAuth'
 import { ProtectedRouteTeacher } from './ProtectedRouteTeacher'
 import { ProtectedRouteSuperAdmin } from './ProtectedRouteSuperAdmin'
 import { ProtectedRouteMonitoring } from './ProtectedRouteMonitoring'
+import { RouterLanding } from './RouterLanding'
+import Home from '../pages/landing/Home'
 
 
 
@@ -20,9 +22,10 @@ function Routes () {
         <Router>
             <Switch>
                 <Redirect exact from={ `/` } to={ `/login` } />
+                {/* <RouterLanding exact path={`/`} component = {Home} /> */}
                 <ProtectedRouteAdmin path={ `/admin` } component={ Admin } />
                 <ProtectedRouteTeacher path={ `/teacher` } component={ Teacher } />
-                <ProtectedRouteSuperAdmin path={ `/super_admin` } component={ SuperAdmin } />
+                <ProtectedRouteSuperAdmin path={ `/super-admin` } component={ SuperAdmin } />
                 <ProtectedRouteMonitoring path={ `/monitoring` } component={ Monitoring } />
                 <ProtectedRouteAuth path={ `/login` } component={ Login } />
                 {/* <Redirect exact from={ `/*` } to={ `/login` } /> */}

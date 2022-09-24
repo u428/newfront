@@ -14,6 +14,8 @@ import {
 } from "react-router-dom";
 import { useBreadCrumb } from "../../hooks/useBreadCrumb";
 import Home from "./home/Home";
+import Controllers from "./controller/Controllers";
+import SideBarSuperAdmin from "../../layouts/sideBar/SideBarSuperAdmin";
 
 
 function SuperAdmin () {
@@ -41,7 +43,7 @@ function SuperAdmin () {
           collapsed={ width < 768 ? true : collapseds }
           onCollapse={ onCollapse }
         >
-          <SideBarTeacher/>
+          <SideBarSuperAdmin/>
         </Sider>
 
         <Layout className="site-layout">
@@ -64,16 +66,16 @@ function SuperAdmin () {
                   render={ ( props ) => <Home { ...props } /> }
                 />
                 
-                {/* <Route
-                  path={ `${ path }/monitoring` }
-                  render={ ( props ) => <StudentsGroup { ...props } /> }
-                /> */}
+                <Route
+                  path={ `${ path }/add-controller` }
+                  render={ ( props ) => <Controllers { ...props } /> }
+                />
               </Switch>
             </div>
           </Content>
           <Footer style={ { textAlign: "center" } }>
             { " " }
-            2022 Created by Muhammad Amin 🐝
+            2022 Created by Muhammad Amin
           </Footer>
         </Layout>
       </Layout>

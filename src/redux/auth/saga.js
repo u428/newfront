@@ -29,7 +29,7 @@ function* workAuthLogin({ payload }) {
     yield put(authMe(history));
   } else {
     yield put(authLoginError(error.response.data.message));
-    notificationMessage("error", error.response.data.message);
+    notificationMessage("error", "Login yoki parol xato");
   }
 }
 
