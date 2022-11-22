@@ -14,7 +14,6 @@ import {
 } from "react-router-dom";
 import { useBreadCrumb } from "../../hooks/useBreadCrumb";
 import Home from "./home/Home";
-import Setting from "./setting/Setting";
 import Teachers from "./teachers/Teachers";
 import Subject from "./subject/Subject";
 import Groups from "./group/Groups";
@@ -22,6 +21,7 @@ import Students from "./student/Students";
 import StudentsGroup from "./studentgroup/StudentsGroup";
 import StudentView from "./studentgroup/studentView/StudentView";
 import ViewTeacher from "./teachers/view/ViewTeacher";
+import AdminSetting from "./setting/AdminSetting";
 
 
 function Admin () {
@@ -73,7 +73,7 @@ function Admin () {
                 />
                 <Route
                   path={ `${ path }/setting` }
-                  render={ ( props ) => <Setting { ...props } /> }
+                  render={ ( props ) => <AdminSetting { ...props } /> }
                 />
             
                 <Route exact

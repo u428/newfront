@@ -14,6 +14,14 @@ import {
   GET_USERS_AUTH,
   GET_USERS_AUTH_SUCCESS,
   GET_USERS_AUTH_ERROR,
+
+  PUT_USERS_AUTH,
+  PUT_USERS_AUTH_SUCCESS,
+  PUT_USERS_AUTH_ERROR,
+
+  ADD_USERS_AUTH,
+  ADD_USERS_AUTH_SUCCESS,
+  ADD_USERS_AUTH_ERROR
     
   } from "../actions";
   
@@ -74,6 +82,36 @@ import {
   
   export const getUserAuthError = (error) => ({
     type: GET_USERS_AUTH_ERROR,
+    payload: error,
+  });
+
+  export const putUserAuth = (values) => ({
+    type: PUT_USERS_AUTH,
+    payload: values
+  });
+  
+  export const putUserAuthSuccess = (response) => ({
+    type: PUT_USERS_AUTH_SUCCESS,
+    payload: response,
+  });
+  
+  export const putUserAuthError = (error) => ({
+    type: PUT_USERS_AUTH_ERROR,
+    payload: error,
+  });
+
+  export const addUserAuth = (values) => ({
+    type: ADD_USERS_AUTH,
+    payload: values
+  });
+  
+  export const addUserAuthSuccess = (response) => ({
+    type: ADD_USERS_AUTH_SUCCESS,
+    payload: response,
+  });
+  
+  export const addUserAuthError = (error) => ({
+    type: ADD_USERS_AUTH_ERROR,
     payload: error,
   });
   

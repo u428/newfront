@@ -14,6 +14,14 @@ import {
   GET_USERS_AUTH,
   GET_USERS_AUTH_SUCCESS,
   GET_USERS_AUTH_ERROR,
+  
+  PUT_USERS_AUTH,
+  PUT_USERS_AUTH_SUCCESS,
+  PUT_USERS_AUTH_ERROR,
+
+  ADD_USERS_AUTH,
+  ADD_USERS_AUTH_SUCCESS,
+  ADD_USERS_AUTH_ERROR
 
   } from "../actions";
   
@@ -52,14 +60,28 @@ import {
       case GET_ALL_USERS_ERROR:
         return { ...state, loading: false, isActive: false, error: payload };
 
-        case GET_USERS_AUTH:
+      case GET_USERS_AUTH:
         return { ...state, isActive: false, loading: true };
       case GET_USERS_AUTH_SUCCESS:
         return { ...state, loading: false, isActive: true, userAuth: payload};
       case GET_USERS_AUTH_ERROR:
         return { ...state, loading: false, isActive: false, error: payload };
       
-      default:
+        case PUT_USERS_AUTH:
+          return { ...state, isActive: false, loading: true };
+        case PUT_USERS_AUTH_SUCCESS:
+          return { ...state, loading: false, isActive: true};
+        case PUT_USERS_AUTH_ERROR:
+          return { ...state, loading: false, isActive: false, error: payload };
+
+          case ADD_USERS_AUTH:
+          return { ...state, isActive: false, loading: true };
+        case ADD_USERS_AUTH_SUCCESS:
+          return { ...state, loading: false, isActive: true};
+        case ADD_USERS_AUTH_ERROR:
+          return { ...state, loading: false, isActive: false, error: payload };
+        
+        default:
         return { ...state };
     }
   };

@@ -3,7 +3,7 @@ import axios from "axios";
 export const token = localStorage.getItem("token");
 export const role = localStorage.getItem("role");
 
-const URL = "https://qorakol-ilm-ziyo.uz/api/v1"
+const URL = "http://localhost:8080/api/v1"
 
 export const delay = async (ms) =>
   await new Promise((resolve) => {
@@ -41,9 +41,19 @@ export const fetchAuthSetting = async (req) =>
     .then((response) => ({ response }))
     .catch((error) => ({ error }));
 
-    export const fetchGetCheckLogin = async (login) =>
+export const fetchGetCheckLogin = async (login) =>
   await axios
     .get(`${URL}/auth/check_login?login=${login}`, {
+      headers: {
+        Authorization: token,
+      },
+    })
+    .then((response) => ({ response }))
+    .catch((error) => ({ error }));
+
+    export const fetchPutUserAuth = async (req) =>
+  await axios
+    .get(`${URL}/auth/change-password?password=${req.password}&authId=${req.authId}`, {
       headers: {
         Authorization: token,
       },
@@ -527,6 +537,33 @@ await axios
   })
 .then((response) => ({ response }))
 .catch((error) => ({ error }));
+
+export const fetchPutControllerAuth = async (req) =>
+await axios
+.post(
+  `${URL}/a23d_m23_i23n/change-password-controller`,
+  req,
+  {
+  headers: {
+    Authorization: token,
+  },
+  })
+.then((response) => ({ response }))
+.catch((error) => ({ error }));
+
+export const fetchAddControllerAuth = async (req) =>
+await axios
+.post(
+  `${URL}/a23d_m23_i23n/add-controller`,
+  req,
+  {
+  headers: {
+    Authorization: token,
+  },
+  })
+.then((response) => ({ response }))
+.catch((error) => ({ error }));
+
 
 
 

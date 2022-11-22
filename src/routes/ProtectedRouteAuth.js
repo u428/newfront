@@ -48,7 +48,7 @@ export const ProtectedRouteAuth = ( { component: Component, ...rest } ) => {
                       } }
                   />
                 )
-              } else if(userData.role.name == "MONITORING"){
+              } else if(userData.role.name == "MODERATOR"){
                 return(
                   <Redirect
                       to={ {

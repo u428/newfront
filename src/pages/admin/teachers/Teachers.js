@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 
 import Fade from "react-reveal/Fade";
-import { EditOutlined, DeleteOutlined, EyeOutlined } from '@ant-design/icons';
+import { EditOutlined, DeleteOutlined, EyeOutlined, FormOutlined } from '@ant-design/icons';
 import { Table, Tag, Card, PageHeader, Modal, Row, Col, Button, Space, Tooltip } from 'antd';
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import { getTeachers, deleteTeacher, getSingleTeacher, viewTeacher } from "../../../redux/teacher/actions";
 import AddTeacher from "./modal/AddTeacher";
 import EditTeacher from "./modal/EditTeacher";
+import ChangePasswords from "./modal/ChangePasswords";
 
 
 
@@ -20,6 +21,8 @@ const Teachers = () => {
   const dispatch = useDispatch();
   const [ isModalVisible, setIsModalVisible ] = useState( false );
   const [ isEditModalVisible, setIsEditModalVisible ] = useState( false );
+  const [ passwordChange, setChangePassword ] = useState( false );
+  const [ changePassId, setChangePassId ] = useState(0);
 
   
   function deleteTeachers (teacher) {
@@ -47,11 +50,21 @@ const Teachers = () => {
     dispatch(viewTeacher(history, id))
   };
 
+  const changePassword = (id) => {
+    console.log(id);
+    setChangePassId(id);
+    setChangePassword(true);
+    // dispatch(viewTeacher(history, id))
+  };
+
   const handleOk = () => {
     setIsModalVisible( false );
   };
   const handleOk2 = () => {
     setIsEditModalVisible( false );
+  };
+  const handleOk3 = () => {
+    setChangePassword( false );
   };
 
   const handleCancel = () => {
@@ -59,6 +72,9 @@ const Teachers = () => {
   };
   const handleEDitModalCancel = () => {
     setIsEditModalVisible( false );
+  };
+  const handleCancel3 = () => {
+    setChangePassword( false );
   };
 
   useEffect( () => {
@@ -73,25 +89,25 @@ const Teachers = () => {
       render: text => <p>{ text.id }</p>,
     },
     {
-      title: 'fullName',
+      title: 'FullName',
       dataIndex: 'teacher',
       key: 'fullName',
       render: text => <p>{ text.firstName +" "+text.lastName }</p>,
     },
     {
-      title: 'gmail',
+      title: 'Gmail',
       dataIndex: 'teacher',
       key: 'gmail',
       render: text => <p>{ text.gmail }</p>,
     },
     {
-      title: 'telNumber',
+      title: 'Tel Number',
       dataIndex: 'teacher',
       key: 'telNomer',
       render: text => <p>{ text.telNomer }</p>,
     },
     {
-      title: 'language',
+      title: 'Language',
       dataIndex: 'teacher',
       key: 'languages',
       render: text => (
@@ -112,7 +128,7 @@ const Teachers = () => {
       )
     },
     {
-      title: 'subjects',
+      title: 'Subjects',
       dataIndex: 'teacher',
       key: 'subjects',
       render: text => (
@@ -132,7 +148,13 @@ const Teachers = () => {
       )
     },
     {
-      title: 'groups',
+      title: 'Login',
+      dataIndex: 'login',
+      key: 'telNomerlogin',
+      render: text => <p>{ text }</p>,
+    },
+    {
+      title: 'Groups',
       dataIndex: 'groups',
       key: 'groups',
       render: text => <Button type="primary" shape="circle">{text}</Button>
@@ -146,6 +168,7 @@ const Teachers = () => {
               <Button onClick={() => showEditModal(data.teacher.id)}  shape="circle" warning icon={<EditOutlined />} />
               <Button onClick={() => deleteTeachers(data.teacher)} shape="circle" danger  icon={<DeleteOutlined />} />
               <Button onClick={() => viewTeachers(data.teacher.id)} shape="circle" info  icon={ <EyeOutlined />} />
+              <Button onClick={() => changePassword(data.teacher.authId)} shape="circle" info  icon={ <FormOutlined />} />
           </Space>
         )
       },
@@ -166,6 +189,9 @@ const Teachers = () => {
       </Modal>
       <Modal title="Change Teacher" visible={ isEditModalVisible } onOk={ handleOk2 } onCancel={ handleEDitModalCancel } footer={ false }>
         <EditTeacher handleOk2={ handleOk2 } handleCancel={ handleEDitModalCancel } />
+      </Modal>
+      <Modal title="Change Teacher" visible={ passwordChange } onOk={ handleOk3 } onCancel={ handleCancel3 } footer={ false }>
+        <ChangePasswords handleOk3={ handleOk3 } handleCancel3={ handleCancel3 } changePassId={changePassId} />
       </Modal>
 
       <Row justify="space-between" align="middle">

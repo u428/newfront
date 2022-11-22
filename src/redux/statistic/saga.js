@@ -1,8 +1,8 @@
 import { all, takeEvery, call, put, fork} from "@redux-saga/core/effects";
-import { GET_ALL_USERS, GET_STATISTICS, GET_STATISTICS_CHART, GET_USERS_AUTH } from "../actions";
-import { fetchDashboardStatistic, fetchDashboardStatisticChart, fetchGetAllControllers, fetchGetControllerAuth } from "../services/api";
+import { ADD_USERS_AUTH, GET_ALL_USERS, GET_STATISTICS, GET_STATISTICS_CHART, GET_USERS_AUTH, PUT_USERS_AUTH } from "../actions";
+import { fetchAddControllerAuth, fetchDashboardStatistic, fetchDashboardStatisticChart, fetchGetAllControllers, fetchGetControllerAuth, fetchPutControllerAuth } from "../services/api";
 import { notificationMessage } from "../services/notificationMessage";
-import { getAllUsersError, getAllUsersSuccess, getStatisticChartError, getStatisticChartSuccess, getStatisticError, getStatisticSuccess, getUserAuthError, getUserAuthSuccess } from "./actions";
+import { addUserAuthError, addUserAuthSuccess, getAllUsersError, getAllUsersSuccess, getStatisticChartError, getStatisticChartSuccess, getStatisticError, getStatisticSuccess, getUserAuthError, getUserAuthSuccess, putUserAuthError, putUserAuthSuccess } from "./actions";
 
 function* watchGetStatistics() {
   yield takeEvery(GET_STATISTICS, workGetStatistics);
@@ -46,11 +46,10 @@ function* workGetAllUsers() {
   const { response, error } = yield call(fetchGetAllControllers);
   
   if (response) {
-    console.log(response);
     yield put(getAllUsersSuccess(response.data));
   } else {
     yield put(getAllUsersError(error.response.data.message));
-    notificationMessage("error", error.response.data.message);
+    notificationMessage("error", "Bu yerda qandaydir xatolik ro'y berdi");
   }
 }
 
@@ -58,8 +57,9 @@ function* watchGetUserAuth() {
   yield takeEvery(GET_USERS_AUTH, workGetUserAuth);
 }
 
-function* workGetUserAuth() {
-  const { response, error } = yield call(fetchGetControllerAuth);
+function* workGetUserAuth({payload}) {
+  console.log(payload);
+  const { response, error } = yield call(fetchGetControllerAuth, payload);
   
   if (response) {
     console.log(response);
@@ -70,12 +70,46 @@ function* workGetUserAuth() {
   }
 }
 
+function* watchPutUserAuth() {
+  yield takeEvery(PUT_USERS_AUTH, workPutUserAuth);
+}
+
+function* workPutUserAuth({payload}) {
+  console.log(payload);
+  const { response, error } = yield call(fetchPutControllerAuth, payload);
+  
+  if (response) {
+    console.log(response);
+    yield put(putUserAuthSuccess(response.data));
+  } else {
+    yield put(putUserAuthError(error.response.data));
+    notificationMessage("error", "Xatolik yuz berdi");
+  }
+}
+
+function* watchAddUserAuth() {
+  yield takeEvery(ADD_USERS_AUTH, workAddUserAuth);
+}
+
+function* workAddUserAuth({payload}) {
+  console.log(payload);
+  const { response, error } = yield call(fetchAddControllerAuth, payload);
+  if (response) {
+    yield put(addUserAuthSuccess(response.data));
+  } else {
+    yield put(addUserAuthError(error.response.data));
+    notificationMessage("error", "Xatolik yuz berdi");
+  }
+}
+
 
 export default function* statisticsSaga() {
   yield all([
     fork(watchGetStatistics),
     fork(watchGetStatisticsChart),
     fork(watchGetAllUsers),
-    fork(watchGetUserAuth)
+    fork(watchGetUserAuth),
+    fork(watchPutUserAuth),
+    fork(watchAddUserAuth)
   ]);
 }

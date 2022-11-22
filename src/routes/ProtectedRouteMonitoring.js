@@ -16,7 +16,7 @@ export const ProtectedRouteMonitoring = ({ component: Component, ...rest }) => {
       render={(props) =>
         {
           if(token  && userData){
-            if(userData.role.name == "MONITORING"){
+            if(userData.role.name == "MODERATOR"){
               return(
                 <Component {...props} />
               )

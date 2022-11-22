@@ -4,7 +4,10 @@ import Fade from "react-reveal/Fade";
 import { Table, Tag, Card, PageHeader, Modal, Row, Col, Button, Space, Tooltip } from 'antd';
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
-import { getAllUsers } from "../../../redux/statistic/actions";
+import { getAllUsers, getUserAuth } from "../../../redux/statistic/actions";
+import { EditOutlined, CheckOutlined , InfoOutlined} from '@ant-design/icons';
+import EditController from "./modal/EditController";
+import AddAdmins from "./modal/AddAdmins";
 
 
 
@@ -17,6 +20,7 @@ const Controllers = () => {
 
   const dispatch = useDispatch();
   const [ isModalVisible, setIsModalVisible ] = useState( false );
+  const [ isEditModalVisible, setIsEditModalVisible ] = useState( false );
 
   
   function deleteTeachers (teacher) {
@@ -31,6 +35,16 @@ const Controllers = () => {
     })
   }
 
+  const editIt = (id) =>{
+    // console.log(id);
+    dispatch(getUserAuth(id))
+    setIsModalVisible( true );
+  }
+
+  const showEditModal = (id) => {
+    setIsEditModalVisible( true );
+  };
+
   const showModal = () => {
     setIsModalVisible( true );
   };
@@ -39,8 +53,15 @@ const Controllers = () => {
     setIsModalVisible( false );
   };
 
+  const handleOk2 = () => {
+    setIsEditModalVisible( false );
+  };
+
   const handleCancel = () => {
     setIsModalVisible( false );
+  };
+  const handleEDitModalCancel = () => {
+    setIsEditModalVisible( false );
   };
 
   useEffect( () => {
@@ -61,16 +82,16 @@ const Controllers = () => {
       render: text => <p>{ text.firstName +" "+text.lastName }</p>,
     },
     {
-      title: 'gmail',
-      dataIndex: 'teacher',
-      key: 'gmail',
-      render: text => <p>{ text.gmail }</p>,
+      title: 'Auth',
+      dataIndex: 'auth',
+      key: 'auth',
+      render: text => <p>{ text.login }</p>,
     },
     {
-      title: 'telNumber',
-      dataIndex: 'teacher',
-      key: 'telNomer',
-      render: text => <p>{ text.telNomer }</p>,
+      title: 'Role',
+      dataIndex: 'auth',
+      key: 'role',
+      render: text => <p>{ text.roles.name }</p>,
     },
     {
       title: 'Action',
@@ -78,8 +99,8 @@ const Controllers = () => {
       render: ( data ) => {
         return (
           <Space size="middle">
-              {/* <Button onClick={() => showEditModal(data.teacher.id)}  shape="circle" warning icon={<EditOutlined />} />
-              <Button onClick={() => deleteTeachers(data.teacher)} shape="circle" danger  icon={<DeleteOutlined />} />
+              <Button onClick={() => {editIt(data.teacher.id)}}  shape="circle" warning icon={<EditOutlined />} />
+              {/* <Button onClick={() => deleteTeachers(data.teacher)} shape="circle" danger  icon={<DeleteOutlined />} />
               <Button onClick={() => viewTeachers(data.teacher.id)} shape="circle" info  icon={ <EyeOutlined />} /> */}
           </Space>
         )
@@ -90,8 +111,11 @@ const Controllers = () => {
   
   return (
     <Fade>
-      <Modal title="Chreate Teacher" visible={ isModalVisible } onOk={ handleOk } onCancel={ handleCancel } footer={ false }>
-        {/* <AddTeacher handleOk={ handleOk } handleCancel={ handleCancel } /> */}
+      <Modal title="Chreate Login" visible={ isModalVisible } onOk={ handleOk } onCancel={ handleCancel } footer={ false }>
+        <EditController handleOk={ handleOk } handleCancel={ handleCancel } />
+      </Modal>
+      <Modal title="Add Admins" visible={ isEditModalVisible } onOk={ handleOk2 } onCancel={ handleEDitModalCancel } footer={ false }>
+        <AddAdmins handleOk2={ handleOk2 } handleCancel={ handleEDitModalCancel } />
       </Modal>
 
       <Row justify="space-between" align="middle">
@@ -104,8 +128,8 @@ const Controllers = () => {
           />
         </Col>
         <Col>
-          <Button type="primary" onClick={ showModal }>
-            Add teacher
+          <Button type="primary" onClick={ showEditModal }>
+            Add Admins
           </Button>
         </Col>
       </Row>

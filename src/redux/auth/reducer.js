@@ -11,6 +11,11 @@ import {
   AUTH_SETTING,
   AUTH_SETTING_ERROR,
   AUTH_SETTING_SUCCESS,
+
+  PUT_USER_AUTH_SETTING,
+  PUT_USER_AUTH_SETTING_SUCCESS,
+  PUT_USER_AUTH_SETTING_ERROR,
+  
 } from "../actions";
 
 const INIT_STATE = {
@@ -45,6 +50,15 @@ export const authReducer = (state = INIT_STATE, { type, payload }) => {
       return { ...state, loading: false, userData: payload };
     case AUTH_SETTING_ERROR:
       return { ...state, loading: false, error: payload };
+
+
+      case PUT_USER_AUTH_SETTING:
+        return { ...state, loading: true };
+      case PUT_USER_AUTH_SETTING_SUCCESS:
+        return { ...state, loading: false};
+      case PUT_USER_AUTH_SETTING_ERROR:
+        return { ...state, loading: false, error: payload };
+    
     default:
       return { ...state };
   }

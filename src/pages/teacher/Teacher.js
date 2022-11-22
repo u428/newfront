@@ -15,6 +15,7 @@ import {
 import { useBreadCrumb } from "../../hooks/useBreadCrumb";
 import Home from "./home/Home";
 import GroupsTeacher from "./group/GroupsTeacher";
+import TeacherSetting from "./setting/TeacherSetting";
 
 
 function Teacher () {
@@ -63,6 +64,11 @@ function Teacher () {
                 <Route
                   path={ `${ path }/home` }
                   render={ ( props ) => <Home { ...props } /> }
+                />
+
+                <Route
+                  path={ `${ path }/setting` }
+                  render={ ( props ) => <TeacherSetting { ...props } /> }
                 />
                 
                 <Route

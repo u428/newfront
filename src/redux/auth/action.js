@@ -14,6 +14,11 @@ import {
   AUTH_SETTING,
   AUTH_SETTING_ERROR,
   AUTH_SETTING_SUCCESS,
+
+  PUT_USER_AUTH_SETTING,
+  PUT_USER_AUTH_SETTING_SUCCESS,
+  PUT_USER_AUTH_SETTING_ERROR,
+  
   
 } from "../actions";
 
@@ -73,5 +78,22 @@ export const authSettingSuccess = (res) => ({
 
 export const authSettingError = (error) => ({
   type: AUTH_SETTING_ERROR,
+  payload: error,
+});
+
+
+
+export const putUserAuthSetting = (req) => ({
+  type: PUT_USER_AUTH_SETTING,
+  payload: req,
+});
+
+export const putUserAuthSettingSuccess = (res) => ({
+  type: PUT_USER_AUTH_SETTING_SUCCESS,
+  payload: res,
+});
+
+export const putUserAuthSettingError = (error) => ({
+  type: PUT_USER_AUTH_SETTING_ERROR,
   payload: error,
 });

@@ -1,6 +1,6 @@
 import { all, takeEvery, call, put, fork } from "@redux-saga/core/effects";
-import { AUTH_LOGIN, AUTH_LOGOUT, AUTH_ME, AUTH_SETTING } from "../actions";
-import { fetchAuthLogin, fetchAuthMe, fetchAuthSetting } from "../services/api";
+import { AUTH_LOGIN, AUTH_LOGOUT, AUTH_ME, AUTH_SETTING, PUT_USERS_AUTH, PUT_USER_AUTH_SETTING } from "../actions";
+import { fetchAuthLogin, fetchAuthMe, fetchAuthSetting, fetchPutUserAuth } from "../services/api";
 import { notificationMessage } from "../services/notificationMessage";
 import {
   authLoginError,
@@ -12,6 +12,8 @@ import {
   authMeSuccess,
   authSettingError,
   authSettingSuccess,
+  putUserAuthSettingError,
+  putUserAuthSettingSuccess,
 } from "./action";
 
 function* watchAuthLogin() {
@@ -95,11 +97,32 @@ function* workAuthSetting({ payload }) {
   }
 }
 
+
+function* watchPutUserAuthSetting() {
+  yield takeEvery(PUT_USER_AUTH_SETTING, workPutUserAuthSetting);
+}
+
+function* workPutUserAuthSetting({ payload }) {
+  const req = payload;
+
+  const { response, error } = yield call(fetchPutUserAuth, req);
+
+  if (response) {
+    yield put(putUserAuthSettingSuccess(response.data.data));
+    notificationMessage("success", "Password changed");
+    yield fork(authMe);
+  } else {
+    yield put(putUserAuthSettingError(error));
+    notificationMessage("error", error.response.data.message);
+  }
+}
+
 export default function* authSaga() {
   yield all([
     fork(watchAuthLogin),
     fork(watchAuthLogout),
     fork(watchAuthMe),
     fork(watchAuthSetting),
+    fork(watchPutUserAuthSetting),
   ]);
 }

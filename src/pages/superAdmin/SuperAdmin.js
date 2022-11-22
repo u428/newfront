@@ -16,6 +16,7 @@ import { useBreadCrumb } from "../../hooks/useBreadCrumb";
 import Home from "./home/Home";
 import Controllers from "./controller/Controllers";
 import SideBarSuperAdmin from "../../layouts/sideBar/SideBarSuperAdmin";
+import SAdminSetting from "./controller/setting/SAdminSetting";
 
 
 function SuperAdmin () {
@@ -69,6 +70,11 @@ function SuperAdmin () {
                 <Route
                   path={ `${ path }/add-controller` }
                   render={ ( props ) => <Controllers { ...props } /> }
+                />
+
+                <Route
+                  path={ `${ path }/setting` }
+                  render={ ( props ) => <SAdminSetting { ...props } /> }
                 />
               </Switch>
             </div>
