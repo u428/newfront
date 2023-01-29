@@ -6,10 +6,10 @@ import { Table, Tag, Card, PageHeader, Modal, Row, Col, Button, Space, Tooltip }
 import { useDispatch, useSelector } from "react-redux";
 import { getSubjects, deleteSubject, getSingleSubject } from "../../../redux/subject/actions";
 import ModalSubject from "./modal/ModalSubject";
-
+import { useTranslation } from "react-i18next";
 
 const Subject = () => {
-
+  const { i18n, t } = useTranslation();
   const dispatch = useDispatch();
   const [ isModalVisible, setIsModalVisible ] = useState( false );
   const [ modalData, setModalData ] = useState( {} );
@@ -19,10 +19,10 @@ const {isActive, loading, subjects} = useSelector(state => state.subjectReducer)
   
   function deleteSubjects (subject) {
     Modal.confirm({
-      title: "siz shu "+subject.id+" ni ochirmoqchimisiz",
-      okText: "Xa",
+      title: t("del_title1")+"<"+subject.id+">"+t("del_title2"),
+      okText: t("yes"),
       okType:"danger",
-      cancelText:"yoq",
+      cancelText:t("no"),
       onOk: () =>{
         dispatch(deleteSubject(subject.id));
       }
@@ -62,22 +62,22 @@ const {isActive, loading, subjects} = useSelector(state => state.subjectReducer)
       key: 'id',
     },
     {
-      title: 'name Uz',
+      title: t("name_uz") ,
       dataIndex: 'nameUz',
       key: 'nameUz',
     },
     {
-      title: 'name Ru',
+      title: t("name_ru"),
       dataIndex: 'nameRu',
       key: 'nameRu',
     },
     {
-      title: 'name En',
+      title: t("name_en"),
       dataIndex: 'nameEn',
       key: 'nameEn',
     },
     {
-      title: 'description',
+      title: t("descryption"),
       dataIndex: 'description',
       key: 'description',
       // render: text => <p>{ text.telNomer }</p>,
@@ -114,7 +114,7 @@ const {isActive, loading, subjects} = useSelector(state => state.subjectReducer)
         </Col>
         <Col>
           <Button type="primary" onClick={()=> showModal({}, 0) }>
-            Add Subject
+          {t("add_subject")}
           </Button>
         </Col>
       </Row>

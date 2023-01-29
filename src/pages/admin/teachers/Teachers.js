@@ -9,7 +9,7 @@ import { getTeachers, deleteTeacher, getSingleTeacher, viewTeacher } from "../..
 import AddTeacher from "./modal/AddTeacher";
 import EditTeacher from "./modal/EditTeacher";
 import ChangePasswords from "./modal/ChangePasswords";
-
+import { useTranslation } from "react-i18next";
 
 
 const Teachers = () => {
@@ -17,7 +17,7 @@ const Teachers = () => {
   let history = useHistory();
 
   const {pagination, loading, isActive, teachers} = useSelector(state=>state.teacherReducer);
-
+  const { i18n, t } = useTranslation();
   const dispatch = useDispatch();
   const [ isModalVisible, setIsModalVisible ] = useState( false );
   const [ isEditModalVisible, setIsEditModalVisible ] = useState( false );
@@ -89,25 +89,25 @@ const Teachers = () => {
       render: text => <p>{ text.id }</p>,
     },
     {
-      title: 'FullName',
+      title: t("person_full_name"),
       dataIndex: 'teacher',
       key: 'fullName',
       render: text => <p>{ text.firstName +" "+text.lastName }</p>,
     },
     {
-      title: 'Gmail',
+      title: t("person_gmail"),
       dataIndex: 'teacher',
       key: 'gmail',
       render: text => <p>{ text.gmail }</p>,
     },
     {
-      title: 'Tel Number',
+      title: t("person_tel_nomer"),
       dataIndex: 'teacher',
       key: 'telNomer',
       render: text => <p>{ text.telNomer }</p>,
     },
     {
-      title: 'Language',
+      title: t("language"),
       dataIndex: 'teacher',
       key: 'languages',
       render: text => (
@@ -128,7 +128,7 @@ const Teachers = () => {
       )
     },
     {
-      title: 'Subjects',
+      title: t("subject"),
       dataIndex: 'teacher',
       key: 'subjects',
       render: text => (
@@ -148,19 +148,19 @@ const Teachers = () => {
       )
     },
     {
-      title: 'Login',
+      title: t("login"),
       dataIndex: 'login',
       key: 'telNomerlogin',
       render: text => <p>{ text }</p>,
     },
     {
-      title: 'Groups',
+      title: t("group"),
       dataIndex: 'groups',
       key: 'groups',
       render: text => <Button type="primary" shape="circle">{text}</Button>
     },
     {
-      title: 'Action',
+      title: t("actions"),
       key: 'action',
       render: ( data ) => {
         return (
@@ -205,7 +205,7 @@ const Teachers = () => {
         </Col>
         <Col>
           <Button type="primary" onClick={ showModal }>
-            Add teacher
+          {t("add_teacher")}
           </Button>
         </Col>
       </Row>

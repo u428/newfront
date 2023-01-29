@@ -3,12 +3,11 @@ import { Form, Input, Button, Space, Upload, TreeSelect, DatePicker, Select } fr
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import { getSubjects, postSubject, putSubject } from '../../../../redux/subject/actions';
-import moment from 'moment';
-import ImgCrop from 'antd-img-crop';
-import Subject from '../Subject';
+import { useTranslation } from "react-i18next";
 
 const ModalSubject = ( { handleOk, handleCancel, count } ) => {
 
+    const { i18n, t } = useTranslation();
     const [ form ] = Form.useForm();
     const dispatch = useDispatch();
     const { TreeNode } = TreeSelect;
@@ -17,9 +16,6 @@ const ModalSubject = ( { handleOk, handleCancel, count } ) => {
     const {isActive, subject} = useSelector(state => state.subjectReducer);
 
     useEffect( () => {
-        
-        console.log(subject);
-        console.log(count);
         if(count > 0){
             console.log(count);
             form.setFieldsValue({
@@ -37,8 +33,6 @@ const ModalSubject = ( { handleOk, handleCancel, count } ) => {
     }, [count] );
 
     const onFinish = ( values ) => {
-        console.log(values);
-        
         if(count > 0){
             let returns = {
                 "id":subject.id,
@@ -77,31 +71,32 @@ const ModalSubject = ( { handleOk, handleCancel, count } ) => {
         autoComplete='off'
         form={ form } 
         layout="vertical"
-        name="subject" 
+        name={t("add_subject")} 
         onFinish={ onFinish } 
         onFinishFailed={ onFinishFailed }>
 
             <Form.Item 
-                name="nameUz" 
-                label="O'zbekcha nomi" 
+                label={t("name_uz")} 
+                name="nameUz"
                 rules={ [ { required: true, message: "Iltimos joyni toldiring" }, {min: 3, max: 20 } ] }>
                 <Input />
             </Form.Item>
             <Form.Item 
                 name="nameRu" 
-                label="Ruscha nomi" 
+                label={t("name_ru")} 
                 rules={ [ { required: true, message: "Iltimos joyni toldiring" }, {min: 3, max: 20 } ] }>
                 <Input />
             </Form.Item>
             <Form.Item 
                 name="nameEn" 
-                label="Inglizcha nomi" 
+                label={t("name_en")} 
                 rules={ [ { required: true, message: "Iltimos joyni toldiring" }, {min: 3, max: 20 } ] }>
                 <Input />
             </Form.Item>
             <Form.Item 
                 name="description" 
-                label="tarif bering">
+                label={t("descryption")} 
+                >
                  <Input />
             </Form.Item>
             
@@ -116,7 +111,7 @@ const ModalSubject = ( { handleOk, handleCancel, count } ) => {
                       !!form.getFieldsError().filter(({ errors }) => errors.length).length
                     }
                   >
-                   Add Teacher
+                   {count>0?t("change"):t("add")}
                   </Button>
                 )}
             </Form.Item>

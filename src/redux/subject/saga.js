@@ -49,7 +49,7 @@ console.log(req);
 
   if (response) {
     console.log(response);
-    notificationMessage("success", " Qo'shildi");
+    notificationMessage("success","added");
     yield put(postSubjectSuccess(response.data));
     yield fork(workGetSubjects);
   } else {

@@ -8,6 +8,7 @@ import { getSubjects } from '../../../../redux/subject/actions';
 import moment from 'moment';
 import { EyeInvisibleOutlined, EyeTwoTone, UploadOutlined, InboxOutlined } from '@ant-design/icons';
 import { MaskedInput } from 'antd-mask-input';
+import { useTranslation } from "react-i18next";
 
 const options = [{ id: 3, value: 'Boshqa' }, {id: 1, value: 'Erkak' }, {id: 2, value: 'Ayol' }];
 const EditTeacher = ( { handleOk2, handleEDitModalCancel } ) => {
@@ -16,6 +17,7 @@ const EditTeacher = ( { handleOk2, handleEDitModalCancel } ) => {
     const { TreeNode } = TreeSelect;
     let history = useHistory();
     let emailRef = useRef()
+    const { i18n, t } = useTranslation();
 
     const [initValue, setInitValue] = useState({});
 
@@ -120,22 +122,32 @@ const EditTeacher = ( { handleOk2, handleEDitModalCancel } ) => {
         <Form 
         form={ form } 
         layout="vertical"
-        name="edit-teacher"
+        name={t("edit_teacher")} 
         onFinish={ onFinish } 
         onFinishFailed={ onFinishFailed }>
 
-            <Form.Item name="firstName" label="Ismingiz" rules={ [ { required: true, message: "Iltimos ismingizni kiriting" } ] }>
+            <Form.Item 
+                name="firstName" 
+                label={t("first_name")} 
+                rules={ [ { required: true, message: "Iltimos ismingizni kiriting" } ] }>
                 <Input />
             </Form.Item>
-            <Form.Item name="lastName" label="Familiyangiz" rules={ [ { required: true, message: "Iltimos familiyangizni kiriting" } ] }>
+            <Form.Item 
+                name="lastName" 
+                label={t("last_name")} 
+                rules={ [ { required: true, message: "Iltimos familiyangizni kiriting" } ] }>
                 <Input />
             </Form.Item>
-            <Form.Item name="middleName" label="Otangizni ismi" rules={ [ { required: true } ] }>
+            <Form.Item 
+                name="middleName" 
+                label={t("middle_name")} 
+                rules={ [ { required: true } ] }>
                 <Input />
             </Form.Item>
             <Form.Item 
                 name="birthDate" 
-                label="Tugilgan sana">
+                label={t("birth_date")} 
+                >
                 <DatePicker 
                     style={{width: "100%"}}
                     format={dateFormat}
@@ -144,7 +156,7 @@ const EditTeacher = ( { handleOk2, handleEDitModalCancel } ) => {
             </Form.Item>
             <Form.Item 
                 name="gender" 
-                label="Jinsingiz" 
+                label={t("gender")} 
                 rules={ [ { required: true }] }>
                 <Select>
                     <>
@@ -160,10 +172,16 @@ const EditTeacher = ( { handleOk2, handleEDitModalCancel } ) => {
                     </>
                 </Select>
             </Form.Item>
-            <Form.Item name="gmail" label="G-mail" rules={ [ { required: false } ] }>
+            <Form.Item 
+                name="gmail" 
+                label={t("g_mail")} 
+                rules={ [ { required: false } ] }>
                 <Input />
             </Form.Item>
-            <Form.Item name="telNomer" label="Telefon nomer" rules={ [ { required: true } ] }>
+            <Form.Item 
+                name="telNomer" 
+                label={t("tel_number")} 
+                 rules={ [ { required: true } ] }>
                 <MaskedInput
         ref={emailRef}
         mask="+998(00) 000 00 00"
@@ -172,17 +190,29 @@ const EditTeacher = ( { handleOk2, handleEDitModalCancel } ) => {
         // onBlur={handleBlur}
       />
             </Form.Item>
-            <Form.Item name="tgLink" label="Telegram link" rules={ [ { required: false } ] }>
+            <Form.Item 
+                name="tgLink" 
+                label={t("telegram_link")} 
+                rules={ [ { required: false } ] }>
                 <Input />
             </Form.Item>
-            <Form.Item name="fLink" label="Facebook link" rules={ [ { required: false } ] }>
+            <Form.Item 
+                name="fLink" 
+                label={t("facebook_link")} 
+                rules={ [ { required: false } ] }>
                 <Input />
             </Form.Item>
-            <Form.Item name="inLink" label="Instagram link" rules={ [ { required: false } ] }>
+            <Form.Item 
+                name="inLink" 
+                label={t("instagram_link")} 
+                rules={ [ { required: false } ] }>
                 <Input />
             </Form.Item>
 
-            <Form.Item name="languageId" label="Tilni tanlang" rules={ [ { required: true } ] }>
+            <Form.Item 
+                name="languageId" 
+                label={t("language")} 
+                rules={ [ { required: true } ] }>
             <TreeSelect
                 showSearch
                 style={{ width: '100%' }}
@@ -206,7 +236,10 @@ const EditTeacher = ( { handleOk2, handleEDitModalCancel } ) => {
             </TreeSelect>
             </Form.Item>
 
-            <Form.Item name="subjectId" label="Fanni tanlang" rules={ [ { required: true } ] }>
+            <Form.Item 
+                name="subjectId" 
+                label={t("subject")} 
+                rules={ [ { required: true } ] }>
             <TreeSelect
                 showSearch
                 style={{ width: '100%' }}
@@ -229,7 +262,10 @@ const EditTeacher = ( { handleOk2, handleEDitModalCancel } ) => {
                </>
             </TreeSelect>
             </Form.Item>
-            <Form.Item name="images" label="Imageni tanlang">
+            <Form.Item 
+                name="images" 
+                label={t("choice_image")} 
+                >
                 <Upload.Dragger 
                 maxCount={1}
                 name="file"

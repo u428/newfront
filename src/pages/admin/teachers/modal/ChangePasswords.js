@@ -2,10 +2,12 @@ import React, {useEffect} from 'react'
 import { Form, Input, Button } from 'antd';
 import { useDispatch } from "react-redux";
 import { putUserAuthSetting } from '../../../../redux/auth/action';
+import { useTranslation } from "react-i18next";
 
 const ChangePasswords = ( { handleOk3, handleCancel3, changePassId } ) => {
     const [ form ] = Form.useForm();
     const dispatch = useDispatch();
+    const { i18n, t } = useTranslation();
    
     const onFinish = ( values ) => {
 
@@ -32,12 +34,12 @@ const ChangePasswords = ( { handleOk3, handleCancel3, changePassId } ) => {
         autoComplete='off'
         form={ form } 
         layout="vertical"
-        name="add-teacher" 
+        name={t("teacher_change_password")}
         onFinish={ onFinish }>
 
             <Form.Item 
                 name="password" 
-                label="Parol"  
+                label= {t("password")} 
                 rules={ [ { required: true }, {min: 5, max: 15 } ] }
                 hasFeedback
                 >
@@ -46,7 +48,7 @@ const ChangePasswords = ( { handleOk3, handleCancel3, changePassId } ) => {
             <Form.Item 
                 name="repassword" 
                 dependencies={['password']} 
-                label="Parolni Takrorlang" 
+                label= {t("re_password")} 
                 rules={ [ {
                      required: true 
                     },
@@ -74,7 +76,7 @@ const ChangePasswords = ( { handleOk3, handleCancel3, changePassId } ) => {
                       !!form.getFieldsError().filter(({ errors }) => errors.length).length
                     }
                   >
-                   Add Teacher
+                   {t("change")} 
                   </Button>
                 )}
             </Form.Item>

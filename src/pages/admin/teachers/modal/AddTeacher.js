@@ -10,6 +10,7 @@ import ImgCrop from 'antd-img-crop';
 import { EyeInvisibleOutlined, EyeTwoTone, UploadOutlined, InboxOutlined } from '@ant-design/icons';
 import { fetchGetCheckLogin } from '../../../../redux/services/api';
 import { MaskedInput } from 'antd-mask-input';
+import { useTranslation } from "react-i18next";
 
 const options = [{id: 0, value: 'Boshqa' }, {id: 1, value: 'Erkak' }, {id: 2, value: 'Ayol' }];
 const AddTeacher = ( { handleOk, handleCancel } ) => {
@@ -17,7 +18,7 @@ const AddTeacher = ( { handleOk, handleCancel } ) => {
     const dispatch = useDispatch();
     const { TreeNode } = TreeSelect;
     let history = useHistory();
-
+    const { i18n, t } = useTranslation();
     let emailRef = useRef()
 
     const dateFormat = 'DD.MM.YYYY';
@@ -141,31 +142,31 @@ const AddTeacher = ( { handleOk, handleCancel } ) => {
         autoComplete='off'
         form={ form } 
         layout="vertical"
-        name="add-teacher" 
+        name={t("add_teacher")} 
         onFinish={ onFinish } 
         onFinishFailed={ onFinishFailed }>
 
             <Form.Item 
                 name="firstName" 
-                label="Ismingiz" 
+                label= {t("first_name")} 
                 rules={ [ { required: true, message: "Iltimos ismingizni kiriting" }, {min: 3, max: 20 } ] }>
                 <Input />
             </Form.Item>
             <Form.Item 
                 name="lastName" 
-                label="Familiyangiz" 
+                label= {t("last_name")}
                 rules={ [ { required: true, message: "Iltimos familiyangizni kiriting" }, {min: 3, max: 20 } ] }>
                 <Input />
             </Form.Item>
             <Form.Item 
                 name="middleName" 
-                label="Otangizni ismi" 
+                label= {t("middle_name")}
                 rules={ [ { required: true }, {min: 3, max: 20 } ] }>
                 <Input />
             </Form.Item>
             <Form.Item 
                 name="birthDate" 
-                label="Tugilgan sana" 
+                label= {t("birth_date")}
                 rules={ [ { required: true }] }>
                 <DatePicker 
                     style={{width: "100%"}}
@@ -176,7 +177,7 @@ const AddTeacher = ( { handleOk, handleCancel } ) => {
             </Form.Item>
             <Form.Item 
                 name="gender" 
-                label="Jinsingiz" 
+                label= {t("gender")}
                 rules={ [ { required: true }] }>
                 <Select defaultValue="0">
                     <Select.Option value="1">Erkak</Select.Option>
@@ -186,13 +187,13 @@ const AddTeacher = ( { handleOk, handleCancel } ) => {
             </Form.Item>
             <Form.Item 
                 name="gmail" 
-                label="G-mail" 
+                label= {t("g_mail")}
                 rules={ [ { required: false, type: 'email'  }, {min: 3, max: 40 } ] } hasFeedback>
                 <Input />
             </Form.Item>
             <Form.Item 
                 name="telNomer" 
-                label="Telefon nomer" 
+                label= {t("tel_number")}
                 rules={ [ { 
                     required: true}
                     ] }>
@@ -208,32 +209,32 @@ const AddTeacher = ( { handleOk, handleCancel } ) => {
             </Form.Item>
             <Form.Item 
                 name="tgLink" 
-                label="Telegram link" 
+                label= {t("telegram_link")}
                 rules={ [ { required: false }, {min: 3, max: 50 } ] }>
                 <Input />
             </Form.Item>
             <Form.Item 
                 name="fLink" 
-                label="Facebook link" 
+                label= {t("facebook_link")}
                 rules={ [ { required: false }, {min: 3, max: 50 } ] }>
                 <Input />
             </Form.Item>
             <Form.Item 
                 name="inLink" 
-                label="Instagram link" 
+                label= {t("instagram_link")}
                 rules={ [ { required: false }, {min: 3, max: 50 } ] }>
                 <Input />
             </Form.Item>
             <Form.Item 
                 name="login" 
                 validateStatus = {valid}
-                label="Login" 
+                label= {t("login")}
                 rules={ [ { required: true }, {min: 3, max: 20 } ] } hasFeedback>
                 <Input onBlur={onBlurHandle} ref={emailRef} />
             </Form.Item>
             <Form.Item 
                 name="password" 
-                label="Parol"  
+                label= {t("password")}
                 rules={ [ { required: true }, {min: 8, max: 15 } ] }
                 hasFeedback
                 >
@@ -242,7 +243,7 @@ const AddTeacher = ( { handleOk, handleCancel } ) => {
             <Form.Item 
                 name="repassword" 
                 dependencies={['password']} 
-                label="Parolni Takrorlang" 
+                label= {t("re_password")}
                 rules={ [ {
                      required: true 
                     },
@@ -261,7 +262,7 @@ const AddTeacher = ( { handleOk, handleCancel } ) => {
 
             <Form.Item 
                 name="languageId" 
-                label="Tilni tanlang" 
+                label= {t("language")}
                 rules={ [ { required: true } ] }>
             <TreeSelect
                 showSearch
@@ -288,7 +289,7 @@ const AddTeacher = ( { handleOk, handleCancel } ) => {
 
             <Form.Item 
                 name="subjectId" 
-                label="Fanni tanlang" 
+                label= {t("subject")}
                 rules={ [ { required: true } ] }>
             <TreeSelect
                 showSearch
@@ -314,7 +315,7 @@ const AddTeacher = ( { handleOk, handleCancel } ) => {
             </Form.Item>
             <Form.Item 
                 name="images" 
-                label="Imageni tanlang" 
+                label= {t("choice_image")}
                 rules={ [ { required: true }] }>
                 <Upload.Dragger 
                 maxCount={1}
@@ -340,7 +341,7 @@ const AddTeacher = ( { handleOk, handleCancel } ) => {
                       !!form.getFieldsError().filter(({ errors }) => errors.length).length
                     }
                   >
-                   Add Teacher
+                  {t("add")}
                   </Button>
                 )}
             </Form.Item>
