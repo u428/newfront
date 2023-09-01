@@ -45,10 +45,8 @@ const StudentCheckTeacher = ({handleOk, handleCancel, groupId}) => {
         }
     
         dispatch(checkStudentTeacher(req));
-        console.log("shu yera galdi");
         onReset();
-        console.log("ishladi");
-        handleOk()
+        handleOk();
 
     };
 

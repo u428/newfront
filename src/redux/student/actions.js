@@ -42,6 +42,11 @@ import {
     STUDENT_PAYMENT,
     STUDENT_PAYMENT_ERROR,
     STUDENT_PAYMENT_SUCCESS,
+
+    GET_HISTORY_STUDENT,
+    GET_HISTORY_STUDENT_SUCCESS,
+    GET_HISTORY_STUDENT_ERROR,
+
   } from "../actions";
   
   export const getNewStudents = (req) => ({
@@ -106,9 +111,9 @@ import {
     payload: error,
   });
 
-  export const getSingleGroupStudent = (history, id) => ({
+  export const getSingleGroupStudent = (history, id, url) => ({
     type: GET_SINGLE_GROUP_STUDENT,
-    payload: {history, id}
+    payload: {history, id, url}
   });
 
   export const getSingleGroupStudentSuccess = (response) => ({
@@ -121,9 +126,9 @@ import {
     payload: error,
   });
 
-  export const getSingleStudent = (history, req) => ({
+  export const getSingleStudent = (id) => ({
     type: GET_SINGLE_STUDENT,
-    payload: {history, req}
+    payload: id
   });
   
   export const getSingleStudentSuccess = (response) => ({
@@ -208,6 +213,23 @@ import {
   
   export const studentPaymentError = (error) => ({
     type: STUDENT_PAYMENT_ERROR,
+    payload: error,
+  });
+
+
+
+  export const getHistoryStudent = (idGroup, idStudent) => ({
+    type: GET_HISTORY_STUDENT,
+    payload: {idGroup, idStudent}
+  });
+
+  export const getHistoryStudentSuccess = (response) => ({
+    type: GET_HISTORY_STUDENT_SUCCESS,
+    payload: response,
+  });
+  
+  export const getHistoryStudentError = (error) => ({
+    type: GET_HISTORY_STUDENT_ERROR,
     payload: error,
   });
   

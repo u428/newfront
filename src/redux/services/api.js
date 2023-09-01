@@ -487,6 +487,18 @@ await axios
 .then((response) => ({ response }))
 .catch((error) => ({ error }));
 
+export const fetchHistoryStudent = async (idGroup, idStudent) =>
+await axios
+.get(
+  `${URL}/static/history-student?idGroup=${Number(idGroup)}&idStudent=${Number(idStudent)}`,
+  {
+  headers: {
+    Authorization: token,
+  },
+  })
+.then((response) => ({ response }))
+.catch((error) => ({ error }));
+
 // dashboard statistic
 export const fetchDashboardStatistic = async () =>
 await axios

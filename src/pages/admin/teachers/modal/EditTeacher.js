@@ -16,7 +16,6 @@ const EditTeacher = ( { handleOk2, handleEDitModalCancel } ) => {
     const dispatch = useDispatch();
     const { TreeNode } = TreeSelect;
     let history = useHistory();
-    let emailRef = useRef()
     const { i18n, t } = useTranslation();
 
     const [initValue, setInitValue] = useState({});
@@ -24,26 +23,26 @@ const EditTeacher = ( { handleOk2, handleEDitModalCancel } ) => {
     const reduce = useSelector(state=>state.languageReducer);
     const reducer = useSelector(state=>state.subjectReducer);
     const {teacher, isActive} = useSelector(state=>state.teacherReducer);
-    const dateFormat = 'YYYY-MM-DD';
+    const dateFormat = 'DD.MM.YYYY';
     const [dating, setDating] = useState("");
-
-    console.log(teacher);
-    console.log(isActive);
-    console.log(initValue);
 
     useEffect( () => {
         dispatch( getLanguages());
         dispatch( getSubjects());
     }, [] );
 
+    function changeDate(dating){
+        return 
+    }
+
     useEffect(() =>{
-        
+        console.log(teacher.telNomer);
         if(isActive){
             form.setFieldsValue({
             "firstName": teacher.firstName,
             "lastName": teacher.lastName,
             "middleName":teacher.middleName,
-            "telNomer":teacher.telNomer,
+            "telNomer": teacher.telNomer,
             "tgLink":teacher.tgLink,
             "inLink":teacher.inLink,
             "fLink":teacher.flink,
@@ -54,9 +53,8 @@ const EditTeacher = ( { handleOk2, handleEDitModalCancel } ) => {
             "subjectId":teacher.subjects.map((item)=> item.id),
             "languageId":teacher.languages.map((item) => item.id),
             "images": teacher.imagesId,
-            "gender":   teacher.gender
+            "gender": teacher.gender
             });
-            // setDating(teacher.dateBirth)
         }
        
     }, [isActive])
@@ -111,11 +109,6 @@ const EditTeacher = ( { handleOk2, handleEDitModalCancel } ) => {
     function onChange(date, dateString) {
         setDating(dateString);
     }
-    const handleInputChange = e => {
-        if (!e.target.value) {
-            emailRef.current.setInputValue("+998(__) ___ __ __");
-        }
-    };
 
     return (
 
@@ -123,6 +116,12 @@ const EditTeacher = ( { handleOk2, handleEDitModalCancel } ) => {
         form={ form } 
         layout="vertical"
         name={t("edit_teacher")} 
+        fields={[
+            {
+                name: ["telNomer"],
+                value: isActive?teacher.telNomer:" "
+            }
+        ]}
         onFinish={ onFinish } 
         onFinishFailed={ onFinishFailed }>
 
@@ -179,11 +178,10 @@ const EditTeacher = ( { handleOk2, handleEDitModalCancel } ) => {
                 <Input />
             </Form.Item>
             <Form.Item 
-                name="telNomer" 
+                name="telNomer"
                 label={t("tel_number")} 
-                 rules={ [ { required: true } ] }>
+                rules={ [ { required: true, message: "Iltimos joyni toldiring" }, {min: 3, max: 20 } ] }>
                 <MaskedInput
-        ref={emailRef}
         mask="+998(00) 000 00 00"
         // onChange={handleInputChange}
         // onFocus={handleFocus}
@@ -274,13 +272,13 @@ const EditTeacher = ( { handleOk2, handleEDitModalCancel } ) => {
                 method='post'
                 action="https://qorakol-ilm-ziyo.uz/api/v1/a23d_m23_i23n/add_image"
                 >
-                    <Button>Imageni yuklash</Button>
+                     <Button>{t("add_image")}</Button>
                 </Upload.Dragger>
             </Form.Item>
             
             <Form.Item >
                 <Button block type="primary" htmlType="submit">
-                    Edit
+                    {t("change")}
                 </Button>
             </Form.Item>
 

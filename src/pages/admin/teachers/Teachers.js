@@ -27,10 +27,10 @@ const Teachers = () => {
   
   function deleteTeachers (teacher) {
     Modal.confirm({
-      title: "siz shu "+teacher.firstName.toUpperCase()+" "+teacher.lastName.toUpperCase()+" ni ochirmoqchimisiz",
-      okText: "Xa",
+      title: t("del_title1")+"<"+teacher.firstName.toUpperCase()+" "+teacher.lastName.toUpperCase()+">"+t("del_title2"),
+      okText: t("yes"),
       okType:"danger",
-      cancelText:"yoq",
+      cancelText:t("no"),
       onOk: () =>{
         dispatch(deleteTeacher(teacher.id));
       }
@@ -165,10 +165,18 @@ const Teachers = () => {
       render: ( data ) => {
         return (
           <Space size="middle">
-              <Button onClick={() => showEditModal(data.teacher.id)}  shape="circle" warning icon={<EditOutlined />} />
-              <Button onClick={() => deleteTeachers(data.teacher)} shape="circle" danger  icon={<DeleteOutlined />} />
-              <Button onClick={() => viewTeachers(data.teacher.id)} shape="circle" info  icon={ <EyeOutlined />} />
-              <Button onClick={() => changePassword(data.teacher.authId)} shape="circle" info  icon={ <FormOutlined />} />
+              <Tooltip placement="topLeft" title={t("sys_edit")}>
+                <Button onClick={() => showEditModal(data.teacher.id)}  shape="circle" warning icon={<EditOutlined />} />
+              </Tooltip>
+              <Tooltip placement="topLeft" title={t("sys_view")}>
+                <Button onClick={() => viewTeachers(data.teacher.id)} shape="circle" info  icon={ <EyeOutlined />} />
+              </Tooltip>
+              <Tooltip placement="topLeft" title={t("sys_change_login")}>
+                <Button onClick={() => changePassword(data.teacher.authId)} shape="circle" info  icon={ <FormOutlined />} />
+              </Tooltip>
+              <Tooltip placement="topLeft" title={t("sys_delete")}>
+                <Button onClick={() => deleteTeachers(data.teacher)} shape="circle" danger  icon={<DeleteOutlined />} />
+              </Tooltip>
           </Space>
         )
       },
@@ -184,13 +192,13 @@ const Teachers = () => {
   
   return (
     <Fade>
-      <Modal title="Chreate Teacher" visible={ isModalVisible } onOk={ handleOk } onCancel={ handleCancel } footer={ false }>
+      <Modal title={t("add_teacher")} visible={ isModalVisible } onOk={ handleOk } onCancel={ handleCancel } footer={ false }>
         <AddTeacher handleOk={ handleOk } handleCancel={ handleCancel } />
       </Modal>
-      <Modal title="Change Teacher" visible={ isEditModalVisible } onOk={ handleOk2 } onCancel={ handleEDitModalCancel } footer={ false }>
+      <Modal title={t("change_teacher")} visible={ isEditModalVisible } onOk={ handleOk2 } onCancel={ handleEDitModalCancel } footer={ false }>
         <EditTeacher handleOk2={ handleOk2 } handleCancel={ handleEDitModalCancel } />
       </Modal>
-      <Modal title="Change Teacher" visible={ passwordChange } onOk={ handleOk3 } onCancel={ handleCancel3 } footer={ false }>
+      <Modal title={t("change_password_teacher")} visible={ passwordChange } onOk={ handleOk3 } onCancel={ handleCancel3 } footer={ false }>
         <ChangePasswords handleOk3={ handleOk3 } handleCancel3={ handleCancel3 } changePassId={changePassId} />
       </Modal>
 

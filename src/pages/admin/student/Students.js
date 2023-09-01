@@ -6,18 +6,18 @@ import { Table, Tag, Card, PageHeader, Modal, Row, Col, Button, Space, Tooltip }
 import { useDispatch, useSelector } from "react-redux";
 import {getNewStudents, getSingleStudent, deleteNewStudent } from "../../../redux/student/actions";
 import ModalStudents from "./modal/ModalStudents";
-
+import { useTranslation } from "react-i18next";
 
 
 const Students = () => {
 
   const {pagination, loading, isActive, students} = useSelector(state=>state.studentReducer);
-  console.log(students);
 
 
   const dispatch = useDispatch();
   const [ isModalVisible, setIsModalVisible ] = useState( false );
-
+  const [count, setCount] =useState(0);
+  const { i18n, t } = useTranslation();
   
   useEffect( () => {
     dispatch( getNewStudents(pagination));
@@ -40,10 +40,10 @@ const Students = () => {
     setIsModalVisible( true );
   };
 
-  const showEditModal = (id, i) => {
-   if(i<=0){
+  const showEditModal = (id) => {
       dispatch(getSingleStudent(id))
-    }
+      setIsModalVisible( true );
+      setCount(1);
   };
 
   const handleOk = () => {
@@ -62,24 +62,44 @@ const Students = () => {
       key: 'id'
     },
     {
-      title: 'firstName',
+      title: t("first_name"),
       dataIndex: 'firstName',
       key: 'firstName'
     },
     {
-      title: 'lastName',
+      title: t("last_name"),
       dataIndex: 'lastName',
       key: 'lastName'
     },
     {
-      title: 'Birth day',
+      title: t("middle_name"),
       dataIndex: 'dateBirth',
       key: 'birthDay'
     },
     {
-      title: 'telNumber',
+      title: t("tel_number"),
       dataIndex: 'telNomer',
       key: 'telNomer'
+    },
+    {
+      title: t("student_interests"),
+      dataIndex: 'subjects',
+      key: 'subjects',
+      render: data => (
+        <>
+        {
+        data.map(lang =>{
+          const name = lang.nameUz;
+          const id = lang.id;
+          return(
+            <Tag color="geekblue" key={ id }>
+              {name}
+            </Tag>
+          )
+        })
+      }
+      </>
+      )
     },
     {
       title: 'Action',
@@ -103,8 +123,8 @@ const Students = () => {
   
   return (
     <Fade>
-      <Modal title="Chreate Teacher" visible={ isModalVisible } onOk={ handleOk } onCancel={ handleCancel } footer={ false }>
-        <ModalStudents handleOk={ handleOk } handleCancel={ handleCancel } />
+      <Modal title="Chreate Student" visible={ isModalVisible } onOk={ handleOk } onCancel={ handleCancel } footer={ false }>
+        <ModalStudents handleOk={ handleOk } handleCancel={ handleCancel } count={count} />
       </Modal>
 
       <Row justify="space-between" align="middle">

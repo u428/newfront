@@ -33,8 +33,8 @@ const StudentsGroup = () => {
   }
 
   function viewSingleStudent (students) {
-    dispatch(getSingleGroupStudent(history, students.id));
-    dispatch(getSingleStudent(history, students.id));
+    dispatch(getSingleStudent(students.id));
+    dispatch(getSingleGroupStudent(history, students.id, "/admin/view/student"));
   }
 
   const showModalLogin = () => {

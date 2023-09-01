@@ -42,6 +42,10 @@ import {
   STUDENT_PAYMENT,
   STUDENT_PAYMENT_SUCCESS,
   STUDENT_PAYMENT_ERROR,
+
+  GET_HISTORY_STUDENT,
+  GET_HISTORY_STUDENT_SUCCESS,
+  GET_HISTORY_STUDENT_ERROR,
  
   } from "../actions";
   
@@ -50,6 +54,7 @@ import {
     isActive: false,
     error: null,
     students: null,
+    studentHistory: [],
     studentsGroup: [],
     student: {},
     studentGroup:{},
@@ -74,7 +79,7 @@ import {
       case GET_STUDENTS_GROUP_SUCCESS:
         return { ...state, loading: false, isActive: true, studentsGroup: payload};
       case GET_STUDENTS_GROUP_ERROR:
-        return { ...state, loading: false, isActive: false, error: payload, students: {} };
+        return { ...state, loading: false, isActive: false, error: payload, studentsGroup: {} };
 
         case GET_NEW_STUDENTS:
           return { ...state, isActive: false, loading: true };
@@ -138,6 +143,13 @@ import {
       case PUT_STUDENT_SUCCESS:
         return { ...state, loading: false, isActive: true, success: payload };
       case PUT_STUDENT_ERROR:
+        return { ...state, loading: false, error: payload };
+
+        case GET_HISTORY_STUDENT:
+        return { ...state, loading: true , isActive: false};
+      case GET_HISTORY_STUDENT_SUCCESS:
+        return { ...state, loading: false, isActive: true, studentHistory: payload.data };
+      case GET_HISTORY_STUDENT_ERROR:
         return { ...state, loading: false, error: payload };
 
       default:

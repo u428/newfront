@@ -3,9 +3,9 @@ import { Button, List } from 'antd';
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import { EyeOutlined} from '@ant-design/icons';
-import { getSingleGroupStudent, getSingleStudent } from '../../../../../redux/student/actions';
+import { getSingleGroupStudent, getSingleStudent } from '../../../../redux/student/actions';
 
-const StudentViewGroupModal = ( { handleOk, handleCancel} ) => {
+const StudentViewGroupTeacherModal = ( { handleOk, handleCancel} ) => {
 
     const dispatch = useDispatch();
     let history = useHistory();
@@ -13,7 +13,7 @@ const StudentViewGroupModal = ( { handleOk, handleCancel} ) => {
 
     function seeStudentById (id) {
         console.log(id);
-        dispatch(getSingleGroupStudent(history, id, "/admin/view/student"));
+        dispatch(getSingleGroupStudent(history, id, "/teacher/view/student"));
         dispatch(getSingleStudent(id));
         handleOk()
     }
@@ -41,4 +41,4 @@ const StudentViewGroupModal = ( { handleOk, handleCancel} ) => {
     )
 }
 
-export default StudentViewGroupModal;
+export default StudentViewGroupTeacherModal;

@@ -1,14 +1,15 @@
 import React, {useEffect, useState} from 'react'
-import { Form, Input, Button, Upload, TreeSelect, DatePicker, Select } from 'antd';
+import { Form, Input, Button, UploadFile, Upload, TreeSelect, DatePicker, Select } from 'antd';
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import { fetchGetTeachersListSearch, fetchGetSingleTeacher } from '../../../../redux/services/api';
 import moment from 'moment';
 import { postGroup, putGroup } from '../../../../redux/group/actions';
-
+import { useTranslation } from "react-i18next";
 
 
 const ModalGroup = ( { handleOk, handleCancel, count } ) => {
+    const { i18n, t } = useTranslation();
     const [ form ] = Form.useForm();
     const dispatch = useDispatch();
     const { TreeNode } = TreeSelect;
@@ -23,6 +24,9 @@ const ModalGroup = ( { handleOk, handleCancel, count } ) => {
     const [languages, setLanguages] = useState([]);
     const [subjects, setSubjects] = useState([]);
     const [defaultData, setDefaultData]=useState([]);
+    const [fileLists, setFileLists] = useState({});
+
+    const imageURL = 'http://localhost:8080/api/v1/static/images?id=';
 
     const {isActive, group} = useSelector(state=>state.groupReducer);   
 
@@ -45,12 +49,20 @@ const ModalGroup = ( { handleOk, handleCancel, count } ) => {
                 setLanguages(teacher.languages.map(lang=> <TreeNode key={lang.id} value={lang.id} title ={lang.name}></TreeNode>));
                 setSubjects(teacher.subjects.map(sub=><TreeNode key={sub.id} value={sub.id} title ={sub.nameUz}></TreeNode>));
             })
-            
+
+            setFileLists({
+                uid: group.imagesId,
+                name: 'name.jpg' +count,
+                status: 'done',
+                url: imageURL + group.imagesId,
+                thumbUrl: imageURL+ group.imagesId
+            })
         }
     }, [group] );
 
     useEffect( () => {
         onReset()
+        setFileLists({});
     }, [count] );
     
  
@@ -86,12 +98,9 @@ const ModalGroup = ( { handleOk, handleCancel, count } ) => {
             "finish":dating[1],
             "filesId":values.images.file.response
         }
-    
-
-        console.log(returns);
-
         dispatch(postGroup(history, returns));
     }
+        setFileLists({});
         handleOk()
         onReset()
     };
@@ -151,30 +160,30 @@ const ModalGroup = ( { handleOk, handleCancel, count } ) => {
         autoComplete='off'
         form={ form } 
         layout="vertical"
-        name="add-teacher" 
         onFinish={ onFinish } 
         onFinishFailed={ onFinishFailed }>
 
             <Form.Item 
                 name="name" 
-                label="Group name" 
-                rules={ [ { required: true, message: "Iltimos ismingizni kiriting" }, {min: 3, max: 20 } ] }>
+                label= {t("group_name")} 
+                rules={ [ { required: true, message: "Iltimos" }, {min: 3, max: 20 } ] }>
                 <Input />
             </Form.Item>
             <Form.Item 
                 name="price"
-                label="Group price"
-                rules={ [ { required: true, message: "Iltimos familiyangizni kiriting" }, {min: 3, max: 20 } ] }>
+                label= {t("price")} 
+                rules={ [ { required: true, message: "Iltimos" }, {min: 3, max: 20 } ] }>
                 <Input />
             </Form.Item>
             <Form.Item 
                 name="description"
-                label="Tarif">
+                label= {t("description")} 
+                >
                 <Input />
             </Form.Item>
             <Form.Item 
                 name="date" 
-                label="Begin and finish date" 
+                label= {t("start_finish_date")} 
                 rules={ [ { required: true }] }>
                 <RangePicker
                     style={{width: "100%"}}
@@ -186,11 +195,11 @@ const ModalGroup = ( { handleOk, handleCancel, count } ) => {
             </Form.Item>
             <Form.Item 
                 name="teacher" 
-                label="choice teacher" 
+                label= {t("choice_teacher")} 
                 rules={ [ { required: true } ] }>
             <Select
                 showSearch
-                placeholder="write teacher name"
+                placeholder={t("write_teacher_name")}
                 style={{width: "100%"}}
                 defaultActiveFirstOption={false}
                 showArrow={false}
@@ -205,7 +214,7 @@ const ModalGroup = ( { handleOk, handleCancel, count } ) => {
 
             <Form.Item 
                 name="subjectId" 
-                label="Fanni tanlang" 
+                label= {t("choice_subject")} 
                 rules={ [ { required: true } ] }>
             <TreeSelect
                 showSearch
@@ -222,7 +231,7 @@ const ModalGroup = ( { handleOk, handleCancel, count } ) => {
             </Form.Item>
             <Form.Item 
                 name="languageId" 
-                label="Tilni tanlang" 
+                label= {t("choice_language")} 
                 rules={ [ { required: true } ] }>
             <TreeSelect
                 showSearch
@@ -240,18 +249,19 @@ const ModalGroup = ( { handleOk, handleCancel, count } ) => {
 
             <Form.Item 
                 name="images" 
-                label="Imageni tanlang" 
+                label= {t("choice_image")} 
                 rules={ [ { required: true }] }>
                     <Upload.Dragger 
                         maxCount={1}
                         name="file"
+                        defaultFileList={[fileLists]}
                         listType="picture"
                         accept='.png, .jpg, .img'
                         method='post'
-                        action="https://qorakol-ilm-ziyo.uz/api/v1/a23d_m23_i23n/add_image"
+                        action="http://localhost:8080/api/v1/a23d_m23_i23n/add_image"
                         onPreview={onPreview}
                     >
-                        <Button>Imageni yuklash</Button>
+                        <Button>{t("add_image")}</Button>
                     </Upload.Dragger>
             </Form.Item>
             
@@ -266,7 +276,7 @@ const ModalGroup = ( { handleOk, handleCancel, count } ) => {
                       !!form.getFieldsError().filter(({ errors }) => errors.length).length
                     }
                   >
-                   Add Teacher
+                   {count>0?t("change"):t("add")}
                   </Button>
                 )}
             </Form.Item>

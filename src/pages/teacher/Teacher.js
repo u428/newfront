@@ -16,6 +16,7 @@ import { useBreadCrumb } from "../../hooks/useBreadCrumb";
 import Home from "./home/Home";
 import GroupsTeacher from "./group/GroupsTeacher";
 import TeacherSetting from "./setting/TeacherSetting";
+import StudentViewTeacher from "./group/page/StudentViewTeacher";
 
 
 function Teacher () {
@@ -74,6 +75,10 @@ function Teacher () {
                 <Route
                   path={ `${ path }/groups` }
                   render={ ( props ) => <GroupsTeacher { ...props } /> }
+                />
+                <Route
+                  path={ `${ path }/view/student` }
+                  render={ ( props ) => <StudentViewTeacher { ...props } /> }
                 />
               </Switch>
             </div>

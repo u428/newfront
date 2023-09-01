@@ -83,15 +83,19 @@ const {isActive, loading, subjects} = useSelector(state => state.subjectReducer)
       // render: text => <p>{ text.telNomer }</p>,
     },
     {
-      title: 'Action',
+      title: t("action"),
       key: 'action',
       render: ( data ) => {
         return (
           <Space size="middle">
-              <Button onClick={() => showModal(data.id, 1)}  shape="circle" warning icon={<EditOutlined />} />
-              <Button onClick={() => deleteSubjects(data)} shape="circle" danger  icon={<DeleteOutlined />} />
+              <Tooltip placement="topLeft" title={t("sys_edit")}>
+                <Button onClick={() => showModal(data.id, 1)}  shape="circle" warning icon={<EditOutlined />} />
+              </Tooltip>
+              <Tooltip placement="topLeft" title={t("sys_delete")}>
+                <Button onClick={() => deleteSubjects(data)} shape="circle" danger  icon={<DeleteOutlined />} />
+              </Tooltip>
           </Space>
-        )
+        )  
       },
     }
   ];
@@ -99,7 +103,7 @@ const {isActive, loading, subjects} = useSelector(state => state.subjectReducer)
   
   return (
     <Fade>
-      <Modal title="Chreate Teacher" visible={ isModalVisible } onOk={ handleOk } onCancel={ handleCancel } footer={ false }>
+      <Modal title="Chreate Subject" visible={ isModalVisible } onOk={ handleOk } onCancel={ handleCancel } footer={ false }>
         <ModalSubject handleOk={ handleOk } handleCancel={ handleCancel } count={count} modalData={modalData} />
       </Modal>
 

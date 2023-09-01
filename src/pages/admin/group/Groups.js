@@ -10,12 +10,12 @@ import { getStudentsGroup } from "../../../redux/student/actions";
 import StudentListGroupModal from "./modal/StudentListGroupModal";
 import { useHistory } from "react-router-dom";
 import { viewTeacher } from "../../../redux/teacher/actions";
-
+import { useTranslation } from "react-i18next";
 
 
 const Groups = () => {
-
-  const {pagination, loading, isActive, groups} = useSelector(state=>state.groupReducer);
+  const { i18n, t } = useTranslation();
+  const {pagination, loading, groups} = useSelector(state=>state.groupReducer);
 
   console.log(groups);
   let history = useHistory();
@@ -28,10 +28,10 @@ const Groups = () => {
   
   function deleteGroups (group) {
     Modal.confirm({
-      title: "siz shu "+group.name.toUpperCase()+" ni ochirmoqchimisiz",
-      okText: "Xa",
+      title: t("del_title1")+"<"+group.name.toUpperCase()+">"+t("del_title2"),
+      okText: t("yes"),
       okType:"danger",
-      cancelText:"yoq",
+      cancelText:t("no"),
       onOk: () =>{
         dispatch(deleteGroup(group.id));
         dispatch( getGroups(pagination));
@@ -41,12 +41,13 @@ const Groups = () => {
 
   const showModal = (id, i) => {
     if(i > 0){
+      setCount(i)
       setIsModalVisible( true );
       dispatch(getSingleGroup(id));
-      setCount(i)
     }else{
-      setIsModalVisible( true );
       setCount(i)
+      setIsModalVisible( true );
+      
     }
   };
 
@@ -88,48 +89,52 @@ const Groups = () => {
       render: text => <p>{ text.id }</p>
     },
     {
-      title: 'name',
+      title: t("group_name"),
       dataIndex: 'group',
       key: 'name',
       render: text => <p>{text.name}</p>
     },
     {
-      title: 'price',
+      title: t("price"),
       dataIndex: 'group',
       key: 'price',
       render: text => <p>{text.price}</p>
     },
     {
-      title: 'Language',
+      title: t("language"),
       dataIndex: 'language',
       key: 'language',
       render: text => <p>{text.name}</p>
     },
     {
-      title: 'Subject',
+      title: t("subject"),
       dataIndex: 'subject',
       key: 'subject',
       render: text => <p>{text.nameUz}</p>
     },
     {
-      title: 'Teacher',
+      title: t("teacher_name"),
       dataIndex: 'teacher',
       key: 'fullName',
       render: text => <a onClick={() =>{ groupTeacher(text.id)}}>{text.firstName} {text.lastName} <br /> {text.telNumber}</a>
     },
     {
-      title: 'Students',
+      title: t("students_quantity"),
       key: 'soni',
       render: text => <Button onClick={() =>{getGroupStudents(text.group)}} type="primary" shape="circle">{text.soni}</Button>
     },
     {
-      title: 'Action',
+      title: t("action"),
       key: 'action',
       render: ( data ) => {
         return (
           <Space size="middle">
-              <Button onClick={() => showModal(data.group.id, 1)}  shape="circle" warning icon={<EditOutlined />} />
-              <Button onClick={() => deleteGroups(data.group)} shape="circle" danger  icon={<DeleteOutlined />} />
+              <Tooltip placement="topLeft" title={t("sys_view")}>
+                <Button onClick={() => showModal(data.group.id, 1)}  shape="circle" warning icon={<EditOutlined />} />
+              </Tooltip>
+              <Tooltip placement="topLeft" title={t("sys_delete")}>
+                <Button onClick={() => deleteGroups(data.group)} shape="circle" danger  icon={<DeleteOutlined />} />
+              </Tooltip>
           </Space>
         )
       },
@@ -144,7 +149,7 @@ const Groups = () => {
   
   return (
     <Fade>
-      <Modal title="Chreate Group" visible={ isModalVisible } onOk={ handleOk } onCancel={ handleCancel } footer={ false }>
+      <Modal title={count==0?t("group_add"):t("group_change")} visible={ isModalVisible } onOk={ handleOk } onCancel={ handleCancel } footer={ false }>
         <ModalGroup handleOk={ handleOk } handleCancel={ handleCancel } count={count}/>
       </Modal>
 {/* 
@@ -168,7 +173,7 @@ const Groups = () => {
         </Col>
         <Col>
           <Button type="primary" onClick={()=> showModal({}, 0) }>
-            Add Group
+            {t("add_group")}
           </Button>
         </Col>
       </Row>

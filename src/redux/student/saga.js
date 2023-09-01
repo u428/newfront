@@ -1,8 +1,8 @@
 import { all, takeEvery, call, put, fork } from "@redux-saga/core/effects";
-import {GET_STUDENTS, GET_NEW_STUDENTS, GET_SINGLE_STUDENT, DELETE_STUDENT, POST_STUDENT, PUT_STUDENT, POST_STUDENT_GROUP, POST_STUDENT_LOGIN, GET_SINGLE_GROUP_STUDENT, GET_STUDENTS_GROUP, STUDENT_PAYMENT } from "../actions";
-import { fetchGetStudentList, fetchGetNewStudentList, fetchGetSingleStudent, fetchDeleteStudent, fetchPostStudent, fetchPutStudent, fetchPostStudentLogin, fetchPostStudentGroup, fetchGetSingleStudentGroups, fetchGetStudentGroupList, fetchPaymentStudent} from "../services/api";
+import {GET_STUDENTS, GET_NEW_STUDENTS, GET_SINGLE_STUDENT, DELETE_STUDENT, POST_STUDENT, PUT_STUDENT, POST_STUDENT_GROUP, POST_STUDENT_LOGIN, GET_SINGLE_GROUP_STUDENT, GET_STUDENTS_GROUP, STUDENT_PAYMENT, GET_HISTORY_STUDENT } from "../actions";
+import { fetchGetStudentList, fetchGetNewStudentList, fetchGetSingleStudent, fetchDeleteStudent, fetchPostStudent, fetchPutStudent, fetchPostStudentLogin, fetchPostStudentGroup, fetchGetSingleStudentGroups, fetchGetStudentGroupList, fetchPaymentStudent, fetchHistoryStudent} from "../services/api";
 import { notificationMessage } from "../services/notificationMessage";
-import { getNewStudentsSuccess, getNewStudentsError, postStudentGroupError, postStudentGroupSuccess, postStudentLoginError, postStudentLoginSuccess, getStudentsError, getStudentsSuccess, getSingleStudentSuccess, getSingleStudentError, deleteNewStudentSuccess, deleteNewStudentError, postNewStudentSuccess, postNewStudentError, putNewStudentSuccess, putNewStudentError, getSingleGroupStudentSuccess, getSingleGroupStudentError, getStudentsGroupSuccess, getStudentsGroupError, studentPaymentSuccess, studentPaymentError } from "./actions";
+import { getNewStudentsSuccess, getNewStudentsError, postStudentGroupError, postStudentGroupSuccess, postStudentLoginError, postStudentLoginSuccess, getStudentsError, getStudentsSuccess, getSingleStudentSuccess, getSingleStudentError, deleteNewStudentSuccess, deleteNewStudentError, postNewStudentSuccess, postNewStudentError, putNewStudentSuccess, putNewStudentError, getSingleGroupStudentSuccess, getSingleGroupStudentError, getStudentsGroupSuccess, getStudentsGroupError, studentPaymentSuccess, studentPaymentError, getHistoryStudentSuccess, getHistoryStudentError } from "./actions";
 
 function* watchGetStudents() {
   yield takeEvery(GET_STUDENTS, workGetStudents);
@@ -24,10 +24,10 @@ function* watchGetStudentsGroup() {
   yield takeEvery(GET_STUDENTS_GROUP, workGetStudentsGroup);
 }
 
-function* workGetStudentsGroup({payload}) {
-  const { response, error } = yield call(fetchGetStudentGroupList, payload);
+function* workGetStudentsGroup(payload) {
+  console.log("Shu yera galdi");
+  const { response, error } = yield call(fetchGetStudentGroupList, 1);
   if (response) {
-    // console.log(JSON.parse(response));
     yield put(getStudentsGroupSuccess(response.data));
   } else {
     yield put(getStudentsGroupError(error.response.data));
@@ -56,8 +56,7 @@ function* watchGetSingleStudent() {
 }
 
 function* workGetSingleStudent({payload}) {
-  const {history, req} = payload;
-  const { response, error } = yield call(fetchGetSingleStudent,req);
+  const { response, error } = yield call(fetchGetSingleStudent, payload);
   if (response) {
     yield put(getSingleStudentSuccess(response.data));
   } else {
@@ -73,12 +72,12 @@ function* watchGetSingleStudentGroups() {
 
 function* workGetSingleStudentGroups({payload}) {
   console.log(payload);
-  const {history, id} = payload;
-  console.log(id);
-  const { response, error } = yield call(fetchGetSingleStudentGroups,id);
+  const {history, id, url} = payload;
+  const { response, error } = yield call(fetchGetSingleStudentGroups, id);
   if (response) {
     yield put(getSingleGroupStudentSuccess(response.data));
-    history.push("/admin/view/student")
+    // history.push('${}'/admin/view/student')
+    history.push(url);
   } else {
     yield put(getSingleGroupStudentError(error.response.data.message));
     notificationMessage("error", error.response.data);
@@ -188,6 +187,22 @@ function* workStudentPayment({payload}) {
   }
 }
 
+function* watchStudentHistory() {
+  yield takeEvery(GET_HISTORY_STUDENT, workStudentHistory);
+}
+
+function* workStudentHistory({payload}) {
+ const {idGroup, idStudent} = payload;
+  const { response, error } = yield call(fetchHistoryStudent, idGroup, idStudent);
+  if (response) {
+    yield put(getHistoryStudentSuccess(response));
+  } else {
+    yield put(getHistoryStudentError(error.response.data));
+    notificationMessage("error", "SORRY: there is some ERRORS");
+  }
+}
+
+
 
 
 export default function* studentSaga() {
@@ -202,6 +217,7 @@ export default function* studentSaga() {
     fork(watchPostStudentGroup),
     fork(watchGetSingleStudentGroups),
     fork(watchPostStudentLogin),
-    fork(watchStudentPayment)
+    fork(watchStudentPayment),
+    fork(watchStudentHistory)
   ]);
 }

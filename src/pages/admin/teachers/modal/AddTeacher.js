@@ -180,9 +180,9 @@ const AddTeacher = ( { handleOk, handleCancel } ) => {
                 label= {t("gender")}
                 rules={ [ { required: true }] }>
                 <Select defaultValue="0">
-                    <Select.Option value="1">Erkak</Select.Option>
-                    <Select.Option value="2">Ayol</Select.Option>
-                    <Select.Option value="0">Boshqa</Select.Option>
+                    <Select.Option value="1">{t("gender_man")}</Select.Option>
+                    <Select.Option value="2">{t("gender_woman")}</Select.Option>
+                    <Select.Option value="0">{t("gender_other")}</Select.Option>
                 </Select>
             </Form.Item>
             <Form.Item 
@@ -323,10 +323,10 @@ const AddTeacher = ( { handleOk, handleCancel } ) => {
                 listType="picture"
                 accept='.png, .jpg, .img'
                 method='post'
-                action="https://qorakol-ilm-ziyo.uz/api/v1/a23d_m23_i23n/add_image"
+                action="http://localhost:8080/api/v1/a23d_m23_i23n/add_image"
                 onPreview={onPreview}
                 >
-                    <Button>Imageni yuklash</Button>
+                    <Button>{t("add_image")}</Button>
                 </Upload.Dragger>
             </Form.Item>
             

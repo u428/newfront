@@ -3,13 +3,12 @@ import { HistoryOutlined, UsergroupAddOutlined, DollarCircleOutlined} from '@ant
 import Fade from "react-reveal/Fade";
 import { Table, Tag, Card, PageHeader, Modal, Row, Col, Button, Space } from 'antd';
 import { useDispatch, useSelector } from "react-redux";
-import StudentViewGroupModal from "./model/StudentViewGroupModal";
-import { getStudentsGroup } from "../../../../redux/student/actions";
-import StudentPaymentGroupModal from "./model/StudentPaymentGroupModal";
+import { getHistoryStudent } from "../../../../redux/student/actions";
+import StudentViewAttendaceHistory from "./StudentViewAttendaceHistory";
 
 
 
-const StudentView = () => {
+const StudentViewTeacher = () => {
 
   const {loading, studentGroup, student} = useSelector(state=>state.studentReducer);
   // let history = useHistory();
@@ -38,14 +37,21 @@ const StudentView = () => {
     setIsModalPaymentVisible( false );
   };
 
+  function seeHistory (id) {
+    console.log(id);
+    console.log(student.id);
+    dispatch(getHistoryStudent(id, student.id));
+    setIsModalLoginVisible( true );
+  }
+
   function getPayment (group) {
-    setGroupPaymentId(group);
-    setIsModalPaymentVisible( true );
+    // setGroupPaymentId(group);
+    // setIsModalPaymentVisible( true );
   }
 
   function getGroupStudents (group) {
-    dispatch(getStudentsGroup(group.id))
-    setIsModalLoginVisible( true );
+    // dispatch(getStudentsGroup(group.id))
+    // setIsModalLoginVisible( true );
   }
 
   const columns = [
@@ -82,19 +88,12 @@ const StudentView = () => {
       key: 'attendance'
     },
     {
-      title: 'deposite',
-      dataIndex: 'deposite',
-      key: 'deposite'
-    },
-    {
       title: 'Action',
       key: 'action',
       render: ( data ) => {
         return (
           <Space size="middle">
-              <Button  shape="circle" style={{color: "#399EFF"}} icon={<HistoryOutlined />} />
-              <Button shape="circle"  onClick={() => getGroupStudents(data)} style={{color: "#399EFF"}}  icon={<UsergroupAddOutlined />} />
-              <Button shape="circle" onClick={() => getPayment(data)} style={{color: "#399EFF"}} icon={<DollarCircleOutlined />} />
+              <Button  shape="circle"  onClick={() => seeHistory(data.id)}  style={{color: "#399EFF"}} icon={<HistoryOutlined />} />
           </Space>
         )
       }
@@ -110,10 +109,7 @@ const StudentView = () => {
   return (
     <Fade>
       <Modal title="Chreate Teacher" visible={ isModalLoginVisible } onOk={ handleOkLogin } onCancel={ handleCancel } footer={ false }>
-        <StudentViewGroupModal  handleOk={ handleOkLogin } handleCancel={ handleCancel } />
-      </Modal>
-      <Modal title="Payment" visible={ isModalPaymentVisible } onOk={ handleOkPayment } onCancel={ handlepaymentCancel } footer={ false }>
-        <StudentPaymentGroupModal  handleOk={ handleOkPayment } handleCancel={ handlepaymentCancel } group = {groupPaymentId} />
+        <StudentViewAttendaceHistory  handleOk={ handleOkLogin } handleCancel={ handleCancel } />
       </Modal>
       <Row justify="space-between" align="middle">
         <Col>
@@ -141,8 +137,10 @@ const StudentView = () => {
          scroll={ { x: "auto" } }
          />
       </Card>
+
+      <Button>Go back</Button>
     </Fade>
   );
 };
 
-export default StudentView;
+export default StudentViewTeacher;
