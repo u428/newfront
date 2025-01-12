@@ -6,7 +6,7 @@ import { Table, Tag, Card, PageHeader, Modal, Row, Col, Button, Space, Tooltip }
 import { useDispatch, useSelector } from "react-redux";
 import {getGroups, deleteGroup, getSingleGroup, getTeacherGroups } from "../../../redux/group/actions";
 import ModalGroup from "./modal/ModalGroup";
-import { getStudentsGroup } from "../../../redux/student/actions";
+import {getStudentsGroup, viewStudentsGroup} from "../../../redux/student/actions";
 import StudentListGroupModal from "./modal/StudentListGroupModal";
 import { useHistory } from "react-router-dom";
 import { viewTeacher } from "../../../redux/teacher/actions";
@@ -52,9 +52,7 @@ const Groups = () => {
   };
 
   function getGroupStudents (group) {
-    dispatch(getStudentsGroup(group.id))
-    // modal open
-    setIsStudentVisible(true);
+    dispatch(viewStudentsGroup(history, group.id));
   }
 
   function groupTeacher (id) {

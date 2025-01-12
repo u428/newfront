@@ -72,7 +72,7 @@ const Students = () => {
       key: 'lastName'
     },
     {
-      title: t("middle_name"),
+      title: t("birth_date"),
       dataIndex: 'dateBirth',
       key: 'birthDay'
     },

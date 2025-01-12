@@ -46,7 +46,9 @@
     "change_teacher":"Tahrirlash",
     "action":"Buyruqlar",
     "group_add":"Gruh qo'shish",
-    "group_change":"Gruhni o'zgartirish"
+    "group_change":"Gruhni o'zgartirish",
+    "students_quantity": "Gruhdaki o'quvchilar soni",
+    "teacher_name": "Ustoz(lar) ismi"
 
 
 }

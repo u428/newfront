@@ -39,6 +39,7 @@ import {
       current: 1,
       pageSize: 10
     },
+      groupStudents: {},
     group: {}
   };
   

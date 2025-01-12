@@ -7,6 +7,10 @@ import {
     GET_STUDENTS_GROUP_ERROR,
     GET_STUDENTS_GROUP_SUCCESS,
 
+    VIEW_STUDENTS_GROUP,
+    VIEW_STUDENTS_GROUP_ERROR,
+    VIEW_STUDENTS_GROUP_SUCCESS,
+
     GET_NEW_STUDENTS,
     GET_NEW_STUDENTS_ERROR,
     GET_NEW_STUDENTS_SUCCESS,
@@ -14,6 +18,10 @@ import {
     DELETE_STUDENT,
     DELETE_STUDENT_SUCCESS,
     DELETE_STUDENT_ERROR,
+
+    DELETE_STUDENT_FROM_GROUP,
+    DELETE_STUDENT_FROM_GROUP_SUCCESS,
+    DELETE_STUDENT_FROM_GROUP_ERROR,
 
     GET_SINGLE_STUDENT,
     GET_SINGLE_STUDENT_ERROR,
@@ -47,189 +55,224 @@ import {
     GET_HISTORY_STUDENT_SUCCESS,
     GET_HISTORY_STUDENT_ERROR,
 
-  } from "../actions";
-  
-  export const getNewStudents = (req) => ({
+} from "../actions";
+
+export const getNewStudents = (req) => ({
     type: GET_NEW_STUDENTS,
     payload: req,
-  });
-  
-  export const getNewStudentsSuccess = (response) => ({
+});
+
+export const getNewStudentsSuccess = (response) => ({
     type: GET_NEW_STUDENTS_SUCCESS,
     payload: response,
-  });
-  
-  export const getNewStudentsError = (error) => ({
+});
+
+export const getNewStudentsError = (error) => ({
     type: GET_NEW_STUDENTS_ERROR,
     payload: error,
-  });
+});
 
 
-  export const getStudents = (req) => ({
+export const getStudents = (req) => ({
     type: GET_STUDENTS,
     payload: req,
-  });
-  
-  export const getStudentsSuccess = (response) => ({
+});
+
+export const getStudentsSuccess = (response) => ({
     type: GET_STUDENTS_SUCCESS,
     payload: response,
-  });
-  
-  export const getStudentsError = (error) => ({
+});
+
+export const getStudentsError = (error) => ({
     type: GET_STUDENTS_ERROR,
     payload: error,
-  });
+});
 
-  
-  export const getStudentsGroup = (req) => ({
+
+export const getStudentsGroup = (req) => ({
     type: GET_STUDENTS_GROUP,
     payload: req,
-  });
-  
-  export const getStudentsGroupSuccess = (response) => ({
+});
+
+export const getStudentsGroupSuccess = (response) => ({
     type: GET_STUDENTS_GROUP_SUCCESS,
     payload: response,
-  });
-  
-  export const getStudentsGroupError = (error) => ({
+});
+
+export const getStudentsGroupError = (error) => ({
     type: GET_STUDENTS_GROUP_ERROR,
     payload: error,
-  });
+});
 
-  export const deleteNewStudent = (id) => ({
+// view
+
+export const viewStudentsGroup = (history, groupId) => ({
+    type: VIEW_STUDENTS_GROUP,
+    payload: {history, groupId},
+});
+
+export const viewStudentsGroupSuccess = (response) => ({
+    type: VIEW_STUDENTS_GROUP_SUCCESS,
+    payload: response,
+});
+
+export const viewStudentsGroupError = (error) => ({
+    type: VIEW_STUDENTS_GROUP_ERROR,
+    payload: error,
+});
+
+// view
+
+
+export const deleteNewStudent = (id) => ({
     type: DELETE_STUDENT,
     id: id
-  });
-  
-  export const deleteNewStudentSuccess = (response) => ({
+});
+
+export const deleteNewStudentSuccess = (response) => ({
     type: DELETE_STUDENT_SUCCESS,
     payload: response,
-  });
-  
-  export const deleteNewStudentError = (error) => ({
+});
+
+export const deleteNewStudentError = (error) => ({
     type: DELETE_STUDENT_ERROR,
     payload: error,
-  });
+});
 
-  export const getSingleGroupStudent = (history, id, url) => ({
+export const deleteStudentFromGroup = (studentId, groupId) => ({
+    type: DELETE_STUDENT_FROM_GROUP,
+    payload: {studentId, groupId}
+});
+
+export const deleteStudentFromGroupSuccess = (response) => ({
+    type: DELETE_STUDENT_FROM_GROUP_SUCCESS,
+    payload: response,
+});
+
+export const deleteStudentFromGroupError = (error) => ({
+    type: DELETE_STUDENT_FROM_GROUP_ERROR,
+    payload: error,
+});
+
+
+export const getSingleGroupStudent = (history, id, url) => ({
     type: GET_SINGLE_GROUP_STUDENT,
     payload: {history, id, url}
-  });
+});
 
-  export const getSingleGroupStudentSuccess = (response) => ({
+export const getSingleGroupStudentSuccess = (response) => ({
     type: GET_SINGLE_GROUP_STUDENT_SUCCESS,
     payload: response,
-  });
-  
-  export const getSingleGroupStudentError = (error) => ({
+});
+
+export const getSingleGroupStudentError = (error) => ({
     type: GET_SINGLE_GROUP_STUDENT_ERROR,
     payload: error,
-  });
+});
 
-  export const getSingleStudent = (id) => ({
+export const getSingleStudent = (id) => ({
     type: GET_SINGLE_STUDENT,
     payload: id
-  });
-  
-  export const getSingleStudentSuccess = (response) => ({
+});
+
+export const getSingleStudentSuccess = (response) => ({
     type: GET_SINGLE_STUDENT_SUCCESS,
     payload: response,
-  });
-  
-  export const getSingleStudentError = (error) => ({
+});
+
+export const getSingleStudentError = (error) => ({
     type: GET_SINGLE_STUDENT_ERROR,
     payload: error,
-  });
+});
 
-  export const postStudentLogin = (history, req) => ({
+export const postStudentLogin = (history, req) => ({
     type: POST_STUDENT_LOGIN,
     payload: {history, req}
-  });
-  
-  export const postStudentLoginSuccess = (response) => ({
+});
+
+export const postStudentLoginSuccess = (response) => ({
     type: POST_STUDENT_LOGIN_SUCCESS,
     payload: response,
-  });
-  
-  export const postStudentLoginError = (error) => ({
+});
+
+export const postStudentLoginError = (error) => ({
     type: POST_STUDENT_LOGIN_ERROR,
     payload: error,
-  });
+});
 
-  export const postStudentGroup = (history, req) => ({
+export const postStudentGroup = (history, req) => ({
     type: POST_STUDENT_GROUP,
     payload: {history, req}
-  });
-  
-  export const postStudentGroupSuccess = (response) => ({
+});
+
+export const postStudentGroupSuccess = (response) => ({
     type: POST_STUDENT_GROUP_SUCCESS,
     payload: response,
-  });
-  
-  export const postStudentGroupError = (error) => ({
+});
+
+export const postStudentGroupError = (error) => ({
     type: POST_STUDENT_GROUP_ERROR,
     payload: error,
-  });
+});
 
-  export const postNewStudent = (history, req) => ({
+export const postNewStudent = (history, req) => ({
     type: POST_STUDENT,
     payload: {history, req}
-  });
-  
-  export const postNewStudentSuccess = (response) => ({
+});
+
+export const postNewStudentSuccess = (response) => ({
     type: POST_STUDENT_SUCCESS,
     payload: response,
-  });
-  
-  export const postNewStudentError = (error) => ({
+});
+
+export const postNewStudentError = (error) => ({
     type: POST_STUDENT_ERROR,
     payload: error,
-  });
+});
 
-  export const putNewStudent = (history, req) => ({
+export const putNewStudent = (history, req) => ({
     type: PUT_STUDENT,
     payload: {history, req}
-  });
-  
-  export const putNewStudentSuccess = (response) => ({
+});
+
+export const putNewStudentSuccess = (response) => ({
     type: PUT_STUDENT_SUCCESS,
     payload: response,
-  });
-  
-  export const putNewStudentError = (error) => ({
+});
+
+export const putNewStudentError = (error) => ({
     type: PUT_STUDENT_ERROR,
     payload: error,
-  });
+});
 
-  export const studentPayment = (history, req) => ({
+export const studentPayment = (history, req) => ({
     type: STUDENT_PAYMENT,
     payload: {history, req}
-  });
-  
-  export const studentPaymentSuccess = (response) => ({
+});
+
+export const studentPaymentSuccess = (response) => ({
     type: STUDENT_PAYMENT_SUCCESS,
     payload: response,
-  });
-  
-  export const studentPaymentError = (error) => ({
+});
+
+export const studentPaymentError = (error) => ({
     type: STUDENT_PAYMENT_ERROR,
     payload: error,
-  });
+});
 
 
-
-  export const getHistoryStudent = (idGroup, idStudent) => ({
+export const getHistoryStudent = (idGroup, idStudent) => ({
     type: GET_HISTORY_STUDENT,
     payload: {idGroup, idStudent}
-  });
+});
 
-  export const getHistoryStudentSuccess = (response) => ({
+export const getHistoryStudentSuccess = (response) => ({
     type: GET_HISTORY_STUDENT_SUCCESS,
     payload: response,
-  });
-  
-  export const getHistoryStudentError = (error) => ({
+});
+
+export const getHistoryStudentError = (error) => ({
     type: GET_HISTORY_STUDENT_ERROR,
     payload: error,
-  });
+});
   

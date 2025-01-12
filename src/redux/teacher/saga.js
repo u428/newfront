@@ -32,9 +32,7 @@ function* watchViewTeachers() {
 
 function* workViewTeachers({payload}) {
 
-  console.log(payload);
   const {history, id} = payload;
-  console.log(id);
 
   const { response, error } = yield call(fetchViewTeacher, id);
 

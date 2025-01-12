@@ -6,6 +6,10 @@ import {
   GET_STUDENTS_GROUP,
   GET_STUDENTS_GROUP_ERROR,
   GET_STUDENTS_GROUP_SUCCESS,
+
+  VIEW_STUDENTS_GROUP,
+  VIEW_STUDENTS_GROUP_ERROR,
+  VIEW_STUDENTS_GROUP_SUCCESS,
  
   GET_NEW_STUDENTS,
   GET_NEW_STUDENTS_ERROR,
@@ -14,6 +18,11 @@ import {
   DELETE_STUDENT,
   DELETE_STUDENT_SUCCESS,
   DELETE_STUDENT_ERROR,
+
+
+  DELETE_STUDENT_FROM_GROUP,
+  DELETE_STUDENT_FROM_GROUP_SUCCESS,
+  DELETE_STUDENT_FROM_GROUP_ERROR,
 
   GET_SINGLE_STUDENT,
   GET_SINGLE_STUDENT_SUCCESS,
@@ -56,6 +65,7 @@ import {
     students: null,
     studentHistory: [],
     studentsGroup: [],
+    studentList: [],
     student: {},
     studentGroup:{},
     success: null,
@@ -81,7 +91,14 @@ import {
       case GET_STUDENTS_GROUP_ERROR:
         return { ...state, loading: false, isActive: false, error: payload, studentsGroup: {} };
 
-        case GET_NEW_STUDENTS:
+      case VIEW_STUDENTS_GROUP:
+        return { ...state, isActive: false, loading: true };
+      case VIEW_STUDENTS_GROUP_SUCCESS:
+        return { ...state, loading: false, isActive: true, studentList: payload};
+      case VIEW_STUDENTS_GROUP_ERROR:
+        return { ...state, loading: false, isActive: false, error: payload, studentsGroup: {} };
+
+      case GET_NEW_STUDENTS:
           return { ...state, isActive: false, loading: true };
         case GET_NEW_STUDENTS_SUCCESS:
           return { ...state, loading: false, isActive: true, students: payload.students, pagination:{...payload.pagination}};
@@ -94,7 +111,6 @@ import {
             return { ...state, loading: false, isActive: true};
           case STUDENT_PAYMENT_ERROR:
             return { ...state, loading: false, isActive: false};
-  
 
       case DELETE_STUDENT:
         return { ...state, isActive: false, loading: true };
@@ -102,7 +118,14 @@ import {
         return { ...state, loading: false, isActive: true, success: payload};
       case DELETE_STUDENT_ERROR:
         return { ...state, loading: false, isActive: false, error: payload };
-        
+
+      case DELETE_STUDENT_FROM_GROUP:
+        return { ...state, isActive: false, loading: true };
+      case DELETE_STUDENT_FROM_GROUP_SUCCESS:
+        return { ...state, loading: false, isActive: true, success: payload};
+      case DELETE_STUDENT_FROM_GROUP_ERROR:
+        return { ...state, loading: false, isActive: false, error: payload };
+
       case GET_SINGLE_STUDENT:
           return { ...state, loading: true, isActive: false};
       case GET_SINGLE_STUDENT_SUCCESS:

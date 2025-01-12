@@ -434,6 +434,17 @@ await axios
 .then((response) => ({ response }))
 .catch((error) => ({ error }));
 
+export const fetchViewStudentGroupList = async (groupId) =>
+    await axios
+        .get(
+            `${URL}/depend/group_student_list?id=${groupId}`,
+            {
+                headers: {
+                    Authorization: token,
+                },
+            })
+        .then((response) => ({ response }))
+        .catch((error) => ({ error }));
 
 export const fetchPostStudentLogin = async (req) =>
 await axios
@@ -473,6 +484,20 @@ await axios
   })
 .then((response) => ({ response }))
 .catch((error) => ({ error }));
+
+
+
+export const fetchDeleteStudentFromGroup = async (studentId, groupId) =>
+    await axios
+        .delete(
+            `${URL}/a23d_m23_i23n/remove_student_group?studentId=${studentId}&groupId=${groupId}`,
+            {
+                headers: {
+                    Authorization: token,
+                },
+            })
+        .then((response) => ({ response }))
+        .catch((error) => ({ error }));
 
 export const fetchPaymentStudent = async (req) =>
 await axios
