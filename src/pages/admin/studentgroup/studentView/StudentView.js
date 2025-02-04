@@ -35,11 +35,16 @@ const StudentView = () => {
     setIsModalLoginVisible( false );
   };
 
+  function getGroupStudents (group) {
+    dispatch(getStudentsGroup(group.id))
+    setIsModalLoginVisible( true );
+  }
+
   const handleOkPayment = () => {
     setIsModalPaymentVisible( false );
   };
 
-  const handlepaymentCancel = () => {
+  const handlePaymentCancel = () => {
     setIsModalPaymentVisible( false );
   };
 
@@ -48,10 +53,7 @@ const StudentView = () => {
     setIsModalPaymentVisible( true );
   }
 
-  function getGroupStudents (group) {
-    dispatch(getStudentsGroup(group.id))
-    setIsModalLoginVisible( true );
-  }
+
 
   function deleteStudentsFromGroups (data) {
     console.log(data);
@@ -131,8 +133,8 @@ const StudentView = () => {
       <Modal title="Chreate Teacher" visible={ isModalLoginVisible } onOk={ handleOkLogin } onCancel={ handleCancel } footer={ false }>
         <StudentViewGroupModal  handleOk={ handleOkLogin } handleCancel={ handleCancel } />
       </Modal>
-      <Modal title="To'lov Turlari" visible={ isModalPaymentVisible } onOk={ handleOkPayment } onCancel={ handlepaymentCancel } footer={ false }>
-        <StudentPaymentGroupModal  handleOk={ handleOkPayment } handleCancel={ handlepaymentCancel } group = {groupPaymentId} />
+      <Modal title="To'lov Turlari" visible={ isModalPaymentVisible } onOk={ handleOkPayment } onCancel={ handlePaymentCancel } footer={ false }>
+        <StudentPaymentGroupModal  handleOk={ handleOkPayment } handleCancel={ handlePaymentCancel } group = {groupPaymentId} />
       </Modal>
       <Row justify="space-between" align="middle">
         <Col>

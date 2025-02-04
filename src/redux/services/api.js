@@ -3,7 +3,7 @@ import axios from "axios";
 export const token = localStorage.getItem("token");
 export const role = localStorage.getItem("role");
 
-const URL = "https://qorakol.jprq.site/api/v1"
+const URL = "http://localhost:8081/api/v1"
 
 export const delay = async (ms) =>
   await new Promise((resolve) => {
@@ -15,7 +15,7 @@ export const delay = async (ms) =>
 export const fetchAuthLogin = (req) => {
   console.log(req);
   return axios
-  .post(`${URL}/auth/login`, req)
+  .post(`${URL}/auth/login`, req )
   .then((response) => ({ response }))
   .catch((error) => ({ error }));
 }
