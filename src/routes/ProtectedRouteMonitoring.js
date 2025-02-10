@@ -7,7 +7,6 @@ export const ProtectedRouteMonitoring = ({ component: Component, ...rest }) => {
   
   const {loading, userData} = useSelector(state=>state.authReducer);
 
-  console.log(userData);
 
   return (
 

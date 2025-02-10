@@ -85,8 +85,6 @@ export const data = {
 const Home = () => {
   const dispatch = useDispatch();
   const {statistic, charts} = useSelector(state=>state.statisticReducer);
-  console.log(statistic);
-  console.log(charts);
   useEffect( () => {
     dispatch(getStatistics())
     dispatch(getStatisticsChart());

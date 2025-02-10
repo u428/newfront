@@ -7,9 +7,6 @@ export const ProtectedRouteAdmin = ({ component: Component, ...rest }) => {
   
   const {loading, userData} = useSelector(state=>state.authReducer);
 
-  console.log(userData);
-
-  console.log(!userData);
 
   return (
 

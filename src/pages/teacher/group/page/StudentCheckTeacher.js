@@ -18,8 +18,6 @@ const StudentCheckTeacher = ({handleOk, handleCancel, groupId}) => {
 
     const [studentCheckIds, setStudentCheckedIds] = useState([]);
 
-    console.log(groupId);
-
 
     // const onCheckAllChange = e => {
     //     if(e.target.checked){
@@ -56,7 +54,6 @@ const StudentCheckTeacher = ({handleOk, handleCancel, groupId}) => {
     };
 
     const onChange = (e) => {
-        console.log(checkFree);
         setCheckFree(!checkFree);
     };
 
@@ -85,7 +82,6 @@ const StudentCheckTeacher = ({handleOk, handleCancel, groupId}) => {
         else{
             setIndeterminate(true);
         }
-        console.log(newArr);
       };
 
     return (

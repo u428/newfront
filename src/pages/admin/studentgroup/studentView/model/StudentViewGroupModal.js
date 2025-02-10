@@ -12,7 +12,6 @@ const StudentViewGroupModal = ( { handleOk, handleCancel} ) => {
     const { studentsGroup} = useSelector(state=>state.studentReducer);
 
     function seeStudentById (id) {
-        console.log(id);
         dispatch(getSingleGroupStudent(history, id, "/admin/view/student"));
         dispatch(getSingleStudent(id));
         handleOk()

@@ -16,27 +16,21 @@ const AddAdmins = ( { handleOk2, handleCancel } ) => {
 
 
     const onFinish = ( values ) => {
-    
-        console.log(values);
+
         dispatch(addUserAuth(values));
         handleOk2()
         onReset()
     };
 
     const onFinishFailed = ( errorInfo ) => {
-        console.log( 'Failed:', errorInfo );
         onReset()
     };
 
 
     const onBlurHandle = ()=>{
-        
-
-        console.log(emailRef.current);
 
         fetchGetCheckLogin(emailRef.current.input.value)
         .then(response => {
-            console.log(response.response);
             if(!response.response.data){
                 setValid("success");
             }else{

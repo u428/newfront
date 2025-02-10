@@ -35,7 +35,6 @@ const ModalStudentsLogin = ( { handleOk, handleCancel, count } ) => {
     }, [count] );
 
     const onFinish = ( values ) => {
-        console.log(values);
             let returns = {
             "studentId":values.Student,
             "login":values.login,
@@ -47,19 +46,13 @@ const ModalStudentsLogin = ( { handleOk, handleCancel, count } ) => {
     };
 
     const onFinishFailed = ( errorInfo ) => {
-        console.log( 'Failed:', errorInfo );
         onReset()
     };
 
     const onBlurHandle = ()=>{
-        
-
-        console.log(emailRef.current);
 
         fetchGetCheckLogin(emailRef.current.input.value)
         .then(response => {
-            console.log(response.response);
-            console.log(!response.response.data);
             if(!response.response.data){
                 setValid("success");
             }else{
@@ -69,13 +62,11 @@ const ModalStudentsLogin = ( { handleOk, handleCancel, count } ) => {
     }
 
     const handleSearch = (value)=>{
-        console.log(value);
         if(value.length > 2){
 
         const returns = fetchGetNewStudentOne(value);
 
         returns.then(response =>{
-            console.log(response.response);
             setListStudents(response.response.data);
             setOptionStudents(response.response.data.map(d => <Option key={d.id}>{d.firstName} {d.lastName} - {d.telNomer.substring(d.telNomer.length-6)}</Option>));
         })

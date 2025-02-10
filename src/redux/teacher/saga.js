@@ -11,12 +11,10 @@ function* watchGetTeachers() {
 function* workGetTeachers(req) {
 
   const {payload} = req;
-  console.log(payload);
 
   const { response, error } = yield call(fetchGetTeachersList, payload);
 
   if (response) {
-    console.log(response);
     yield put(getTeachersSuccess(response.data));
   } else {
     yield put(getTeachersError(error.response.data.message));
@@ -37,7 +35,6 @@ function* workViewTeachers({payload}) {
   const { response, error } = yield call(fetchViewTeacher, id);
 
   if (response) {
-    console.log(response);
     yield put(viewTeacherSuccess(response.data));
     history.push("/admin/view/teacher")
   } else {
@@ -53,10 +50,9 @@ function* watchGetSingleTeacher() {
 
 function* workGetSingleTeacher({id}) {
 
-  console.log(id);
 
   const { response, error } = yield call(fetchGetSingleTeacher, id);
-  console.log(response);
+
   if (response) {
     yield put(getSingleTeacherSuccess(response.data.teacher));
   } else {
@@ -70,15 +66,14 @@ function* watchDeleteTeacher() {
 }
 
 function* workDeleteTeacher({id}) {
-  console.log(id);
+
   const { response, error } = yield call(fetchDeleteTeacher, id);
-  console.log(response);
+
   if (response) {
     notificationMessage("success", "O'irildi");
     yield put(deleteTeacherSuccess(response.data.teachers));
     yield fork(workGetTeachers, {payload:{current: 1, pageSize: 10}});
   } else {
-    console.log(error);
     yield put(deleteTeacherError(error.response.data.message));
     notificationMessage("error", "SORRY: there is some ERRORS");
   }
@@ -111,7 +106,6 @@ function* watchCheckStudentTeacher() {
 
 function* workCheckStudentTeacher({payload}) {
 
-  console.log(payload);
   const { response, error } = yield call(fetchCheckStudentTeacher, payload);
 
   if (response) {

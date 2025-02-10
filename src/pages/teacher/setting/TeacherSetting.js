@@ -11,7 +11,7 @@ const options = [{ id: 3, value: 'Boshqa' }, {id: 1, value: 'Erkak' }, {id: 2, v
 const TeacherSetting = ( ) => {
 
     const {loading, userData} = useSelector(state=>state.authReducer);
-    console.log(userData);
+
     const [ form ] = Form.useForm();
     const [form2] = Form.useForm();
     const dispatch = useDispatch();
@@ -27,7 +27,7 @@ const TeacherSetting = ( ) => {
 
 
     const onFinish = ( values ) => {
-      console.log(values);
+
 
       const valid = {
         password: values.password,
@@ -39,7 +39,7 @@ const TeacherSetting = ( ) => {
     };
 
   const onFinishAbout = ( values ) => {
-    console.log(values);
+
 
    
     // dispatch(putUserAuth(returns));

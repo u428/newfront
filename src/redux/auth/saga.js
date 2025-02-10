@@ -47,7 +47,6 @@ function* workAuthLogout({ payload }) {
     notificationMessage("success", "chiqib kettiz");
     history.push("/");
   } catch (error) {
-    console.log(error);
     yield put(authLogoutError(error));
     notificationMessage("error", "chiqishda hatolik");
   }

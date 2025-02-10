@@ -31,12 +31,10 @@ const {isActive, loading, subjects} = useSelector(state => state.subjectReducer)
 
   const showModal = (id, i) => {
     if(i > 0){
-      console.log("bu yerda 111111   " +i);
       setIsModalVisible( true );
       dispatch(getSingleSubject(id));
       setCount(i)
     }else{
-      console.log("bu yerda 00000   "+ i);
       setIsModalVisible( true );
       setCount(i)
     }

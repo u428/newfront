@@ -20,7 +20,6 @@ const ModalStudentsGroup = ( { handleOk, handleCancel, studentId } ) => {
     }, [] );
 
     const onFinish = ( values ) => {
-        console.log(values);
             let returns = {
             "studentId": studentId,
             "groupId": values.groupId
@@ -31,17 +30,14 @@ const ModalStudentsGroup = ( { handleOk, handleCancel, studentId } ) => {
     };
 
     const onFinishFailed = ( errorInfo ) => {
-        console.log( 'Failed:', errorInfo );
         onReset()
     };
 
     const handleSearch = (value)=>{
-        console.log(value);
 
         const returns = fetchGetGroupsListSearch(value);
 
         returns.then(response =>{
-            console.log(response.response);
             setListGroups(response.response.data);
             setOptionGroups(response.response.data.map(d => <Option key={d.id}>{d.name} {d.price} {d.begin}</Option>));
         })

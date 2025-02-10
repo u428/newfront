@@ -46,12 +46,10 @@ const Teachers = () => {
   };
 
   const viewTeachers = (id) => {
-    console.log(id);
     dispatch(viewTeacher(history, id))
   };
 
   const changePassword = (id) => {
-    console.log(id);
     setChangePassId(id);
     setChangePassword(true);
     // dispatch(viewTeacher(history, id))

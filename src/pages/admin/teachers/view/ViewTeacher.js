@@ -13,8 +13,6 @@ const ViewTeacher = ( ) => {
     const dispatch = useDispatch();
     let history = useHistory();
 
-    console.log(teacher);
-    console.log(teacherGroup);
 
     useEffect( () => {
     }, [] );

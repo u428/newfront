@@ -39,7 +39,6 @@ const StudentPaymentGroupModal = ({handleOk, handleCancel, group}) => {
             payTeacher:checkTeacher
 
         }
-        console.log(payments);
         dispatch(studentPayment(history, payments))
         handleOk()
         onReset()
@@ -54,7 +53,6 @@ const StudentPaymentGroupModal = ({handleOk, handleCancel, group}) => {
             pane:2,
             payTeacher:checkTeacher
         }
-        console.log(payments);
         dispatch(studentPayment(history, payments))
         handleOk()
         onReset()
@@ -69,7 +67,6 @@ const StudentPaymentGroupModal = ({handleOk, handleCancel, group}) => {
             pane:3,
             payTeacher:checkTeacher
         }
-        console.log(payments);
         dispatch(studentPayment(history, payments))
         handleOk()
         onReset()

@@ -11,7 +11,6 @@ const EditController = ( { handleOk, handleCancel } ) => {
     const dispatch = useDispatch();
     let history = useHistory();
     const {userAuth, isActive} = useSelector(state=>state.statisticReducer);
-    console.log(userAuth);
     let emailRef = useRef()
     const [valid, setValid] = useState();
     
@@ -26,7 +25,6 @@ const EditController = ( { handleOk, handleCancel } ) => {
     }, [isActive])
 
     const onFinish = ( values ) => {
-        console.log(values);
 
         const returns ={
             "id": userAuth.id,
@@ -34,8 +32,6 @@ const EditController = ( { handleOk, handleCancel } ) => {
             "password": values.password,
             "roleId": values.role
         }
-
-        console.log(returns);
         dispatch(putUserAuth(returns));
         handleOk()
         onReset()
@@ -46,13 +42,10 @@ const EditController = ( { handleOk, handleCancel } ) => {
     };
 
     const onBlurHandle = ()=>{
-        
 
-        console.log(emailRef.current);
 
         fetchGetCheckLogin(emailRef.current.input.value)
         .then(response => {
-            console.log(response.response);
             if(!response.response.data){
                 setValid("success");
             }else{

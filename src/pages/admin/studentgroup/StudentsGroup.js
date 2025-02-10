@@ -129,7 +129,7 @@ const StudentsGroup = () => {
       <Card>
         <Table
          columns={ columns } 
-         dataSource={ students && students} 
+         dataSource={students?.map((item) => ({ ...item, key: item.id })) || []}
          pagination={pagination}
          loading={loading}
          scroll={ { x: "auto" } } 

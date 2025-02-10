@@ -42,7 +42,6 @@ const ModalStudents = ( { handleOk, handleCancel, count } ) => {
     }, [count] );
 
     const onFinish = ( values ) => {
-        console.log(values);
         
         if(count > 0){
             let returns = {
@@ -73,7 +72,6 @@ const ModalStudents = ( { handleOk, handleCancel, count } ) => {
     };
 
     const onFinishFailed = ( errorInfo ) => {
-        console.log( 'Failed:', errorInfo );
         onReset()
     };
 

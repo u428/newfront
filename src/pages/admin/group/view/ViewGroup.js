@@ -30,7 +30,6 @@ const ViewTeacher = ( ) => {
     const dispatch = useDispatch();
     let history = useHistory();
 
-    console.log(studentList);
 
     useEffect( () => {
     }, [] );
@@ -50,7 +49,6 @@ const ViewTeacher = ( ) => {
     }
 
     function deleteStudent(data){
-        console.log(data);
     }
 
     const onReset = () => {

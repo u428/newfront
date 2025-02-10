@@ -31,12 +31,7 @@ const EditTeacher = ( { handleOk2, handleEDitModalCancel } ) => {
         dispatch( getSubjects());
     }, [] );
 
-    function changeDate(dating){
-        return 
-    }
-
     useEffect(() =>{
-        console.log(teacher.telNomer);
         if(isActive){
             form.setFieldsValue({
             "firstName": teacher.firstName,
@@ -61,14 +56,11 @@ const EditTeacher = ( { handleOk2, handleEDitModalCancel } ) => {
 
     const onFinish = ( values ) => {
         let imageId;
-        console.log(values);
-        console.log(values.images.file);
         if(values.images.file){
             imageId = values.images.file.response;
         }else{
             imageId = values.images;
         }
-        console.log(imageId);
 
         let returns = {
             "id":teacher.id,
@@ -89,8 +81,6 @@ const EditTeacher = ( { handleOk2, handleEDitModalCancel } ) => {
             "dateBirth": dating,
             "gender": values.gender
         }
-
-        console.log(returns);
 
         dispatch(putTeacher(history, returns));
         handleOk2()

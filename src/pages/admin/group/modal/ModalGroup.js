@@ -68,7 +68,6 @@ const ModalGroup = ( { handleOk, handleCancel, count } ) => {
  
 
     const onFinish = ( values ) => {
-        console.log(values);
 
         if(count>0){
             let returns = {
@@ -82,7 +81,6 @@ const ModalGroup = ( { handleOk, handleCancel, count } ) => {
                 "finish":dating[1],
                 "filesId":values.images.file.response
             }
-            console.log(returns);
 
             // dispatch(putGroup(returns));
         }else{
@@ -106,7 +104,6 @@ const ModalGroup = ( { handleOk, handleCancel, count } ) => {
     };
 
     const onFinishFailed = ( errorInfo ) => {
-        console.log( 'Failed:', errorInfo );
         onReset()
     };
     const handleSearch = (value)=>{
@@ -116,7 +113,6 @@ const ModalGroup = ( { handleOk, handleCancel, count } ) => {
         const returns = fetchGetTeachersListSearch(value);
 
         returns.then(response =>{
-            console.log(response.data);
             setListTeacher(response.data);
             setOptionList(response.data.map(d => <Option key={d.id}>{d.firstName} {d.lastName} -{d.telNomer.substring(d.telNomer.length-5)}</Option>));
         })
@@ -124,9 +120,7 @@ const ModalGroup = ( { handleOk, handleCancel, count } ) => {
     }
 
     const handleChange = (value)=>{
-        console.log(value);
         const data = listTeacher.filter((red)=>red.id == value);
-        console.log(data);
         setLanguages(data[0].languages.map(lang=> <TreeNode key={lang.id} value={lang.id} title ={lang.name}></TreeNode>));
         setSubjects(data[0].subjects.map(sub=><TreeNode key={sub.id} value={sub.id} title ={sub.nameUz}></TreeNode>));
     }

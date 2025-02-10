@@ -12,7 +12,7 @@ function* workGetStatistics() {
   const { response, error } = yield call(fetchDashboardStatistic);
   
   if (response) {
-    console.log(response);
+
     yield put(getStatisticSuccess(response.data));
   } else {
     yield put(getStatisticError(error.response.data.message));
@@ -28,7 +28,6 @@ function* workGetStatisticsChart() {
   const { response, error } = yield call(fetchDashboardStatisticChart);
   
   if (response) {
-    console.log(response);
     yield put(getStatisticChartSuccess(response.data));
   } else {
     yield put(getStatisticChartError(error.response.data.message));
@@ -58,11 +57,11 @@ function* watchGetUserAuth() {
 }
 
 function* workGetUserAuth({payload}) {
-  console.log(payload);
+
   const { response, error } = yield call(fetchGetControllerAuth, payload);
   
   if (response) {
-    console.log(response);
+
     yield put(getUserAuthSuccess(response.data));
   } else {
     yield put(getUserAuthError(error.response.data.message));
@@ -75,11 +74,10 @@ function* watchPutUserAuth() {
 }
 
 function* workPutUserAuth({payload}) {
-  console.log(payload);
+
   const { response, error } = yield call(fetchPutControllerAuth, payload);
   
   if (response) {
-    console.log(response);
     yield put(putUserAuthSuccess(response.data));
   } else {
     yield put(putUserAuthError(error.response.data));
@@ -92,7 +90,7 @@ function* watchAddUserAuth() {
 }
 
 function* workAddUserAuth({payload}) {
-  console.log(payload);
+
   const { response, error } = yield call(fetchAddControllerAuth, payload);
   if (response) {
     yield put(addUserAuthSuccess(response.data));

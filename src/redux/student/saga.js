@@ -79,7 +79,6 @@ function* watchGetStudentsGroup() {
 }
 
 function* workGetStudentsGroup(payload) {
-    console.log("Shu yera galdi");
     const {response, error} = yield call(fetchGetStudentGroupList, 1);
     if (response) {
         yield put(getStudentsGroupSuccess(response.data));
@@ -96,7 +95,6 @@ function* watchViewStudentsGroup() {
 
 function* workViewStudentsGroup({payload}) {
     const {history, groupId} = payload;
-    console.log(payload);
     const {response, error} = yield call(fetchViewStudentGroupList, groupId);
     if (response) {
         yield put(viewStudentsGroupSuccess(response.data));

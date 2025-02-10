@@ -13,7 +13,6 @@ function* workGetGroups({payload}) {
   const { response, error } = yield call(fetchGetGroupsList, payload);
 
   if (response) {
-    console.log(response);
     yield put(getGroupsSuccess(response.data));
   } else {
     yield put(getGroupsError(error.response.data));
@@ -44,11 +43,10 @@ function* watchGetSingleGroups() {
 }
 
 function* workGetSingleGroups({id}) {
-  console.log(id);
+
   const { response, error } = yield call(fetchGetSingleGroups, id);
 
   if (response) {
-    console.log(response);
     yield put(getSingleGroupSuccess(response.data));
   } else {
     yield put(getSingleGroupError(error.response.data.message));
@@ -101,7 +99,7 @@ function* watchDeleteGroups() {
 
 function* workDeleteGroups({id}) {
 
-  console.log(id);
+
 
   const { response, error } = yield call(fetchDeleteGroup, id);
 

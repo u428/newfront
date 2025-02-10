@@ -12,7 +12,6 @@ const StudentListGroupModal = ( { handleOk} ) => {
     const { studentsGroup} = useSelector(state=>state.studentReducer);
 
     function seeStudentById (id) {
-        console.log(id);
         dispatch(getSingleGroupStudent(history, id));
         dispatch(getSingleStudent(history, id));
         handleOk()

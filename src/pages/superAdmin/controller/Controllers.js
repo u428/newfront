@@ -16,7 +16,6 @@ const Controllers = () => {
   let history = useHistory();
 
   const {users, loading} = useSelector(state=>state.statisticReducer);
-  console.log(users);
 
   const dispatch = useDispatch();
   const [ isModalVisible, setIsModalVisible ] = useState( false );

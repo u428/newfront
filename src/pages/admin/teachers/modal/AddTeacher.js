@@ -30,7 +30,6 @@ const AddTeacher = ( { handleOk, handleCancel } ) => {
     const reducer = useSelector(state=>state.subjectReducer);
 
     useEffect( () => {
-        console.log("this is a dispatch effect");
         dispatch( getLanguages());
         dispatch( getSubjects());
     }, [dispatch] );
@@ -40,8 +39,6 @@ const AddTeacher = ( { handleOk, handleCancel } ) => {
     
 
     const onFinish = ( values ) => {
-        console.log(values);
-        console.log(values.birthDate.dateString);
 
         let returns = {
             "firstName": values.firstName,
@@ -62,7 +59,6 @@ const AddTeacher = ( { handleOk, handleCancel } ) => {
             "langIds":values.languageId
         }
 
-        console.log(returns);
 
         dispatch(postTeacher(history, returns));
         handleOk()
@@ -70,7 +66,6 @@ const AddTeacher = ( { handleOk, handleCancel } ) => {
     };
 
     const onFinishFailed = ( errorInfo ) => {
-        console.log( 'Failed:', errorInfo );
         onReset()
     };
 
@@ -78,11 +73,9 @@ const AddTeacher = ( { handleOk, handleCancel } ) => {
     const onBlurHandle = ()=>{
         
 
-        console.log(emailRef.current);
 
         fetchGetCheckLogin(emailRef.current.input.value)
         .then(response => {
-            console.log(response.response);
             if(!response.response.data){
                 setValid("success");
             }else{

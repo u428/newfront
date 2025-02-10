@@ -16,7 +16,6 @@ const ChangePasswords = ( { handleOk3, handleCancel3, changePassId } ) => {
             "authId": changePassId
         }
 
-        console.log(returns);
 
         dispatch(putUserAuthSetting(returns));
         handleOk3()

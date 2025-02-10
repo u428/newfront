@@ -12,7 +12,6 @@ function* workGetSubjects() {
   const { response, error } = yield call(fetchGetSubjectsList);
 
   if (response) {
-    console.log(response);
     yield put(getSubjectsSuccess(response.data));
   } else {
     yield put(getSubjectsError(error.response.data.message));
@@ -25,11 +24,9 @@ function* watchGetSingleSubjects() {
 }
 
 function* workGetSingleSubjects({id}) {
-  console.log(id);
   const { response, error } = yield call(fetchGetSingleSubjectsList, id);
 
   if (response) {
-    console.log(response);
     yield put(getSingleSubjectSuccess(response.data));
   } else {
     yield put(getSingleSubjectError(error.response.data.message));
@@ -43,12 +40,10 @@ function* watchPostSubjects() {
 
 function* workPostSubjects({payload}) {
 const {history, req} = payload;
-console.log(req);
 
   const { response, error } = yield call(fetchPostSubject, req);
 
   if (response) {
-    console.log(response);
     notificationMessage("success","added");
     yield put(postSubjectSuccess(response.data));
     yield fork(workGetSubjects);
@@ -68,7 +63,6 @@ const {history, req} =payload;
   const { response, error } = yield call(fetchPutSubject, req);
 
   if (response) {
-    console.log(response);
     notificationMessage("success", "O'zgartirildi");
     yield put(putSubjectSuccess(response.data));
     yield fork(workGetSubjects);

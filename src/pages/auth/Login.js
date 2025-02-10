@@ -18,11 +18,9 @@ function Login() {
 
   const onFinish = (values) => {
     dispatch(authLogin(history, values));
-    console.log(values);
   };
 
   const onFinishFailed = (errorInfo) => {
-    console.log("Failed:", errorInfo);
   };
 
   return (

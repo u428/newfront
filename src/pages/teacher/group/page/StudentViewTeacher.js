@@ -38,8 +38,6 @@ const StudentViewTeacher = () => {
   };
 
   function seeHistory (id) {
-    console.log(id);
-    console.log(student.id);
     dispatch(getHistoryStudent(id, student.id));
     setIsModalLoginVisible( true );
   }

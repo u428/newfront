@@ -17,7 +17,6 @@ const Groups = () => {
   const { i18n, t } = useTranslation();
   const {pagination, loading, groups} = useSelector(state=>state.groupReducer);
 
-  console.log(groups);
   let history = useHistory();
   const dispatch = useDispatch();
   const [ isModalVisible, setIsModalVisible ] = useState( false );

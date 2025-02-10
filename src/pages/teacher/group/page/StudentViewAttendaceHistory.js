@@ -11,10 +11,9 @@ const StudentViewAttendaceHistory = ( { handleOk, handleCancel} ) => {
     const dispatch = useDispatch();
     let history = useHistory();
     const { studentHistory } = useSelector(state=>state.studentReducer);
-console.log(studentHistory);
+
 
     function seeStudentById (id) {
-        console.log(id);
         dispatch(getSingleGroupStudent(history, id, "/teacher/view/student"));
         dispatch(getSingleStudent(id));
         handleOk()

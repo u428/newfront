@@ -1,169 +1,157 @@
-import React, { useState } from "react";
-import {HistoryOutlined, UsergroupAddOutlined, DollarCircleOutlined, DeleteOutlined} from '@ant-design/icons';
+import React, { useState, useEffect } from "react";
+import {
+    HistoryOutlined,
+    UsergroupAddOutlined,
+    DollarCircleOutlined,
+    DeleteOutlined
+} from '@ant-design/icons';
 import Fade from "react-reveal/Fade";
 import { Table, Tag, Card, PageHeader, Modal, Row, Col, Button, Space } from 'antd';
 import { useDispatch, useSelector } from "react-redux";
 import StudentViewGroupModal from "./model/StudentViewGroupModal";
 import {
-  deleteNewStudent,
-  deleteStudentFromGroup,
-  getNewStudents,
-  getStudentsGroup
+    deleteStudentFromGroup,
+    getStudentsGroup
 } from "../../../../redux/student/actions";
 import StudentPaymentGroupModal from "./model/StudentPaymentGroupModal";
 
-
-
 const StudentView = () => {
+    const dispatch = useDispatch();
+    const { loading, studentGroup, student } = useSelector(state => state.studentReducer);
+    const [isTableReady, setIsTableReady] = useState(false);
+    useEffect(() => {
+        setTimeout(() => setIsTableReady(true), 300);
+    }, []);
 
-  const {loading, studentGroup, student} = useSelector(state=>state.studentReducer);
-  // let history = useHistory();
+    const [modalState, setModalState] = useState({
+        loginVisible: false,
+        paymentVisible: false,
+        selectedGroup: null
+    });
 
+    const handleModalToggle = (type, group = null) => {
+        setModalState(prevState => ({
+            ...prevState,
+            [type]: !prevState[type],
+            selectedGroup: group || prevState.selectedGroup // Ensure group is set correctly
+        }));
+    };
 
-  // const dispatch = useDispatch();
-  const dispatch = useDispatch();
-  const [ isModalLoginVisible, setIsModalLoginVisible ] = useState( false );
-  const [ isModalPaymentVisible, setIsModalPaymentVisible ] = useState( false );
-  const [ groupPaymentId, setGroupPaymentId ] = useState([]);
+    const confirmDeleteStudent = (group) => {
+        Modal.confirm({
+            title: `Are you sure you want to remove ${student.firstName} ${student.lastName} from ${group.name}?`,
+            okText: "Yes",
+            okType: "danger",
+            cancelText: "No",
+            onOk: () => dispatch(deleteStudentFromGroup(student.id, group.id))
+        });
+    };
 
+    const columns = [
+        { title: 'ID', dataIndex: 'id', key: 'id' },
+        { title: 'Name', dataIndex: 'name', key: 'name' },
+        { title: 'Price', dataIndex: 'price', key: 'price' },
+        {
+            title: 'Status',
+            dataIndex: 'status',
+            key: 'status',
+            render: (status) => (
+                <Tag color={status ? "green" : "volcano"}>
+                    {status ? "ACTIVE" : "DISACTIVE"}
+                </Tag>
+            )
+        },
+        { title: 'Attendance', dataIndex: 'attendance', key: 'attendance' },
+        { title: 'Deposit', dataIndex: 'deposite', key: 'deposite' },
+        {
+            title: 'Actions',
+            key: 'actions',
+            render: (group) => (
+                <Space size="middle">
+                    <Button shape="circle" style={{ color: "#399EFF" }} icon={<HistoryOutlined />} />
+                    <Button
+                        shape="circle"
+                        onClick={() => handleModalToggle('loginVisible', group)}
+                        style={{ color: "#399EFF" }}
+                        icon={<UsergroupAddOutlined />}
+                    />
+                    <Button
+                        shape="circle"
+                        onClick={() => handleModalToggle('paymentVisible', group)}
+                        style={{ color: "#399EFF" }}
+                        icon={<DollarCircleOutlined />}
+                    />
+                    <Button
+                        onClick={() => confirmDeleteStudent(group)}
+                        shape="circle"
+                        danger
+                        icon={<DeleteOutlined />}
+                    />
+                </Space>
+            )
+        }
+    ];
 
-  const handleOkLogin = () => {
-    setIsModalLoginVisible( false );
-  };
+    return (
+        <Fade>
+            <Modal
+                title="Create Teacher"
+                open={modalState.loginVisible}
+                onCancel={() => handleModalToggle('loginVisible')}
+                footer={null}
+                destroyOnClose
+            >
+                {modalState.loginVisible && (
+                    <StudentViewGroupModal
+                        handleOk={() => handleModalToggle('loginVisible')}
+                        handleCancel={() => handleModalToggle('loginVisible')}
+                    />
+                )}
+            </Modal>
 
-  const handleCancel = () => {
-    setIsModalLoginVisible( false );
-  };
-
-  function getGroupStudents (group) {
-    dispatch(getStudentsGroup(group.id))
-    setIsModalLoginVisible( true );
-  }
-
-  const handleOkPayment = () => {
-    setIsModalPaymentVisible( false );
-  };
-
-  const handlePaymentCancel = () => {
-    setIsModalPaymentVisible( false );
-  };
-
-  function getPayment (group) {
-    setGroupPaymentId(group);
-    setIsModalPaymentVisible( true );
-  }
-
-
-
-  function deleteStudentsFromGroups (data) {
-    console.log(data);
-    Modal.confirm({
-      title: "siz shu "+student.firstName + " " + student.lastName+" ni. Shu " + data.name + " ochirmoqchimisiz",
-      okText: "Xa",
-      okType:"danger",
-      cancelText:"yoq",
-      onOk: () =>{
-        dispatch(deleteStudentFromGroup(student.id, data.id));
-      }
-    })
-  }
-
-  const columns = [
-    {
-      title: 'ID',
-      dataIndex: 'id',
-      key: 'id'
-    },
-    {
-      title: 'name',
-      dataIndex: 'name',
-      key: 'name'
-    },
-    {
-      title: 'price',
-      dataIndex: 'price',
-      key: 'price'
-    },
-    {
-      title: 'status',
-      dataIndex: 'status',
-      key: 'status',
-      render: tags => (
-        <span>
-              <Tag color={tags? "green":"volcano"}>
-                {tags?"ACTIVE":"DISACTIVE"}
-              </Tag>
-        </span>
-      )
-    },
-    {
-      title: 'attendance',
-      dataIndex: 'attendance',
-      key: 'attendance'
-    },
-    {
-      title: 'deposite',
-      dataIndex: 'deposite',
-      key: 'deposite'
-    },
-    {
-      title: 'Action',
-      key: 'action',
-      render: ( data ) => {
-        return (
-          <Space size="middle">
-              <Button  shape="circle" style={{color: "#399EFF"}} icon={<HistoryOutlined />} />
-              <Button shape="circle"  onClick={() => getGroupStudents(data)} style={{color: "#399EFF"}}  icon={<UsergroupAddOutlined />} />
-              <Button shape="circle" onClick={() => getPayment(data)} style={{color: "#399EFF"}} icon={<DollarCircleOutlined />} />
-            <Button onClick={() => deleteStudentsFromGroups(data)} shape="circle" danger  icon={<DeleteOutlined />} />
-          </Space>
-        )
-      }
-    }
-  ];
-
-
-  // const handleTableChange = (pagination) => {
-  //   dispatch( getStudents(pagination) );
-  // };
-
-  
-  return (
-    <Fade>
-      <Modal title="Chreate Teacher" visible={ isModalLoginVisible } onOk={ handleOkLogin } onCancel={ handleCancel } footer={ false }>
-        <StudentViewGroupModal  handleOk={ handleOkLogin } handleCancel={ handleCancel } />
-      </Modal>
-      <Modal title="To'lov Turlari" visible={ isModalPaymentVisible } onOk={ handleOkPayment } onCancel={ handlePaymentCancel } footer={ false }>
-        <StudentPaymentGroupModal  handleOk={ handleOkPayment } handleCancel={ handlePaymentCancel } group = {groupPaymentId} />
-      </Modal>
-      <Row justify="space-between" align="middle">
-        <Col>
-          <PageHeader
-            className="site-page-header"
-            // onBack={ () => null }
-            title={student.firstName+" "+ student.lastName}
-            subTitle={student.telNomer}
-          />
-        </Col>
-        {/* <Col>
-          <Button type="primary">
-            Add Students Login
-          </Button>
-        </Col> */}
+            <Modal
+                title="Payment Methods"
+                open={modalState.paymentVisible}
+                onCancel={() => handleModalToggle('paymentVisible')}
+                footer={null}
+                destroyOnClose
+            >
+                {modalState.paymentVisible && modalState.selectedGroup && (
+                    <StudentPaymentGroupModal
+                        handleOk={() => handleModalToggle('paymentVisible')}
+                        handleCancel={() => handleModalToggle('paymentVisible')}
+                        group={modalState.selectedGroup}
+                    />
+                )}
+            </Modal>
 
 
-      </Row>
-      <Card>
-      <Table
-         columns={ columns } 
-         dataSource={ studentGroup && studentGroup} 
-         pagination={{position: ["none", "none"]}}
-         loading={loading}
-         scroll={ { x: "auto" } }
-         />
-      </Card>
-    </Fade>
-  );
+            <Row justify="space-between" align="middle">
+                <Col>
+                    <PageHeader
+                        className="site-page-header"
+                        title={`${student?.firstName || ""} ${student?.lastName || ""}`}
+                        subTitle={student?.telNomer || ""}
+                    />
+                </Col>
+            </Row>
+
+            <Card>
+                {isTableReady && (
+                    <Table
+                        key={modalState.paymentVisible ? "visible" : "hidden"}
+                        columns={columns}
+                        dataSource={studentGroup?.map(group => ({ ...group, key: group.id })) || []}
+                        pagination={false}
+                        loading={loading}
+                        scroll={{ x: "max-content"}}
+                    />
+                )}
+
+
+            </Card>
+        </Fade>
+    );
 };
 
 export default StudentView;

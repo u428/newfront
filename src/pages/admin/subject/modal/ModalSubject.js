@@ -17,7 +17,6 @@ const ModalSubject = ( { handleOk, handleCancel, count } ) => {
 
     useEffect( () => {
         if(count > 0){
-            console.log(count);
             form.setFieldsValue({
                 "nameUz":subject.nameUz,
                 "nameRu":subject.nameRu,
@@ -28,7 +27,6 @@ const ModalSubject = ( { handleOk, handleCancel, count } ) => {
     }, [subject] );
 
     useEffect( () => {
-        console.log(count);
         onReset()
     }, [count] );
 
@@ -56,7 +54,6 @@ const ModalSubject = ( { handleOk, handleCancel, count } ) => {
     };
 
     const onFinishFailed = ( errorInfo ) => {
-        console.log( 'Failed:', errorInfo );
         onReset()
     };
 

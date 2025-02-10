@@ -12,7 +12,6 @@ function* workGetLanguages() {
   const { response, error } = yield call(fetchGetLanguagesList);
 
   if (response) {
-    console.log(response);
     yield put(getLanguagesSuccess(response.data));
   } else {
     yield put(getLanguagesError(error.response.data.message));
